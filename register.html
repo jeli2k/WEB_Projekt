@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="de">
     <head>
+        <link rel="stylesheet" href="register.css">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Register</title>
@@ -13,33 +14,50 @@
     <main>
 
     <form method="post" action="site.html" target="">
+        <div id="salutation" class="label-input">
         <label for="sal">Anrede</label>
-     
-        <select id="sal">
+        <select id="sal" class="select">
             <option value="Herr">Herr</option>
             <option value="Frau">Frau</option>
             <option value="divers">Divers</option>
             <option value="keine Angabe">keine Angabe</option>
-        </select><br>
+        </select>
+        </div>
 
-        <label for="fname">Vorname</label>
-        <input type="text" id="fname" name="firstname" required><br>
+        <div id="fname" class="label-input">
+            <label for="fname">Vorname</label>
+            <input type="text" id="fname" name="firstname" required>
+        </div>
 
-        <label for="lname">Nachname</label>
-        <input type="text" id="lname" name="lastname" required><br>
+        <div id="lname" class="label-input">
+            <label for="lname">Nachname</label>
+            <input type="text" id="lname" name="lastname" required>
+        </div>
 
-        <label for="email">E-Mail</label>
-        <input type="email" id="email" name="email" required><br>
+        <div id="email" class="label-input">
+            <label for="email">E-Mail</label>
+            <input type="email" id="email" name="email" required>
+        </div>
         
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username"><br>
+        <div id="username" class="label-input">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username">
+        </div>
 
-        <label for="pw">Passwort</label>
-        <input type="password" id="pw" name="pw" min="3" required><br>
-        <label for="pwr">Passwort erneut eingeben</label>
-        <input type="password" id="pwr" name="pwr" min="3" required><br>
+        <div id="pw" class="label-input">
+            <label for="pw">Passwort</label>
+            <input type="password" id="pw" name="pw" min="3" required>
+        </div>
 
-        <input type="submit" value="login">
+        <div id="pwr" class="label-input">
+            <label for="pwr">Passwort erneut eingeben</label>
+            <input type="password" id="pwr" name="pwr" min="3" required><br>
+        </div>
+
+        <div id="submit" class="submit">
+            <input type="submit" value="Login">
+        </div>
+
     </form>
 
     </main>

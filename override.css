@@ -1,0 +1,7 @@
+:root {
+    --my-primary: red;
+}
+
+.navbar-brand {
+    --my-primary: green;
+}

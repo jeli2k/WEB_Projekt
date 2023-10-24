@@ -16,6 +16,47 @@
         ?>
 
         <main>    
+          <!-- PHP Calc Test -->
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <h1>Form calculate</h1>
+              </div>
+            </div>
+          </div>
+          <form class="row" action="calc.php" method="post">
+            <div class="col-6">
+              <label for="int-a">Input 1</label>
+              <input type="int-a" class="form-control" id="int-a" name="int-a">
+            </div>
+            <div class="col-6">
+              <label for="int-b">Input 1</label>
+              <input type="int-b" class="form-control" id="int-b" name="int-b">
+            </div>
+            <div class="col-12 mt-3">
+              <button class="btn btn-primary mb-2" type="submit">Calculate</button>
+            </div>
+            <div class="row">
+              <div class="col">
+
+                <?php
+                $result = isset($_GET["result"]) ? $_GET["result"] : "Press Calculate";
+                /*
+                if (isset($_GET["result"])) {
+                  $result = $_GET["result"];
+                } else {
+                  $result = "Press Calculate";
+                }
+                */
+                ?>
+                <h2>Result: <?php echo $result; ?> </h2>
+
+              </div>
+            </div>
+          </form>
+          <!-- PHP Calc Test ENDE -->
+
+
           <!-- Login Form -->
           <div class="container mt-5 pt-5">
           <form class="row">
@@ -28,9 +69,10 @@
                     <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
                   </svg>
   
+                  <!-- TODO: first validate: email-->
                   <div class="mb-3">
                    <label for="InputEmail1" class="form-label">E-Mail Address</label>
-                   <input type="email" class="form-control" id="InputEmail1" aria-describedby="emailHelp" required>
+                   <input type="email" class="form-control <?php echo $email_validation_class ?>" <?php echo 'value="' .$email. '"' ?> id="InputEmail1" aria-describedby="emailHelp" required>
                    <div id="emailHelp" class="form-text">Your E-Mail won't be shared with anyone.</div>
                   </div>
           

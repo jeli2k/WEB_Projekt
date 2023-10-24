@@ -1,0 +1,6 @@
+<?php
+$username = $_POST['username'];
+
+$username_length = strlen($username);
+
+?>

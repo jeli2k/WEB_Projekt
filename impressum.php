@@ -6,62 +6,19 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <link href="override.css" rel="stylesheet">
         <title>Impressum & FAQ</title>
-        <!--kommentar-->
+        
     </head>
 
     <body>
-        <header>
-            <!--logo or icon, authorship information-->
-        </header>
-    <main>
+      <header>
+            
+      </header>
 
-         <!--NAVBAR-->
-         <!--NAVBAR-->
-        <nav class="navbar navbar-expand-lg" style="background-color: #f0f0f0;">
-            <div class="container-fluid">
+      <?php
+          include 'navbar.php';
+      ?>
 
-              <a class="navbar-brand" href="#">Logo/Brand</a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-
-              <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="nav nav-tabs">
-
-                  <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="#">Home</a>
-                  </li>
-
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Features</a>
-                  </li>
-
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Pricing</a>
-                  </li>
-
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Dropdown link
-                    </a>
-
-                    <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">Action</a></li>
-                      <li><a class="dropdown-item" href="#">Another action</a></li>
-                      <li><a class="dropdown-item" href="#">Next action</a></li>
-                    </ul>
-
-                  </li>
-                </ul>
-                <form class="d-flex ms-auto col-xs-2 col-sm-6 col-md-4 col-lg-4 col-xl-3" role="search">
-                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-              </div>
-
-            </div>
-          </nav>
-
+      <main>
         <div class="container-fluid">
             <div class="d-flex justify-content-start mt-5">
                 <h1>Impressum</h1>
@@ -123,93 +80,11 @@
                     <p>Ja, sie tun es, jedoch werden Sie über alle Bedingungen Ihrer Buchung informiert, bevor Sie eine verbindliche Buchung vornehmen
         </section>          
         </div>
-    
-
     </main>
-        
-    <!-- Footer -->
-    <section class="pt-5">
-        <!-- Whitespace on top -->
-      </section>
       
-      <footer class="text-center text-lg-start bg-light text-muted">
-           <!-- Section: Top Space -->
-        <section class="d-flex mt-5 border-bottom">
-        </section>
-           <!-- Section: Top Space -->
-  
-    <!-- Section: Links  -->
-        <section class="">
-          <div class="container text-center text-md-start mt-5">
-            <!-- Grid row -->
-            <div class="row mt-3">
-              <!-- Grid column -->
-              <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-                <!-- Content -->
-                <h6 class="text-uppercase fw-bold mb-4">
-                  <i class="fas fa-gem mx-auto text-secondary"></i>Sargsyan Jelinek
-                </h6>
-                <p>
-                  Here you can use rows and columns to organize your footer content. 
-                  <p>
-                    Hotel Text
-                  </p>
-                </p>
-              </div>
-              <!-- Grid column -->
-  
-              <!-- Grid column -->
-              <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-                <!-- Links -->
-                <h6 class="text-uppercase fw-bold mb-4">
-                  Products
-                </h6>
-                <p>
-                  <a href="#!" class="text-reset">Test</a>
-                </p>
-  
-              </div>
-              <!-- Grid column -->
-  
-              <!-- Grid column -->
-              <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-                <!-- Links -->
-                <h6 class="text-uppercase fw-bold mb-4">
-                  Useful links
-                </h6>
-                <p>
-                  <a href="impressum.html" class="text-reset">Impressum</a>
-                </p>
-  
-              </div>
-              <!-- Grid column -->
-  
-              <!-- Grid column -->
-              <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-                <!-- Links -->
-                <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
-                <p>
-                  <i class="fas fa-envelope mx-auto text-secondary"></i>
-                  wi22b067@technikum-wien.at
-                </p>
-                <p>
-                  <i class="fas fa-envelope mx-auto text-secondary"></i>
-                  wi22b076@technikum-wien.at
-                </p>
-              </div>
-              <!-- Grid column -->
-            </div>
-            <!-- Grid row -->
-          </div>
-        </section>
-        <!-- Copyright -->
-      <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.025);">
-       © 2023 Sargsyan Jelinek:
-       <a class="text-reset fw-bold" href="https://github.com/jeli2k/WEB_Projekt">github.com/jeli2K/WEB_Projekt</a>
-      </div>
-    </footer>
-
-
+    <?php
+         include 'footer.php';
+    ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     </body>
 </html>

@@ -59,7 +59,7 @@
 
           <!-- Login Form -->
           <div class="container mt-5 pt-5">
-          <form class="row">
+          <form class="row" action="validate.php" method="post" class="needs-validation">
             <div class="col-12 col-sm-9 col-md-7 m-auto">
               <div class="card border-0 shadow">
                 <div class="card-body">
@@ -69,31 +69,36 @@
                     <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
                   </svg>
   
-                  <!-- TODO: email validate-->
+                  <!-- TODO: email validate start -->
                   <?php
-                  $email = isset($_GET["email"]) ? $_GET["email"] : "test";
+                  $email = isset($_GET["email"]) ? $_GET["email"] : "";
+                  $email_validation_class = isset($_GET["email_validation_class"])
                   ?>
 
+                  <?php
+                  /*
+                  $email_validation_class = "";
+                  if (isset($_GET["valid"]) && "valid" === $_GET["valid"]) {
+                  $email_validation_class = "is-valid";
+                  }
+                  if (isset($_GET["invalid"]) && "invalid" === $_GET["invalid"]) {
+                  $email_validation_class = "is-invalid";
+                  }
+                  */
+                  ?>
+   
+                  <!-- <?php echo $email_validation_class ?> only displays "1" ??? -->
+
                   <div class="mb-3">
-                   <label for="InputEmail1" class="form-label">E-Mail Address</label>
-                   <?php
-                   $email_validation_class = "";
-                   if (isset($_GET["valid"]) && "valid" === $_GET["valid"]) {
-                    $email_validation_class = "is-valid";
-                   }
-                   if (isset($_GET["valid"]) && "invalid" === $_GET["valid"]) {
-                    $email_validation_class = "is-invalid";
-                   }
-                   ?>
-                   <input type="email" class="form-control <?php echo $email_validation_class ?>" name="email" <?php echo 'value="' .$email. '"' ?> id="InputEmail1" aria-describedby="emailHelp" >
+                   <label for="email" class="form-label">E-Mail Address</label>
+                    
+                   <input type="email" class="form-control <?php echo $email_validation_class ?>" id="email" name="email" <?php echo 'value="' .$email. '"' ?> required aria-describedby="invalidEmailFeedback, validEmailFeedback">
                    <div id="emailHelp" class="form-text">Your E-Mail won't be shared with anyone.</div>
-                   <div class="valid-feedback">
-                      Looks good!
+                   <div class="valid-feedback"> E-Mail is valid </div>
+                   <div class="invalid-feedback"> Incorrect E-Mail </div>
+                  
                   </div>
-                   <div class="invalid-feedback">
-                      Incorrect E-Mail
-                   </div>
-                  </div>
+                  <!-- TODO: email validate end -->
           
                   <div class="mb-3">
                      <label for="InputPassword1" class="form-label">Password</label>

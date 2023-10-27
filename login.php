@@ -69,17 +69,39 @@
                     <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
                   </svg>
   
-                  <!-- TODO: first validate: email-->
+                  <!-- TODO: email validate-->
+                  <?php
+                  $email = isset($_GET["email"]) ? $_GET["email"] : "test";
+                  ?>
+
                   <div class="mb-3">
                    <label for="InputEmail1" class="form-label">E-Mail Address</label>
-                   <input type="email" class="form-control <?php echo $email_validation_class ?>" <?php echo 'value="' .$email. '"' ?> id="InputEmail1" aria-describedby="emailHelp" required>
+                   <?php
+                   $email_validation_class = "";
+                   if (isset($_GET["valid"]) && "valid" === $_GET["valid"]) {
+                    $email_validation_class = "is-valid";
+                   }
+                   if (isset($_GET["valid"]) && "invalid" === $_GET["valid"]) {
+                    $email_validation_class = "is-invalid";
+                   }
+                   ?>
+                   <input type="email" class="form-control <?php echo $email_validation_class ?>" name="email" <?php echo 'value="' .$email. '"' ?> id="InputEmail1" aria-describedby="emailHelp" >
                    <div id="emailHelp" class="form-text">Your E-Mail won't be shared with anyone.</div>
+                   <div class="valid-feedback">
+                      Looks good!
+                  </div>
+                   <div class="invalid-feedback">
+                      Incorrect E-Mail
+                   </div>
                   </div>
           
                   <div class="mb-3">
                      <label for="InputPassword1" class="form-label">Password</label>
                      <input type="password" class="form-control" id="InputPassword1" required>
                   </div>
+                  <div class="invalid-feedback">
+                      Invalid Password
+                   </div>
   
                   <div class="mb-3 form-check, spaceholder">
                     <input type="checkbox" class="form-check-input" id="Check1">

@@ -16,50 +16,9 @@
         ?>
 
         <main>    
-          <!-- PHP Calc Test -->
-          <div class="container">
-            <div class="row">
-              <div class="col">
-                <h1>Form calculate</h1>
-              </div>
-            </div>
-          </div>
-          <form class="row" action="calc.php" method="post">
-            <div class="col-6">
-              <label for="int-a">Input 1</label>
-              <input type="int-a" class="form-control" id="int-a" name="int-a">
-            </div>
-            <div class="col-6">
-              <label for="int-b">Input 1</label>
-              <input type="int-b" class="form-control" id="int-b" name="int-b">
-            </div>
-            <div class="col-12 mt-3">
-              <button class="btn btn-primary mb-2" type="submit">Calculate</button>
-            </div>
-            <div class="row">
-              <div class="col">
-
-                <?php
-                $result = isset($_GET["result"]) ? $_GET["result"] : "Press Calculate";
-                /*
-                if (isset($_GET["result"])) {
-                  $result = $_GET["result"];
-                } else {
-                  $result = "Press Calculate";
-                }
-                */
-                ?>
-                <h2>Result: <?php echo $result; ?> </h2>
-
-              </div>
-            </div>
-          </form>
-          <!-- PHP Calc Test ENDE -->
-
-
           <!-- Login Form -->
           <div class="container mt-5 pt-5">
-          <form class="row" action="validate.php" method="post" class="needs-validation">
+          <form class="row" action="logic/validate.php" method="post" class="needs-validation">
             <div class="col-12 col-sm-9 col-md-7 m-auto">
               <div class="card border-0 shadow">
                 <div class="card-body">
@@ -69,44 +28,57 @@
                     <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
                   </svg>
   
-                  <!-- TODO: email validate start -->
+                  <!-- email validate start -->
                   <?php
-                  $email = isset($_GET["email"]) ? $_GET["email"] : "";
-                  $email_validation_class = isset($_GET["email_validation_class"])
-                  ?>
-
-                  <?php
-                  /*
                   $email_validation_class = "";
-                  if (isset($_GET["valid"]) && "valid" === $_GET["valid"]) {
-                  $email_validation_class = "is-valid";
-                  }
-                  if (isset($_GET["invalid"]) && "invalid" === $_GET["invalid"]) {
-                  $email_validation_class = "is-invalid";
-                  }
-                  */
+                    if (isset($_GET["validemail"]) && "valid" === $_GET["validemail"]) {
+                        $email_validation_class = "is-valid";
+                    }
+                    if (isset($_GET["validemail"]) && "invalid" === $_GET["validemail"]) {
+                        $email_validation_class = "is-invalid";
+                    }
+
+                    $email = "";
+                    if (isset($_GET["email"])) {
+                        $email = $_GET["email"];
+                    }
                   ?>
-   
-                  <!-- <?php echo $email_validation_class ?> only displays "1" ??? -->
 
                   <div class="mb-3">
                    <label for="email" class="form-label">E-Mail Address</label>
-                    
-                   <input type="email" class="form-control <?php echo $email_validation_class ?>" id="email" name="email" <?php echo 'value="' .$email. '"' ?> required aria-describedby="invalidEmailFeedback, validEmailFeedback">
+                   <input id="email" class="form-control <?php echo $email_validation_class ?>" type="email" name="email" <?php echo 'value="' .$email. '"' ?> required>
                    <div id="emailHelp" class="form-text">Your E-Mail won't be shared with anyone.</div>
                    <div class="valid-feedback"> E-Mail is valid </div>
                    <div class="invalid-feedback"> Incorrect E-Mail </div>
-                  
                   </div>
-                  <!-- TODO: email validate end -->
-          
+                  <!-- email validate end -->
+                  <!-- PW validate start -->
+                  <?php
+                  $pw_validation_class = "";
+                    if (isset($_GET["validpw"]) && "valid" === $_GET["validpw"]) {
+                        $pw_validation_class = "is-valid";
+                    }
+                    if (isset($_GET["validpw"]) && "invalid" === $_GET["validpw"]) {
+                        $pw_validation_class = "is-invalid";
+                    }
+
+                    $pw = "";
+                    if (isset($_GET["pw"])) {
+                        $pw = $_GET["pw"];
+                    }
+                  ?>
                   <div class="mb-3">
-                     <label for="InputPassword1" class="form-label">Password</label>
-                     <input type="password" class="form-control" id="InputPassword1" required>
-                  </div>
-                  <div class="invalid-feedback">
+                     <label for="InputPW" class="form-label">Password</label>
+                     <input id="pw" type="password" class="form-control <?php echo $pw_validation_class ?>" name="pw" <?php echo 'value="' .$pw. '"' ?> required>
+                    <div class="valid-feedback">
+                      Valid password
+                    </div>
+                    <div class="invalid-feedback">
                       Invalid Password
-                   </div>
+                    </div>
+                  </div>
+                  
+                   <!-- PW validate end -->
   
                   <div class="mb-3 form-check, spaceholder">
                     <input type="checkbox" class="form-check-input" id="Check1">

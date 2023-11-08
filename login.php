@@ -31,16 +31,16 @@
                   <!-- email validate start -->
                   <?php
                   $email_validation_class = "";
-                    if (isset($_GET["validemail"]) && "valid" === $_GET["validemail"]) {
+                    if (isset($_COOKIE["validemail"]) && "valid" === $_COOKIE["validemail"]) {
                         $email_validation_class = "is-valid";
                     }
-                    if (isset($_GET["validemail"]) && "invalid" === $_GET["validemail"]) {
+                    if (isset($_COOKIE["validemail"]) && "invalid" === $_COOKIE["validemail"]) {
                         $email_validation_class = "is-invalid";
                     }
 
                     $email = "";
-                    if (isset($_GET["email"])) {
-                        $email = $_GET["email"];
+                    if (isset($_COOKIE["email"])) {
+                        $email = $_COOKIE["email"];
                     }
                   ?>
 
@@ -55,17 +55,18 @@
                   <!-- PW validate start -->
                   <?php
                   $pw_validation_class = "";
-                    if (isset($_GET["validpw"]) && "valid" === $_GET["validpw"]) {
+                    if (isset($_COOKIE["validpw"]) && "valid" === $_COOKIE["validpw"]) {
                         $pw_validation_class = "is-valid";
                     }
-                    if (isset($_GET["validpw"]) && "invalid" === $_GET["validpw"]) {
+                    if (isset($_COOKIE["validpw"]) && "invalid" === $_COOKIE["validpw"]) {
                         $pw_validation_class = "is-invalid";
                     }
 
                     $pw = "";
-                    if (isset($_GET["pw"])) {
-                        $pw = $_GET["pw"];
+                    if (isset($_COOKIE["pw"])) {
+                        $pw = $_COOKIE["pw"];
                     }
+
                   ?>
                   <div class="mb-3">
                      <label for="InputPW" class="form-label">Password</label>
@@ -86,7 +87,7 @@
                   </div>
   
                   <div class="text-center mt-3">
-                      <button class="btn btn-primary mb-2" type="submit">Login</button>
+                      <button class="btn btn-primary mb-2" href="impressum.php" type="submit">Login</button>
                   </div>
   
                </div>

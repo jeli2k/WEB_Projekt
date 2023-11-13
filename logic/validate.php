@@ -21,8 +21,15 @@ $pw_validation = /*Datenbank check password placeholder*/ strlen($pw) >= 4 ? "va
 session_start();
 setcookie("validemail", $email_validation, time() + (86400 * 30), "/");
 setcookie("email", $email, time() + (86400 * 30), "/");
-setcookie("validpw", $pw_validation, time() + (86400 * 30), "/");
-setcookie("pw", $pw, time() + (86400 * 30), "/");
+$_SESSION["validpw"] = $pw_validation;
+$_SESSION["pw"] = $pw;
+
+// TODO:
+// beides valid? leite gleich zu Homepage
+// nicht valid? gehe zu login
+if ($email_validation == "valid" && $pw_validation == "valid") {
+    header("Location: ../home.php");
+}
 header("Location: ../login.php");
 exit();
 

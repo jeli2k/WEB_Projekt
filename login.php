@@ -48,7 +48,6 @@
                    <label for="email" class="form-label">E-Mail Address</label>
                    <input id="email" class="form-control <?php echo $email_validation_class ?>" type="email" name="email" <?php echo 'value="' .$email. '"' ?> required>
                    <div id="emailHelp" class="form-text">Your E-Mail won't be shared with anyone.</div>
-                   <div class="valid-feedback"> E-Mail is valid </div>
                    <div class="invalid-feedback"> Incorrect E-Mail </div>
                   </div>
                   <!-- email validate end -->
@@ -71,19 +70,25 @@
                   <div class="mb-3">
                      <label for="InputPW" class="form-label">Password</label>
                      <input id="pw" type="password" class="form-control <?php echo $pw_validation_class ?>" name="pw" <?php echo 'value="' .$pw. '"' ?> required>
-                    <div class="valid-feedback">
-                      Valid password
-                    </div>
                     <div class="invalid-feedback">
-                      Invalid Password
+                      Incorrect Password
                     </div>
                   </div>
                   
                    <!-- PW validate end -->
   
+                   <!-- TODO: Remember Me -->
+                   <?php
+                    $rememberme = "";
+                    if (isset($_COOKIE["rememberme"])) {
+                        $rememberme = $_COOKIE["rememberme"];
+                    }
+
+                  ?>
+
                   <div class="mb-3 form-check, spaceholder">
-                    <input type="checkbox" class="form-check-input" id="Check1">
-                    <label class="form-check-label" for="Check1">Remember</label>
+                    <input type="checkbox" class="form-check-input" name="remember" id="remember"checked>
+                    <label class="form-check-label" for="remember-me">Remember</label>
                   </div>
   
                   <div class="text-center mt-3">

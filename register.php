@@ -29,16 +29,16 @@
                     <!--FN Validation-->
                     <?php
                       $fn_validation_class = "";
-                      if (isset($_COOKIE["validfn"]) && "valid" === $_COOKIE["validfn"]) {
+                      if (isset($_SESSION["validfn"]) && "valid" === $_SESSION["validfn"]) {
                           $fn_validation_class = "is-valid";
                       }
-                      if (isset($_COOKIE["validfn"]) && "invalid" === $_COOKIE["validfn"]) {
+                      if (isset($_SESSION["validfn"]) && "invalid" === $_SESSION["validfn"]) {
                           $fn_validation_class = "is-invalid";
                       }
 
                       $firstname = "";
-                      if (isset($_COOKIE["firstname"])) {
-                          $firstname = $_COOKIE["firstname"];
+                      if (isset($_SESSION["firstname"])) {
+                          $firstname = $_SESSION["firstname"];
                       }
                     ?>
 
@@ -51,16 +51,16 @@
                     <!--LN Validation-->
                     <?php
                       $ln_validation_class = "";
-                      if (isset($_COOKIE["validln"]) && "valid" === $_COOKIE["validln"]) {
+                      if (isset($_SESSION["validln"]) && "valid" === $_SESSION["validln"]) {
                           $ln_validation_class = "is-valid";
                       }
-                      if (isset($_COOKIE["validln"]) && "invalid" === $_COOKIE["validln"]) {
+                      if (isset($_SESSION["validln"]) && "invalid" === $_SESSION["validln"]) {
                           $ln_validation_class = "is-invalid";
                       }
 
                       $lastname = "";
-                      if (isset($_COOKIE["lastname"])) {
-                          $lastname = $_COOKIE["lastname"];
+                      if (isset($_SESSION["lastname"])) {
+                          $lastname = $_SESSION["lastname"];
                       }
                     ?>
 
@@ -74,16 +74,16 @@
                     <!--EMAIL Validation-->
                     <?php
                       $email_validation_class = "";
-                        if (isset($_COOKIE["validemail"]) && "valid" === $_COOKIE["validemail"]) {
+                        if (isset($_SESSION["validemail"]) && "valid" === $_SESSION["validemail"]) {
                             $email_validation_class = "is-valid";
                         }
-                        if (isset($_COOKIE["validemail"]) && "invalid" === $_COOKIE["validemail"]) {
+                        if (isset($_SESSION["validemail"]) && "invalid" === $_SESSION["validemail"]) {
                             $email_validation_class = "is-invalid";
                         }
 
                         $email = "";
-                        if (isset($_COOKIE["email"])) {
-                            $email = $_COOKIE["email"];
+                        if (isset($_SESSION["email"])) {
+                            $email = $_SESSION["email"];
                         }
                     ?>
 
@@ -98,16 +98,16 @@
                     <!--CITY Validation-->
                     <?php
                       $city_validation_class = "";
-                        if (isset($_COOKIE["validcity"]) && "valid" === $_COOKIE["validcity"]) {
+                        if (isset($_SESSION["validcity"]) && "valid" === $_SESSION["validcity"]) {
                             $city_validation_class = "is-valid";
                         }
-                        if (isset($_COOKIE["validcity"]) && "invalid" === $_COOKIE["validcity"]) {
+                        if (isset($_SESSION["validcity"]) && "invalid" === $_SESSION["validcity"]) {
                             $city_validation_class = "is-invalid";
                         }
 
                         $city = "";
-                        if (isset($_COOKIE["city"])) {
-                            $city = $_COOKIE["city"];
+                        if (isset($_SESSION["city"])) {
+                            $city = $_SESSION["city"];
                         }
                     ?>
 
@@ -132,16 +132,16 @@
                     <!--ZIP Validation-->
                     <?php
                       $zip_validation_class = "";
-                        if (isset($_COOKIE["validzip"]) && "valid" === $_COOKIE["validzip"]) {
+                        if (isset($_SESSION["validzip"]) && "valid" === $_SESSION["validzip"]) {
                             $zip_validation_class = "is-valid";
                         }
-                        if (isset($_COOKIE["validzip"]) && "invalid" === $_COOKIE["validzip"]) {
+                        if (isset($_SESSION["validzip"]) && "invalid" === $_SESSION["validzip"]) {
                             $zip_validation_class = "is-invalid";
                         }
 
                         $zip = "";
-                        if (isset($_COOKIE["zip"])) {
-                            $zip = $_COOKIE["zip"];
+                        if (isset($_SESSION["zip"])) {
+                            $zip = $_SESSION["zip"];
                         }
                     ?>
 

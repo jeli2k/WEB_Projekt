@@ -27,6 +27,17 @@ $zip = $_POST["zip"];
 $zip_validation = strlen($zip) == 4 ? "valid" : "invalid";
 
 session_start();
+$_SESSION["validfn"] = $firstname_validation;
+$_SESSION["firstname"] = $firstname;
+$_SESSION["validln"] = $lastname_validation;
+$_SESSION["lastname"] = $lastname;
+$_SESSION["validemail"] = $email_validation;
+$_SESSION["email"] = $email;
+$_SESSION["validcity"] = $city_validation;
+$_SESSION["city"] = $city;
+$_SESSION["validzip"] = $zip_validation;
+$_SESSION["zip"] = $zip;
+/*
 setcookie("validfn", $firstname_validation, time() + (86400 * 30), "/");     // 86400 * 30 = 30 Tage
 setcookie("firstname", $firstname, time() + (86400 * 30), "/");
 setcookie("validln", $lastname_validation, time() + (86400 * 30), "/");    
@@ -37,12 +48,13 @@ setcookie("validcity", $city_validation, time() + (86400 * 30), "/");
 setcookie("city", $city, time() + (86400 * 30), "/");
 setcookie("validzip", $zip_validation, time() + (86400 * 30), "/");    
 setcookie("zip", $zip, time() + (86400 * 30), "/");
+*/
 
 // TODO:
 // beides valid? leite gleich zu Homepage
 // nicht valid? gehe zu login
 if ($firstname_validation == "valid" && $lastname_validation == "valid" && $email_validation == "valid" && $city_validation == "valid" && $zip_validation == "valid") {
-    header("Location: ../home.php");
+    header("Location: ../profile.php");
 } else {
     header("Location: ../register.php");
 }

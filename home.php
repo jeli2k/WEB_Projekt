@@ -4,6 +4,7 @@
         <?php include 'includes/head.php'; ?>
         <link href="override.css" rel="stylesheet">
         <title>Login</title>
+        
     </head>
 
     <body>
@@ -15,8 +16,8 @@
             include 'components/navbar.php';
         ?>
 
-        <main>    
-        <!--TODO everything-->
+        <main> 
+            <!--TODO everything-->
         </main>
 
 

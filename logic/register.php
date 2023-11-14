@@ -1,3 +1,4 @@
+<!-- register.php validates inputs on the register page -->
 <?php
 
 $firstname = $_POST["firstname"];

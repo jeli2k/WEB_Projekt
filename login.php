@@ -74,17 +74,9 @@
                       Incorrect Password
                     </div>
                   </div>
-                  
                    <!-- PW validate end -->
   
                    <!-- TODO: Remember Me -->
-                   <?php
-                    $rememberme = "";
-                    if (isset($_COOKIE["rememberme"])) {
-                        $rememberme = $_COOKIE["rememberme"];
-                    }
-
-                  ?>
 
                   <div class="mb-3 form-check, spaceholder">
                     <input type="checkbox" class="form-check-input" name="remember" id="remember"checked>

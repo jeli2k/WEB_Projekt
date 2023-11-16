@@ -38,7 +38,7 @@
                 <!-- If user is NOT logged in: -->
                 <!-- Display Logout button if the user is NOT logged in -->
                 <?php if (!isset($_SESSION['email']) || ($_SESSION['email'] != 'admin@admin.com' && $_SESSION['pw'] != 'admin')): ?>
-                  <div class="ms-auto" method="GET">
+                  <div class="ms-auto" method="POST">
                     <a href="login.php">
                       <button class="btn btn-light ms-3" type="submit" name="logout" value="true">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-square" viewBox="0 0 16 16">
@@ -52,10 +52,50 @@
                 <?php endif; ?>
 
                 <!-- If user is logged in: -->
-                <!-- Display Profile button if the user is logged in with admin@admin.com email and admin password -->
                 <?php if (isset($_SESSION['email']) && $_SESSION['email'] === 'admin@admin.com' && $_SESSION['pw'] === 'admin'): ?>
                   <div class="d-flex ms-auto">
-                    <form action="logic/loggedIn.php" method="GET">
+
+                <!-- Reservations here -->
+                
+                <div class="dropdown">
+                  <button class="btn btn-light dropdown-toggle" type="button" id="reservationsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    Reservations
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="reservationsDropdown">
+                    <?php
+                    // Use PHP to generate reservations from the session (if any)
+                    // important: before accessing $_SESSION variable/array, always introduce with this:
+                    // if (isset($_SESSION['bookingDetails'])) {  $bookingDetails = $_SESSION['bookingDetails'];  }
+                    if (isset($_SESSION['counter'])) {
+                      for ($i = 1; $i <= $_SESSION['counter']; $i++) {
+                          $bookingDetailsKey = 'bookingDetails' . $i;
+          
+                          if (isset($_SESSION[$bookingDetailsKey])) {
+                              $bookingDetails = $_SESSION[$bookingDetailsKey];
+                              echo '<li><a class="dropdown-item">' . $bookingDetails['selectedRoom'] . '</a></li>';
+                              // Add more details as needed
+                            }
+                        }
+                    }
+                    /*
+                    if (isset($_SESSION['bookingDetails'])) {                       
+                      $bookingDetails = $_SESSION['bookingDetails'];
+                      echo '<li><a class="dropdown-item">' . $bookingDetails['selectedRoom'] . '</a></li>';
+                      /*
+                      foreach ($_SESSION['bookingDetails'] as $room) {
+                        echo '<li><a class="dropdown-item">' . $room . '</a></li>';
+                      }
+                    
+                    }
+                    */
+                    ?>
+                  </ul>
+                </div>
+
+                <!-- TODO: Display ShoppingCart button -->
+
+                <!-- Display Logout & Profile button if the user is logged in with admin@admin.com email and admin password -->
+                    <form action="logic/loggedIn.php" method="POST">
                         <button class="btn btn-light ms-3" type="submit" name="logout" value="true">
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
@@ -65,7 +105,7 @@
                         </button>
                     </form>
                     
-                    <a href="profile.php" method="GET">
+                    <a href="profile.php" method="POST">
                         <button class="btn btn-light ms-3" type="submit" name="profile">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-square" viewBox="0 0 16 16">
                                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
@@ -76,14 +116,6 @@
                     </a>
                   </div>
                 <?php endif; ?>
-
-                <!-- Old Search Bar
-                <form class="d-flex ms-auto col-xs-2 col-sm-6 col-md-4 col-lg-4 col-xl-3" role="search">
-                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-                -->
-              
 
             </div>
           </nav>

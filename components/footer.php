@@ -18,14 +18,11 @@
             <!-- Grid column -->
             <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
               <!-- Content -->
-              <h6 class="text-uppercase fw-bold mb-4">
-                <i class="fas fa-gem mx-auto text-secondary"></i>Sargsyan Jelinek
+            <h6 class="text-uppercase fw-bold mb-4">
+                <i class="fas fa-gem mx-auto text-secondary"></i>Comfort for Everyone!
               </h6>
               <p>
-                Here you can use rows and columns to organize your footer content. 
-                <p>
-                  Hotel Text
-                </p>
+                Sargsyan Jelinek
               </p>
             </div>
             <!-- Grid column -->
@@ -50,9 +47,13 @@
                 Useful links
               </h6>
               <p>
-                <a href="impressum.html" class="text-reset">Impressum</a>
+                <a href="impressum.php" class="text-reset">Impressum</a>
               </p>
-
+              <p>
+                <a href="faq.php" class="text-reset">FAQ</a>
+              </p>
+                
+              
             </div>
             <!-- Grid column -->
 

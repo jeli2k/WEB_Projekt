@@ -3,13 +3,13 @@
 session_start();
 
 // Check if logout parameter is set to true
-if (isset($_POST['logout']) && $_POST['logout'] == 'true') {
+if (isset($_GET['logout']) && $_GET['logout'] == 'true') {
     // Logout the user
     unset($_SESSION['email']);
     unset($_SESSION['pw']);
 
     // Output a logout message
-    // echo "You have been successfully logged out.";
+    echo "You have been successfully logged out.";
     header("Location: ../home.php");
     exit();
 }

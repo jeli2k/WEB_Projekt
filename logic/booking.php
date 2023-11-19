@@ -33,10 +33,20 @@ if (isset($_POST['bookRoom'])) {
     if (strtotime($departureDate) <= strtotime($arrivalDate)) {
         // Departure date must be later than arrival date
         $datevalidation = "invalid";
+        setcookie("datevalidation", $datevalidation, time() + (86400 * 30), "/");
+        // safe room + dates so they dont have to be entered again
+        $_SESSION["selectedRoom"] = $selectedRoom;
+        $_SESSION["arrivalDate"] = $arrivalDate;
+        $_SESSION["departureDate"] = $departureDate;
+        $_SESSION["withBreakfast"] = $withBreakfast;
+        $_SESSION["withParking"] = $withParking;
+        $_SESSION["withPets"] = $withPets;
         header("Location: ../booking.php");
+        exit();
     } else {
         // Store booking details in session or database (TODO)
         // demo: Session
+        $datevalidation = "valid";
         $_SESSION['bookingDetails' . $currentCounter] = [
             'selectedRoom' => $selectedRoom,
             'arrivalDate' => $arrivalDate,
@@ -46,14 +56,6 @@ if (isset($_POST['bookRoom'])) {
             'withPets' => $withPets,
             'status' => 'new', // Initial status is set to "new"
         ];
-    
-
-
-
-        /*
-        // Append the new booking to the bookingDetails array
-        $_SESSION['bookingDetails'][] = $newBooking;
-        */
 
         echo "$selectedRoom booked successfully!"; // Maybe implement Message
         header("Location: ../confirmation.php");

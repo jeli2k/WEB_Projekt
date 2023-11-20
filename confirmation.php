@@ -72,7 +72,7 @@
                 <li><strong>Status:</strong> <?php echo $bookingDetails['status']; ?></li>
             </ul>
         </section>
-
+            
     </main>
 
     <?php include 'components/footer.php'; ?>

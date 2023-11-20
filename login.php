@@ -4,6 +4,17 @@
     <?php include 'includes/head.php'; ?>
     <link href="override.css" rel="stylesheet">
     <title>Login</title>
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+    </style>
 </head>
 <body>
     <header>

@@ -1,4 +1,22 @@
-<nav class="navbar navbar-expand-lg" style="background-color: #f0f0f0;">
+<style>
+  @media (max-width: 780px) {
+    .navbar-nav {
+      text-align: center;
+    }
+
+    .navbar-nav .nav-item, .navbar-nav .dropdown {
+      display: inline-block;
+      margin: 0 10px; /* Adjust the margin as needed */
+    }
+
+    .navbar-nav .dropdown-menu {
+      position: static;
+      float: none;
+    }
+  }
+</style>
+
+<nav class="navbar navbar-expand-md" style="background-color: #f0f0f0;">
   <div class="container-fluid">
     <a href="home.php">
       <img src="./Content/Logo.png" alt="Logo" title="Logo" height="50" width="50" margin="5">

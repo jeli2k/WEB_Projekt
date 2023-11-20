@@ -3,7 +3,6 @@
 <head>
     <?php include 'includes/head.php'; ?>
     <link href="override.css" rel="stylesheet">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <title>FAQ</title>
 </head>
 <body>

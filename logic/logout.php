@@ -4,6 +4,8 @@ session_start();
 if (isset($_POST['logout']) && $_POST['logout'] == 'true') {
     // Logout the user
     $_SESSION['loggedIn'] = false;
+    $_SESSION['admin'] = false;
+    
     //unset($_SESSION['userData']);
     //unset($_SESSION['loggedIn']);
 

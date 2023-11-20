@@ -6,6 +6,19 @@ if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] !== true) {
     exit();
 }
 
+if (isset($_SESSION['admin']) && $_SESSION['admin'] === true) {
+    // set profile data to admin
+    $_SESSION['userData'] = [
+        'name' => "admin",
+        'lastname' => "admin",
+        'email' => "admin@admin.com",
+        'password' => "admin", // TODO: hash the password
+        'city' => "admin",
+        'street' => "admin",
+        'zipCode' => "1234"
+    ];
+}
+
 $errors = [];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

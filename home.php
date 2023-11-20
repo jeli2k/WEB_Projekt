@@ -7,7 +7,11 @@
 
         // Check if the user is logged in
         $loggedIn = isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === true;
-        $username = $loggedIn ? $_SESSION['userData']['name'] : '';
+        if (isset($_SESSION['admin']) && $_SESSION['admin'] === true) {
+            $username = "admin";
+        } else {
+            $username = $loggedIn ? $_SESSION['userData']['name'] : '';
+        }
         ?>
         
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
@@ -32,6 +36,11 @@
                 .news-container {
                     flex-direction: column;
                 }
+            }
+            .card-img-top {
+            width: 100%; /* Adjust the width as needed */
+            height: 240px; /* Adjust the height as needed */
+            object-fit: cover; /* Maintain aspect ratio and cover the entire container */
             }
         </style>
     </head>
@@ -70,7 +79,7 @@
                             <!-- Room 1 -->
                             <div class="col-md-4 mb-4">
                                 <div class="card text-center">
-                                    <img src="Content/room1.jpg" class="card-img-top" alt="Room 1 Image">
+                                    <img src="Content/room1.jpg" class="card-img-top" alt="Culinary">
                                     <div class="card-body">
                                         <h5 class="card-title">Serenity Skyline Suite</h5>
                                         <p class="card-text">Perched high above the city, the Serenity Skyline Suite offers breathtaking panoramic views. The suite features a spacious living area with floor-to-ceiling windows, a plush king-sized bed, and a state-of-the-art entertainment system. Elegantly designed with a blend of modern and classic decor.</p>
@@ -114,13 +123,37 @@
                     </div>
                 </section>
                 <?php endif; ?>
-
+                <!-- News -->
                 <div class="container my-4">
                     <div class="row">
-                        
+                        <!-- News 1 -->
                         <div class="col-md-4 mb-3">
                             <div class="card">
-                                <img src="Content/Culinary.jpg" class="card-img-top" alt="Culinary">
+                                <?php
+                                $uploadKey = 'uploadPath_news' . 1; // TODO: loop, doesnt work yet so change numbers manually per news
+                                    // Check if uploadPath is set in the session and if the file exists
+                                    if (isset($_SESSION[$uploadKey])) {
+                                        $uploadDir = substr($_SESSION[$uploadKey], 3); // entfernt ../ von Path
+                                        //echo 'Session variable is set: ' . $_SESSION['uploadPath']; // Debug line
+                                        if (file_exists($uploadDir)) {
+                                            // Display the uploaded image
+                                            echo '<img src="' . $uploadDir . '" class="card-img-top" alt="Room 1 Image">';
+                                        } else {
+                                            // Display a message if the file doesn't exist
+                                            echo '<img src="Content/Culinary.jpg" class="card-img-top" alt="Room 1 Image">';
+                                        }
+                                    } else {
+                                        // Display a message if $_SESSION['uploadPath'] is not set
+                                        echo '<img src="Content/Culinary.jpg" class="card-img-top" alt="Room 1 Image">';
+                                    }
+                                ?>
+                                <!-- If user is admin -->
+                                <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] == true): ?> <!-- TODO: if user is admin -->
+                                        <form enctype="multipart/form-data" method="post" action="logic/upload.php">
+                                            <input type="file" name="news1" id="news1">
+                                            <input type="submit" value="Upload" name="submit">
+                                        </form> 
+                                <?php endif; ?>
                                 <div class="card-body">
                                     <h5 class="card-title">Local Culinary Delights: Exploring the Best Eateries Near Our Hotel</h5>
                                 <p class="card-text">Discover the gastronomic pleasures that await you just steps from our hotel. Our neighborhood is a treasure trove of culinary delights, featuring a diverse range of cuisines that cater to every palate. 
@@ -133,10 +166,34 @@
                                 </div>
                             </div>
                         </div>
-
+                        <!-- News 2 -->
                         <div class="col-md-4 mb-3">
                             <div class="card">
-                                <img src="Content/Spa.jpg" class="card-img-top" alt="Spa">
+                            <?php
+                                $uploadKey = 'uploadPath_news' . 2; // TODO: loop, doesnt work yet so change numbers manually per news
+                                    // Check if uploadPath is set in the session and if the file exists
+                                    if (isset($_SESSION[$uploadKey])) {
+                                        $uploadDir = substr($_SESSION[$uploadKey], 3); // entfernt ../ von Path
+                                        //echo 'Session variable is set: ' . $_SESSION['uploadPath']; // Debug line
+                                        if (file_exists($uploadDir)) {
+                                            // Display the uploaded image
+                                            echo '<img src="' . $uploadDir . '" class="card-img-top" alt="Room 1 Image">';
+                                        } else {
+                                            // Display a message if the file doesn't exist
+                                            echo '<img src="Content/Spa.jpg" class="card-img-top" alt="Room 1 Image">';
+                                        }
+                                    } else {
+                                        // Display a message if $_SESSION['uploadPath'] is not set
+                                        echo '<img src="Content/Spa.jpg" class="card-img-top" alt="Room 1 Image">';
+                                    }
+                            ?>
+                                <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] == true): ?> <!-- TODO: if user is admin -->
+                                        <form enctype="multipart/form-data" method="post" action="logic/upload.php">
+                                            <input type="file" name="news2" id="news2">
+                                            <input type="submit" value="Upload" name="submit">
+                                        </form> 
+                                <?php endif; ?>
+                                <!--<img src="Content/Spa.jpg" class="card-img-top" alt="Spa">-->
                                 <div class="card-body">
                                 <h5 class="card-title">Unwind and Rejuvenate: Introducing Our New Spa and Wellness Center</h5>
                                 <p class="card-text">We are thrilled to announce the opening of our new Spa and Wellness Center, a sanctuary designed for your ultimate relaxation and rejuvenation. 
@@ -148,10 +205,34 @@
                                 </div>
                             </div>
                         </div>
-
+                        <!-- News 3 -->
                         <div class="col-md-4 mb-3">
                             <div class="card">
-                                <img src="Content/Festival.jpg" class="card-img-top" alt="Festival">
+                            <?php
+                                $uploadKey = 'uploadPath_news' . 3; // TODO: loop, doesnt work yet so change numbers manually per news
+                                    // Check if uploadPath is set in the session and if the file exists
+                                    if (isset($_SESSION[$uploadKey])) {
+                                        $uploadDir = substr($_SESSION[$uploadKey], 3); // entfernt ../ von Path
+                                        //echo 'Session variable is set: ' . $_SESSION['uploadPath']; // Debug line
+                                        if (file_exists($uploadDir)) {
+                                            // Display the uploaded image
+                                            echo '<img src="' . $uploadDir . '" class="card-img-top" alt="Room 1 Image">';
+                                        } else {
+                                            // Display a message if the file doesn't exist
+                                            echo '<img src="Content/Festival.jpg" class="card-img-top" alt="Room 1 Image">';
+                                        }
+                                    } else {
+                                        // Display a message if $_SESSION['uploadPath'] is not set
+                                        echo '<img src="Content/Festival.jpg" class="card-img-top" alt="Room 1 Image">';
+                                    }
+                            ?>
+                                <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] == true): ?> <!-- TODO: if user is admin -->
+                                        <form enctype="multipart/form-data" method="post" action="logic/upload.php">
+                                            <input type="file" name="news3" id="news3">
+                                            <input type="submit" value="Upload" name="submit">
+                                        </form> 
+                                <?php endif; ?>
+                                <!--<img src="Content/Festival.jpg" class="card-img-top" alt="Festival">-->
                                 <div class="card-body">
                                 <h5 class="card-title">Experience Local Culture: Upcoming Events and Festivals Near Our Hotel</h5>
                                 <p class="card-text">Immerse yourself in the vibrant local culture by participating in the exciting events and festivals happening near our hotel. Our city is a hub of cultural activities, offering a rich tapestry of experiences that showcase the local heritage, arts, and community spirit.

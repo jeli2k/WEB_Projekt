@@ -10,7 +10,7 @@
         $username = $loggedIn ? $_SESSION['userData']['name'] : '';
         ?>
         
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
         <link href="override.css" rel="stylesheet">
         <title>Home</title>
         
@@ -44,6 +44,7 @@
         <?php
             include 'components/navbar.php';
         ?>
+    
         <!-- Navbar nicht responsive für Handy, und echo muss noch mit html code -->
                 <div class="row">
                     <div class="col-md-12 text-center mb-3">
@@ -52,7 +53,8 @@
                             if ($loggedIn === true) {
                                 echo "<a>Hello, " . htmlspecialchars($username) . "!</a>";
                             } else {
-                                echo '<a>To book rooms please <a href="register.php" class="alert-link">register here</a>.';
+                                echo '<a>To book rooms please <a href="register.php" class="alert-link">register here </a>.';
+                                echo ' <a> If you already are a user <a href="login.php" class="alert-link">you can login here</a>.';
                             }
                             ?>
                         </div>
@@ -70,11 +72,9 @@
                                 <div class="card text-center">
                                     <img src="Content/room1.jpg" class="card-img-top" alt="Room 1 Image">
                                     <div class="card-body">
-                                        <h5 class="card-title">Room 1</h5>
-                                        <p class="card-text">Description of Room 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                        <a href="booking.php?room=Room 1" class="btn btn-primary">Book Now</a>
-                
-                                                
+                                        <h5 class="card-title">Serenity Skyline Suite</h5>
+                                        <p class="card-text">Perched high above the city, the Serenity Skyline Suite offers breathtaking panoramic views. The suite features a spacious living area with floor-to-ceiling windows, a plush king-sized bed, and a state-of-the-art entertainment system. Elegantly designed with a blend of modern and classic decor.</p>
+                                        <a href="booking.php?room=Serenity Skyline Suite" class="btn btn-primary">Book Now</a>
                                     </div>
                                 </div>
                             </div>
@@ -84,9 +84,9 @@
                                 <div class="card text-center">
                                     <img src="Content/room2.jpg" class="card-img-top" alt="Room 2 Image">
                                     <div class="card-body">
-                                        <h5 class="card-title">Room 2</h5>
-                                        <p class="card-text">Description of Room 2. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                        <a href="booking.php?room=Room 2" class="btn btn-primary">Book Now</a>
+                                        <h5 class="card-title">Ocean Whisper Bungalow</h5>
+                                        <p class="card-text">Nestled on the edge of a pristine beach, the Ocean Whisper Bungalow provides a tranquil seaside escape. This bungalow boasts a private balcony overlooking the ocean, a cozy, canopy-style queen bed, and a luxurious bathroom with a rain shower. Enjoy the soothing sound of the waves and the gentle sea breeze. </p>
+                                        <a href="booking.php?room=Ocean Whisper Bungalow" class="btn btn-primary">Book Now</a>
 
                                     </div>
                                 </div>
@@ -97,9 +97,9 @@
                                 <div class="card text-center">
                                     <img src="Content/room3.jpg" class="card-img-top" alt="Room 3 Image">
                                     <div class="card-body">
-                                        <h5 class="card-title">Room 3</h5>
-                                        <p class="card-text">Description of Room 3. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                        <a href="booking.php?room=Room 3" class="btn btn-primary">Book Now</a>
+                                        <h5 class="card-title">Sunset Serenade Studio</h5>
+                                        <p class="card-text">Overlooking the western horizon, the Sunset Serenade Studio is designed for those who love to watch the day end with a spectacular view. The studio is equipped with floor-to-ceiling windows, a cozy queen-size bed, and a modern, minimalistic decor that complements the natural beauty of the sunset.</p>
+                                        <a href="booking.php?room=Sunset Serenade Studio" class="btn btn-primary">Book Now</a>
                                         <!-- form instead of <a>? Test for Checkout System -->
                                         <!--
                                         <form method="post" action="logic/checkout.php">

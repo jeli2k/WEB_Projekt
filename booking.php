@@ -34,7 +34,7 @@
                                 $selectedRoom = isset($_GET['room']) ? $_GET['room'] : '';
 
                                 // Create an array of rooms for the dropdown
-                                $rooms = ['Room 1', 'Room 2', 'Room 3']; // Add more rooms if needed // Change Name of Room in home.php <a href=RoomName> too!!
+                                $rooms = ['Serenity Skyline Suite', 'Ocean Whisper Bungalow', 'Sunset Serenade Studio']; // Add more rooms if needed // Change Name of Room in home.php <a href=RoomName> too!!
 
                                 // Date Validation + "Keep Variables" after Invalid Validation
                                 $datevalidation = "";

@@ -5,9 +5,9 @@ if (isset($_POST['bookRoom'])) {
     $selectedRoom = $_POST['selectedRoom'];
     $arrivalDate = $_POST['arrivalDate'];
     $departureDate = $_POST['departureDate'];
-    $withBreakfast = isset($_POST['withBreakfast']) ? "Yes" : "No";
-    $withParking = isset($_POST['withParking']) ? "Yes" : "No";
-    $withPets = isset($_POST['withPets']) ? "Yes" : "No";
+    $withBreakfast = isset($_POST['withBreakfast']) ? "checked" : "notchecked";
+    $withParking = isset($_POST['withParking']) ? "checked" : "notchecked";
+    $withPets = isset($_POST['withPets']) ? "checked" : "notchecked";
 
     // Check if dates are within 100 years
     //$maxDate = date('Y-m-d', strtotime('+100 years'));

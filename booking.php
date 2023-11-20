@@ -30,17 +30,31 @@
                         <div class="card border-0 shadow">
                             <div class="card-body d-flex flex-column align-items-center">
                             <?php
+                                
                                 // Retrieve the selected room from the URL
-                                $selectedRoom = isset($_GET['room']) ? $_GET['room'] : '';
+                                $selectedRoom = isset($_GET['room']) ? $_GET['room'] : (isset($_SESSION['selectedRoom']) ? $_SESSION['selectedRoom'] : '');
 
+                                // Check if a room is selected in the form submission
+                                if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selectedRoom'])) {
+                                    $selectedRoom = $_POST['selectedRoom'];
+                                    // Save the selected room in the session immediately after form submission
+                                    $_SESSION['selectedRoom'] = $selectedRoom;
+                                }
+                                // Save the selected room in the session anyways (important)
+                                $_SESSION['selectedRoom'] = $selectedRoom;
                                 // Create an array of rooms for the dropdown
                                 $rooms = ['Serenity Skyline Suite', 'Ocean Whisper Bungalow', 'Sunset Serenade Studio']; // Add more rooms if needed // Change Name of Room in home.php <a href=RoomName> too!!
+                                
+                                    // Debugging output to trace the value of $selectedRoom
+                                    // echo "selectedRoom (before validation): $selectedRoom<br>";
 
                                 // Date Validation + "Keep Variables" after Invalid Validation
                                 $datevalidation = "";
                                 if (isset($_COOKIE["datevalidation"]) && "invalid" === $_COOKIE["datevalidation"]) {
                                     $datevalidation = "is-invalid";
                                 }
+                                    // Debugging output to trace the value of $_SESSION['selectedRoom'] during validation
+                                    // echo "selectedRoom (during validation): " . $_SESSION['selectedRoom'] . "<br>";
                                 $departureDate = "";
                                 if (isset($_SESSION["departureDate"])) {
                                     $departureDate = $_SESSION["departureDate"];
@@ -49,33 +63,30 @@
                                 if (isset($_SESSION["arrivalDate"])) {
                                     $arrivalDate = $_SESSION["arrivalDate"];
                                 }
-                                $choosenRoom = "";
-                                if (isset($_SESSION["selectedRoom"])) {
-                                    $choosenRoom = $_SESSION["selectedRoom"];
-                                }
                                 $withBreakfast = "";
                                 if (isset($_SESSION["withBreakfast"])) {
-                                    $choosenRoom = $_SESSION["withBreakfast"];
+                                    $withBreakfast = $_SESSION["withBreakfast"];
                                 }
                                 $withParking = "";
                                 if (isset($_SESSION["withParking"])) {
-                                    $choosenRoom = $_SESSION["withParking"];
+                                    $withParking = $_SESSION["withParking"];
                                 }
                                 $withPets = "";
                                 if (isset($_SESSION["withPets"])) {
-                                    $choosenRoom = $_SESSION["withPets"];
-                                }
+                                    $withPets = $_SESSION["withPets"];
+                                } 
+                                $selectedRoom = isset($_SESSION["selectedRoom"]) ? $_SESSION["selectedRoom"] : ''; // Ensure $selectedRoom is not empty
                             ?>
                                 <form action="logic/booking.php" method="post">
-                                <div class="mb-3">
+                                    <div class="mb-3">
                                         <label for="selectedRoom">Select Room:</label>
                                         <select name="selectedRoom" class="form-select" required>
                                             <?php
                                                 // Generate options for each room
                                                 // Check if a room is saved in the session and add it to the options 
                                                 foreach ($rooms as $room) {
-                                                $selected = ($room == $selectedRoom) ? 'selected' : '';          // change choosenRoom to selectedRoom, if "keep variables" feature is disabled
-                                                echo "<option value=\"$room\" $selected>$room</option>";
+                                                    $selected = ($room == $selectedRoom) ? 'selected' : '';         
+                                                    echo "<option value=\"$room\" $selected>$room</option>";
                                                 }
                                             ?>
                                         </select>
@@ -91,15 +102,15 @@
                                     </div>
                                     <div class="mb-3 mt-4">
                                         <label for="withBreakfast">With Breakfast:</label>
-                                        <input type="checkbox" name="withBreakfast" <?php echo 'value="' .$withBreakfast. '"' ?>>
+                                        <input type="checkbox" name="withBreakfast" <?php echo '' .$withBreakfast. '' ?>>
                                     </div>
                                     <div class="mb-3">
                                         <label for="withParking">With Parking:</label>
-                                        <input type="checkbox" name="withParking" <?php echo 'value="' .$withParking. '"' ?>>
+                                        <input type="checkbox" name="withParking" <?php echo '' .$withParking. '' ?>>
                                     </div>    
                                     <div class="mb-3">
                                         <label for="withPets">With Pets:</label>
-                                        <input type="checkbox" name="withPets"  <?php echo 'value="' .$withPets. '"' ?>>
+                                        <input type="checkbox" name="withPets"  <?php echo '' .$withPets. '' ?>>
                                     </div>
                                     <div class="mt-4 text-center">
                                         <button class="btn btn-primary" type="submit" name="bookRoom">Book Now</button>

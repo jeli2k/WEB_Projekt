@@ -46,17 +46,17 @@
             
             <?php
             // convert "checked/notchecked" to "Yes/No" for better display
-            if (isset($_SESSION['withBreakfast']) && $_SESSION['withBreakfast'] == "checked") {
+            if (isset($_SESSION['withBreakfast']) && $_SESSION['withBreakfast'] === "checked") {
                 $breakfast = "Yes";
             } else {
                 $breakfast = "No";
             }
-            if (isset($_SESSION['withParking']) && $_SESSION['withParking'] == "checked") {
+            if (isset($_SESSION['withParking']) && $_SESSION['withParking'] === "checked") {
                 $parking = "Yes";
             } else {
                 $parking = "No";
             }
-            if (isset($_SESSION['withPets']) && $_SESSION['withPets'] == "checked") {
+            if (isset($_SESSION['withPets']) && $_SESSION['withPets'] === "checked") {
                 $pets = "Yes";
             } else {
                 $pets = "No";

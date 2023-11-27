@@ -1,0 +1,6 @@
+{
+    "editor.autoClosingOvertype": "always",
+    "editor.autoClosingComments": "never",
+    "editor.comments.ignoreEmptyLines": false,
+    "editor.comments.insertSpace": false
+}

@@ -1,0 +1,12 @@
+:root {
+    --my-primary: red;
+}
+
+.navbar-brand {
+    --my-primary: green;
+}
+
+
+.text {
+    font-family: Arial, Helvetica, sans-serif
+}

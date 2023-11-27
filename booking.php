@@ -31,7 +31,7 @@
                             <div class="card-body d-flex flex-column align-items-center">
                             <?php
                                 
-                                // Retrieve the selected room from the URL
+                                // Retrieve the selected room from the URL (or previously saved room)
                                 $selectedRoom = isset($_GET['room']) ? $_GET['room'] : (isset($_SESSION['selectedRoom']) ? $_SESSION['selectedRoom'] : '');
 
                                 // Check if a room is selected in the form submission
@@ -55,6 +55,7 @@
                                 }
                                     // Debugging output to trace the value of $_SESSION['selectedRoom'] during validation
                                     // echo "selectedRoom (during validation): " . $_SESSION['selectedRoom'] . "<br>";
+                                    
                                 $departureDate = "";
                                 if (isset($_SESSION["departureDate"])) {
                                     $departureDate = $_SESSION["departureDate"];

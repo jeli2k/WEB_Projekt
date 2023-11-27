@@ -139,18 +139,18 @@
                                             // Display the uploaded image
                                             echo '<img src="' . $uploadDir . '" class="card-img-top" alt="Room 1 Image">';
                                         } else {
-                                            // Display a message if the file doesn't exist
+                                            // Display a default if the file doesn't exist
                                             echo '<img src="Content/Culinary.jpg" class="card-img-top" alt="Room 1 Image">';
                                         }
                                     } else {
-                                        // Display a message if $_SESSION['uploadPath'] is not set
+                                        // Display a default if $_SESSION['uploadPath'] is not set
                                         echo '<img src="Content/Culinary.jpg" class="card-img-top" alt="Room 1 Image">';
                                     }
                                 ?>
                                 <!-- If user is admin -->
                                 <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] == true): ?> <!-- TODO: if user is admin -->
                                         <form enctype="multipart/form-data" method="post" action="logic/upload.php">
-                                            <input type="file" name="news1" id="news1">
+                                            <input type="file" name="news1" id="news1"> <!-- TODO: loop, doesnt work yet so change numbers manually per news -->
                                             <input type="submit" value="Upload" name="submit">
                                         </form> 
                                 <?php endif; ?>

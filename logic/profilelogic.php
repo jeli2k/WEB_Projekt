@@ -12,7 +12,7 @@ if (isset($_SESSION['admin']) && $_SESSION['admin'] === true) {
         'name' => "admin",
         'lastname' => "admin",
         'email' => "admin@admin.com",
-        'password' => "admin", // TODO: hash the password
+        'password' => "admin",
         'city' => "admin",
         'street' => "admin",
         'zipCode' => "1234"

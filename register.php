@@ -11,11 +11,10 @@
     </header>
 
     <?php include 'components/navbar.php'; ?>
-    <?php include 'logic/registerlogic.php'; ?>
 
     <main>   
       <div class="container mt-3 pt-5">
-        <form class="row needs-validation" action="register.php" method="post" novalidate>
+        <form class="row needs-validation" action="logic/registerlogic.php" method="post" novalidate>
           <div class="col-12 col-sm-7 col-md-6 m-auto">
             <div class="card border-0 shadow">
               <div class="card-body">
@@ -47,19 +46,13 @@
                 <!-- Email Field -->
                 <div class="mb-3">
                   <label for="email" class="form-label">E-Mail Address</label>
-                  <input type="email" class="form-control <?php echo !empty($errors['email']) ? 'is-invalid' : ''; ?>" id="email" name="email" value="<?php echo isset($_POST['email']) ? $_POST['email'] : ''; ?>" required>
-                  <?php if (!empty($errors['email'])): ?>
-                      <div class="invalid-feedback"><?php echo $errors['email']; ?></div>
-                  <?php endif; ?>
+                  <input type="email" class="form-control" id="email" name="email" required>
                 </div>
 
                 <!-- Password Field -->
                 <div class="mb-3">
                   <label for="password" class="form-label">Password</label>
-                  <input type="password" class="form-control <?php echo !empty($errors['password']) ? 'is-invalid' : ''; ?>" id="password" name="password" required>
-                  <?php if (!empty($errors['password'])): ?>
-                      <div class="invalid-feedback"><?php echo $errors['password']; ?></div>
-                  <?php endif; ?>
+                  <input type="password" class="form-control" id="password" name="password" required>
                 </div>
 
                 <!-- Confirm Password Field -->
@@ -89,6 +82,7 @@
                   <?php endif; ?>
                 </div>
 
+                <!--
                 <div class="mb-3">
                       <label for="state" class="form-label">State</label>
                       <select class="form-select" id="state" required>
@@ -98,6 +92,7 @@
                       <option>Switzerland</option>
                       </select>
                     </div>
+                -->
 
                 <!-- Zip Code Field -->
                 <div class="mb-3">
@@ -121,8 +116,8 @@
                   <button class="btn btn-primary" type="submit">Register</button>
                 </div>
                 <div class="text-center">
-                        <a href="login.php" class="nav-link">Already have an account?</a>
-                    </div>
+                  <a href="login.php" class="nav-link">Already have an account?</a>
+                </div>
 
               </div>
             </div>

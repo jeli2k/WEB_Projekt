@@ -22,11 +22,10 @@
     </header>
 
     <?php include 'components/navbar.php'; ?>
-    <?php include 'logic/loginlogic.php'; ?>
 
     <main>
         <div class="container mt-3 pt-5">
-            <form class="row needs-validation" action="login.php" method="post" novalidate>
+            <form class="row needs-validation" action="logic/loginlogic.php" method="post" novalidate>
                 <div class="col-12 col-sm-7 col-md-6 m-auto">
                     <div class="card border-0 shadow">
                         <div class="card-body">

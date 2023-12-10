@@ -1,3 +1,8 @@
+<?php
+require_once("data/dbaccess.php");
+
+?>
+
 <!DOCTYPE html>
 <html lang="de">
     <head>
@@ -6,11 +11,16 @@
         
 
         // Check if the user is logged in
-        $loggedIn = isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === true;
+        $loggedIn = false;
+        if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true) {
+            $loggedIn = true;
+        }
+        //$loggedIn = isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === true;
         if (isset($_SESSION['admin']) && $_SESSION['admin'] === true) {
-            $username = "admin";
-        } else {
-            $username = $loggedIn ? $_SESSION['userData']['name'] : '';
+            $admin = true;
+        }
+        if (isset($_SESSION['firstname'])) {
+            $firstname = $_SESSION['firstname'];
         }
         ?>
         
@@ -60,7 +70,8 @@
                         <div class="alert alert-info" role="alert">
                             <?php
                             if ($loggedIn === true) {
-                                echo "<a>Hello, " . htmlspecialchars($username) . "!</a>";
+                                // TODO: Register all Content and display firstname from database here.
+                                echo "<a>Hello, " . htmlspecialchars($firstname) . "!</a>";
                             } else {
                                 echo '<a>To book rooms please <a href="register.php" class="alert-link">register here </a>.';
                                 echo ' <a> If you already are a user <a href="login.php" class="alert-link">you can login here</a>.';
@@ -124,6 +135,37 @@
                 </section>
                 <?php endif; ?>
                 <!-- News -->
+                <?php
+                
+                foreach (findAllNews() as $news) {
+                    echo "<div>";
+                    echo "<h2>" . $news['title'] . "</h2>";
+                    echo "<p>" . $news['text'] . "</p>";
+                    // Bilder:
+                    // echo "<img src='" . $news['image'] . "' alt='News Image'>";
+                    echo "<span>" . $news['date'] . "</span>";
+                    echo "</div>";
+                }
+                
+                ?>
+                <h3>Add new News</h3>
+                <form method="post" action="data/savenews.php">
+                    <div>
+                        <label for="title">Title</label>
+                        <input type="text" name="title" id="title">
+                    </div>
+                    <div>
+                        <label for="text">Text</label>
+                        <input type="text" name="text" id="text">
+                    </div>
+                    <div>
+                        <input type="submit" value="Save News">
+                    </div>
+                </form>
+
+
+
+
                 <div class="container my-4">
                     <div class="row">
                         <!-- News 1 -->

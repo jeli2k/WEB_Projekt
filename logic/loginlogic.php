@@ -1,5 +1,32 @@
 <?php
+session_start();
+// new database logic
+include_once("../data/userService.php");
 
+$email = $_POST['email'];
+$password = $_POST['password'];
+
+if ($email === "admin@admin.com" && $password === "admin") {
+    $_SESSION['admin'] = true;
+    $_SESSION['loggedIn'] = true;
+    header("Location: ../home.php?loggedIn=true?admin=true");
+    exit();
+}
+
+if (login($email, $password)) {
+    // set Session
+    $_SESSION['loggedIn'] = true;
+    // debug at the end
+    header("Location: ../home.php?loggedIn=true");
+    exit();
+}
+// debug at the end
+header("Location: ../login.php?loggedIn=false");
+$error = "Invalid email or password";
+
+
+/*
+// old logic
 $error = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -27,5 +54,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error = 'No user data found. Please register first.';
     }
 }
+*/
 
 ?>

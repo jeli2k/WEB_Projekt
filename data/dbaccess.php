@@ -52,6 +52,7 @@ function saveRegister($firstname, $lastname, $email, $hashedPassword, $city, $st
     if ($firstname != NULL && $lastname != NULL && $email != NULL && $hashedPassword != NULL && $city != NULL && $street != NULL && $zipCode != NULL) {
         $sql = "INSERT INTO `guest` (`firstname`, `lastname`, `email`, `password`, `city`, `street`, `zipCode`) VALUES (?, ?, ?, ?, ?, ?, ?)";  // ? placeholder against SQL Injection // prepared Statement
 }
+}
 
 // TODO: Validation im php code, nicht im datenbank code
 function findUserByEmail($email) {

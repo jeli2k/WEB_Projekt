@@ -5,7 +5,7 @@ include_once("dbaccess.php");
 function register($firstname, $lastname, $email, $password, $city, $street, $zipCode) {
 
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-    saveRegister($firstname, $lastname, $email, $hashedPassword, $city, $street, $zipCode)
+    saveRegister($firstname, $lastname, $email, $hashedPassword, $city, $street, $zipCode);
 
     //saveEmail($email, $hashedPassword);
 }

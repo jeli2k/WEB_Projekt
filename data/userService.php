@@ -11,13 +11,13 @@ function register($firstname, $lastname, $email, $password, $city, $street, $zip
 }
 
 function login($email, $password) {
-    $email = findUserByEmail($email);
+    $userEmail = findUserByEmail($email);
 
-    if (null === $email) {
+    if ($userEmail === null) {
         return false;
     }
 
-    return password_verify($password, $email['password']);
+    return password_verify($password, $userEmail['hashedPassword']);
 }
 
 

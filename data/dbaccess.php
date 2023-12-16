@@ -3,7 +3,7 @@
 $host = "localhost";
 $user = "root";
 $password = "";
-$database = "livecoding";
+$database = "hotel";
 
 $db = new mysqli($host, $user, $password, $database); // standardmäßig Port 3306
 
@@ -25,13 +25,13 @@ function findAllNews () {
     return $news;
 }
 
-// Bilder als Text mit dem Pfad in Datenbank abspeichern (../Content/img.png)
+// TODO Bilder als Text mit dem Pfad in Datenbank abspeichern (../Content/img.png)
 function saveNews($title, $text) {
     global $db;
 
     $sql = "INSERT INTO `news` (`title`, `text`) VALUES (?, ?)";  // ? placeholder against SQL Injection // prepared Statement
     $stmt = $db->prepare($sql);
-    $stmt->bind_param("ss", $title, $text); // ss = stringstring
+    $stmt->bind_param("ss", $title, $text); // s = string
 
     $stmt->execute();
 }
@@ -39,9 +39,9 @@ function saveNews($title, $text) {
 function saveEmail($email, $hashedPassword) {
     global $db;
     if ($email != NULL && $hashedPassword != NULL) {
-        $sql = "INSERT INTO `guest` (`email`, `password`) VALUES (?, ?)";  // ? placeholder against SQL Injection // prepared Statement
+        $sql = "INSERT INTO `userdata` (`email`, `hashedPassword`) VALUES (?, ?)";  // ? placeholder against SQL Injection // prepared Statement
     $stmt = $db->prepare($sql);
-    $stmt->bind_param("ss", $email, $hashedPassword); // ss = stringstring
+    $stmt->bind_param("ss", $email, $hashedPassword); // s = string
 
     $stmt->execute(); 
     }
@@ -49,16 +49,21 @@ function saveEmail($email, $hashedPassword) {
 
 function saveRegister($firstname, $lastname, $email, $hashedPassword, $city, $street, $zipCode) {
     global $db;
+
     if ($firstname != NULL && $lastname != NULL && $email != NULL && $hashedPassword != NULL && $city != NULL && $street != NULL && $zipCode != NULL) {
-        $sql = "INSERT INTO `guest` (`firstname`, `lastname`, `email`, `password`, `city`, `street`, `zipCode`) VALUES (?, ?, ?, ?, ?, ?, ?)";  // ? placeholder against SQL Injection // prepared Statement
-}
+        $sql = "INSERT INTO `userdata` (`firstname`, `lastname`, `email`, `hashedPassword`, `city`, `street`, `zipCode`) VALUES (?, ?, ?, ?, ?, ?, ?)";  // ? placeholder against SQL Injection // prepared Statement
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("ssssssi", $firstname, $lastname, $email, $hashedPassword, $city, $street, $zipCode); // s = string, i = integer
+    
+        $stmt->execute(); 
+    }
 }
 
-// TODO: Validation im php code, nicht im datenbank code
-function findUserByEmail($email) {
+
+function findRegister($email) {
     global $db;
 
-    $sql = "SELECT * FROM `guest` WHERE `email` = ?";
+    $sql = "SELECT `firstname`, `lastname`, `email`, `hashedPassword`, `city`, `street`, `zipCode` FROM `userdata` WHERE `email` = ?";
     $stmt = $db->prepare($sql);
     $stmt->bind_param("s", $email); // s = string
 
@@ -67,6 +72,37 @@ function findUserByEmail($email) {
 
     return $result->fetch_array();
 }
+
+
+// TODO: Validation im php code, nicht im datenbank code
+function findUserByEmail($email) {
+    global $db;
+
+    $sql = "SELECT * FROM `userdata` WHERE `email` = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bind_param("s", $email); // s = string
+
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    return $result->fetch_array();
+}
+
+function findAdminLogin($email) {
+    global $db;
+
+    $sql = "SELECT * FROM `userdata` WHERE `email` = ? AND `is_admin` = 1";
+    $stmt = $db->prepare($sql);
+    $stmt->bind_param("s", $email); // s = string
+
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
+
+    // Ensure the user, hashed password, and is_admin field are retrieved
+    return ($user && isset($user['hashedPassword']) && isset($user['is_admin']) && $user['is_admin'] == 1) ? $user : null;
+}
+
 
 
 ?>

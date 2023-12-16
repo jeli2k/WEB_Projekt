@@ -1,59 +1,34 @@
 <?php
 session_start();
-// new database logic
 include_once("../data/userService.php");
 
-$email = $_POST['email'];
+$userEmail = $_POST['email'];
 $password = $_POST['password'];
 
-if ($email === "admin@admin.com" && $password === "admin") {
+$_SESSION['admin'] = false;
+// check if the user is an admin
+$adminLogin = findAdminLogin($userEmail);
+
+if ($adminLogin !== null && password_verify($password, $adminLogin['hashedPassword'])) { // important: always use hashedPassword, no 'password' in the database, only 'hashedPassword'
     $_SESSION['admin'] = true;
     $_SESSION['loggedIn'] = true;
-    header("Location: ../home.php?loggedIn=true?admin=true");
+    $_SESSION['email'] = $userEmail;  // Set the user's email in the session
+    header("Location: ../home.php");
     exit();
 }
 
-if (login($email, $password)) {
+// if not an admin, check regular user login
+if (login($userEmail, $password)) {
     // set Session
     $_SESSION['loggedIn'] = true;
+    $_SESSION['email'] = $userEmail;  // Set the user's email in the session
     // debug at the end
-    header("Location: ../home.php?loggedIn=true");
+    header("Location: ../home.php");
     exit();
 }
+
+// if neither admin nor regular user, show error
+$_SESSION['error'] = "Invalid email or password";
 // debug at the end
-header("Location: ../login.php?loggedIn=false");
-$error = "Invalid email or password";
-
-
-/*
-// old logic
-$error = '';
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-    $enteredEmail = htmlspecialchars($_POST['email']);
-    $enteredPassword = htmlspecialchars($_POST['password']);
-
-    // check if admin
-    if ($enteredEmail === "admin@admin.com" && $enteredPassword === "admin") {
-        $_SESSION['admin'] = true;
-        $_SESSION['loggedIn'] = true;
-        header("Location: home.php");
-        exit();
-    }
-    // Check if user data exists in the session
-    if (isset($_SESSION['userData'])) {
-        if ($enteredEmail === $_SESSION['userData']['email'] && $enteredPassword === $_SESSION['userData']['password']) {
-            $_SESSION['loggedIn'] = true;
-            header("Location: home.php");
-            exit();
-        } else {
-            $error = 'Invalid email or password.';
-        }
-    } else {
-        $error = 'No user data found. Please register first.';
-    }
-}
-*/
-
+header("Location: ../login.php");
 ?>

@@ -10,18 +10,21 @@ require_once("data/dbaccess.php");
         <?php
         
 
-        // Check if the user is logged in
+        // check if the user is logged in
         $loggedIn = false;
         if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true) {
             $loggedIn = true;
+            if (isset($_SESSION['email'])) {
+                $email = $_SESSION['email'];
+                $userData = findUserByEmail($email);
+            
+                // check if user data retrieved succesfully
+                if ($userData !== null) {
+                    $firstname = $userData['firstname'];
+                }
+            }
         }
-        //$loggedIn = isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === true;
-        if (isset($_SESSION['admin']) && $_SESSION['admin'] === true) {
-            $admin = true;
-        }
-        if (isset($_SESSION['firstname'])) {
-            $firstname = $_SESSION['firstname'];
-        }
+
         ?>
         
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
@@ -83,7 +86,7 @@ require_once("data/dbaccess.php");
             
             <main>
                 <!-- If user is logged in: -->
-                <?php if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true): ?>
+                <?php if ($loggedIn === true): ?>
                 <section>
                     <div class="container mt-5">
                         <div class="row">
@@ -146,8 +149,10 @@ require_once("data/dbaccess.php");
                     echo "<span>" . $news['date'] . "</span>";
                     echo "</div>";
                 }
-                
+                // var_dump($_SESSION); for debugging
                 ?>
+                <!-- ADMIN ONLY: Adding News -->
+                <?php if (isset($_SESSION['admin']) && $_SESSION['admin']): ?>
                 <h3>Add new News</h3>
                 <form method="post" action="data/savenews.php">
                     <div>
@@ -162,6 +167,7 @@ require_once("data/dbaccess.php");
                         <input type="submit" value="Save News">
                     </div>
                 </form>
+                <?php endif; ?>
 
 
 

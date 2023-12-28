@@ -59,6 +59,17 @@ function saveRegister($firstname, $lastname, $email, $hashedPassword, $city, $st
     }
 }
 
+function updateRegister($name, $lastname, $email, $hashedPassword, $city, $street, $zipCode) {
+    global $db;
+
+    if ($name != NULL && $lastname != NULL && $email != NULL && $hashedPassword != NULL && $city != NULL && $street != NULL && $zipCode != NULL) {
+        $sql = "UPDATE `userdata` SET `firstname`=?, `lastname`=?, `hashedPassword`=?, `city`=?, `street`=?, `zipCode`=? WHERE `email`=?";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("sssssss", $name, $lastname, $hashedPassword, $city, $street, $zipCode, $email);
+        $stmt->execute(); 
+    }
+}
+
 
 function findRegister($email) {
     global $db;
@@ -102,7 +113,6 @@ function findAdminLogin($email) {
     // Ensure the user, hashed password, and is_admin field are retrieved
     return ($user && isset($user['hashedPassword']) && isset($user['is_admin']) && $user['is_admin'] == 1) ? $user : null;
 }
-
 
 
 ?>

@@ -1,8 +1,9 @@
 # for macOS/Linux
 
 # in Terminal:
-# 1. allow script permissions   "chmod +x db/init_database.sh"
-# 2. initiliaze databse         "./db/init_database.sh"
+# 1. go into script directory   "cd"
+# 2. allow script permissions   "chmod +x db/init_database.sh"
+# 3. initiliaze database        "./db/init_database.sh"
 
 #!/bin/bash
 

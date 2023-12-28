@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS news (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     text TEXT NOT NULL,
-    date DATE DEFAULT CURRENT_TIMESTAMP()
+    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP()
 );
 
 -- create the 'userdata' table

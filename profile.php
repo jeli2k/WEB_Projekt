@@ -50,7 +50,7 @@
                             <!-- Old Password Field -->
                             <div class="mb-3">
                                 <label for="oldPassword" class="form-label">Old Password</label>
-                                <input type="password" class="form-control <?php echo !empty($errors['oldPassword']) ? 'is-invalid' : ''; ?>" id="oldPassword" name="oldPassword" required>
+                                <input type="password" class="form-control <?php echo !empty($errors['oldPassword']) ? 'is-invalid' : ''; ?>" id="oldPassword" name="oldPassword" placeholder="••••••••••••" required>
                                 <?php if (!empty($errors['oldPassword'])): ?>
                                     <div class="invalid-feedback"><?php echo $errors['oldPassword']; ?></div>
                                 <?php endif; ?>

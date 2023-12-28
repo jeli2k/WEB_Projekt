@@ -29,24 +29,24 @@
                     <p>Sargsyan Jelinek & Partners</p>
                     <p>Hochstädtplatz 6</p>
                     <p>1200 Wien</p>
-                    <p>Telefon: +43 12345678</p>
+                    <p>Phone: +43 12345678</p>
                     <p>E-Mail: wi22b067@technikum-wien.at</p>
                 </section>
 
                 <section class="mb-3">
-                    <p>Sargsayn Jelinek & Partners wird vertreten durch die persönlich haftende Gesellschafterin:<br> Sargsyan Jelinek & Partners GmbH, Tulln, FN 251845</p>
+                    <p style="margin-bottom: 70px">Sargsyan Jelinek & Partners is represented by the personally liable partner:<br> Sargsyan Jelinek & Partners GmbH, Tulln, FN 251845</p>
                     <div class="row">
                         <div class="col-md-6 mb-3 text-center">
                             <img src="./Content/Hayk.jpg" alt="Hayk" title="Hayk" class="rounded-img img-fluid mb-2">
-                            <p class="lead">Geschäftsführer Hayk Sargsyan</p>
+                            <p class="lead">Managing Director Hayk Sargsyan</p>
                         </div>
                         <div class="col-md-6 mb-3 text-center">
                             <img src="./Content/Fabian_Jelinek.jpg" alt="Fabian Jelinek" title="Fabian Jelinek" class="rounded-img img-fluid mb-2">
-                            <p class="lead">Geschäftsführer Fabian Jelinek</p>
+                            <p class="lead">Managing Director Fabian Jelinek</p>
                         </div>
                     </div>
-                    <p>Registergericht: Landesgericht St. Pölten</p>
-                    <p>Handelsregister Registernummer: FN 251845</p>
+                    <p style="margin-top: 50px">Commercial Court: Regional Court St. Pölten</p>
+                    <p>Commercial Register Number: FN 251845</p>
                 </section>
             </div>
         </div>

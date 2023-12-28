@@ -21,6 +21,13 @@
     </header>
 
     <?php include 'components/navbar.php'; ?>
+    <?php
+    // check if user is logged in
+    if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] !== true) {
+        header("Location: login.php");
+        exit();
+    }
+    ?>
 
     <main>
         <?php

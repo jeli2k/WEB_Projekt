@@ -57,9 +57,10 @@
                             </div>
 
                             <!-- New Password Field -->
+                            <!-- NOT REQUIRED -->
                             <div class="mb-3">
                                 <label for="newPassword" class="form-label">New Password</label>
-                                <input type="password" class="form-control <?php echo !empty($errors['newPassword']) ? 'is-invalid' : ''; ?>" id="newPassword" name="newPassword" required>
+                                <input type="password" class="form-control <?php echo !empty($errors['newPassword']) ? 'is-invalid' : ''; ?>" id="newPassword" name="newPassword">
                                 <?php if (!empty($errors['newPassword'])): ?>
                                     <div class="invalid-feedback"><?php echo $errors['newPassword']; ?></div>
                                 <?php endif; ?>

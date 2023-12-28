@@ -1,6 +1,6 @@
 <?php
 // change
-include_once("../data/dbaccess.php");
+include_once(__DIR__ . "/../data/dbaccess.php");
 
 if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] !== true) {
     header("Location: login.php");
@@ -68,11 +68,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errors['email'] = "Valid email is required";
     }
-    if (empty($oldPassword) || !password_verify($oldPassword, $_SESSION['userData']['hashedPassword'])) {
-        $errors['oldPassword'] = "Incorrect old password";
-    }
-    if (empty($newPassword)) {
-        $errors['newPassword'] = "New password is required";
+     // Check if a new password is provided
+     if (!empty($newPassword)) {
+        // Require the old password when updating the password
+        if (empty($oldPassword) || !password_verify($oldPassword, $_SESSION['userData']['hashedPassword'])) {
+            $errors['oldPassword'] = "Incorrect old password";
+        }
     }
     if (empty($city)) {
         $errors['city'] = "City is required";
@@ -85,13 +86,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
     
     if (count($errors) === 0) {
-        // hash the new password
-        $hashedNewPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+        // hash the new password if provide
+        if (!empty($newPassword)) {
+            $hashedNewPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+        } else {
+            // use existing hashedPassword if no new password is provided
+            $hashedNewPassword = $_SESSION['userData']['hashedPassword'];
+        }
         // save in database
         updateRegister($name, $lastname, $email, $hashedNewPassword, $city, $street, $zipCode);
 
         // update session data
-        /*
         $_SESSION['userData']['name'] = $name;
         $_SESSION['userData']['lastname'] = $lastname;
         $_SESSION['userData']['email'] = $email;
@@ -99,7 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_SESSION['userData']['city'] = $city;
         $_SESSION['userData']['street'] = $street;
         $_SESSION['userData']['zipCode'] = $zipCode;
-        */
+        
     }
 
 }

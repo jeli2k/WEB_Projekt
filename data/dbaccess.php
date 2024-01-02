@@ -26,13 +26,44 @@ function findAllNews () {
 }
 
 // TODO Bilder als Text mit dem Pfad in Datenbank abspeichern (../Content/img.png)
-function saveNews($title, $text) {
+// ? placeholder against SQL Injection // prepared Statement
+
+function saveNews($title, $text, $imagePath) {
     global $db;
 
-    $sql = "INSERT INTO `news` (`title`, `text`) VALUES (?, ?)";  // ? placeholder against SQL Injection // prepared Statement
+    $sql = "INSERT INTO `news` (`title`, `text`, `image`) VALUES (?, ?, ?)";
     $stmt = $db->prepare($sql);
-    $stmt->bind_param("ss", $title, $text); // s = string
+    $stmt->bind_param("sss", $title, $text, $imagePath);
 
+    $stmt->execute();
+}
+
+
+function findAllRooms() {
+    global $db;
+    $sql = "SELECT * FROM `rooms`";
+    $result = $db->query($sql);
+
+    $rooms = [];
+    while ($row = $result->fetch_array()) {
+        $rooms[] = $row;
+    }
+    return $rooms;
+}
+
+function saveRoom($title, $text, $price, $image) {
+    global $db;
+
+    // upload image
+    $targetDirectory = "../Content";
+    $imageName = basename($image["name"]);
+    $targetFilePath = $targetDirectory . $imageName;
+    move_uploaded_file($image["tmp_name"], $targetFilePath);
+
+    // insert room
+    $sql = "INSERT INTO `rooms` (`title`, `text`, `price`, `image_url`) VALUES (?, ?, ?, ?)";
+    $stmt = $db->prepare($sql);
+    $stmt->bind_param("ssds", $title, $text, $price, $targetFilePath);
     $stmt->execute();
 }
 

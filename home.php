@@ -85,76 +85,93 @@ require_once("data/dbaccess.php");
                 </div>
             
             <main>
-                <!-- If user is logged in: -->
+<!-- If user is logged in: -->
                 <?php if ($loggedIn === true): ?>
+    <!-- Rooms -->
                 <section>
                     <div class="container mt-5">
                         <div class="row">
-                            <!-- Room 1 -->
-                            <div class="col-md-4 mb-4">
-                                <div class="card text-center">
-                                    <img src="Content/room1.jpg" class="card-img-top" alt="Culinary">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Serenity Skyline Suite</h5>
-                                        <p class="card-text">Perched high above the city, the Serenity Skyline Suite offers breathtaking panoramic views. The suite features a spacious living area with floor-to-ceiling windows, a plush king-sized bed, and a state-of-the-art entertainment system. Elegantly designed with a blend of modern and classic decor.</p>
-                                        <a href="booking.php?room=Serenity Skyline Suite" class="btn btn-primary">Book Now</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Room 2 -->
-                            <div class="col-md-4 mb-4">
-                                <div class="card text-center">
-                                    <img src="Content/room2.jpg" class="card-img-top" alt="Room 2 Image">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Ocean Whisper Bungalow</h5>
-                                        <p class="card-text">Nestled on the edge of a pristine beach, the Ocean Whisper Bungalow provides a tranquil seaside escape. This bungalow boasts a private balcony overlooking the ocean, a cozy, canopy-style queen bed, and a luxurious bathroom with a rain shower. Enjoy the soothing sound of the waves and the gentle sea breeze. </p>
-                                        <a href="booking.php?room=Ocean Whisper Bungalow" class="btn btn-primary">Book Now</a>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Room 3 -->
-                            <div class="col-md-4 mb-4">
-                                <div class="card text-center">
-                                    <img src="Content/room3.jpg" class="card-img-top" alt="Room 3 Image">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Sunset Serenade Studio</h5>
-                                        <p class="card-text">Overlooking the western horizon, the Sunset Serenade Studio is designed for those who love to watch the day end with a spectacular view. The studio is equipped with floor-to-ceiling windows, a cozy queen-size bed, and a modern, minimalistic decor that complements the natural beauty of the sunset.</p>
-                                        <a href="booking.php?room=Sunset Serenade Studio" class="btn btn-primary">Book Now</a>
-                                        <!-- form instead of <a>? Test for Checkout System -->
-                                        <!--
-                                        <form method="post" action="logic/checkout.php">
-                                            <input type="hidden" name="reserveRoom" value="Room3">
-                                            <button type="submit" class="btn btn-primary">Book 1 now</button>
-                                        </form>
-                                        -->
-                                    </div>
-                                </div>
-                            </div>
+                            <?php
+                            foreach (findAllRooms() as $room) {
+                                echo '<div class="col-md-4 mb-4">';
+                                echo '<div class="card text-center">';
+                                echo '<img src="' . $room['image_url'] . '" class="card-img-top" alt="' . $room['title'] . ' Image">';
+                                echo '<div class="card-body">';
+                                echo '<h5 class="card-title">' . $room['title'] . '</h5>';
+                                echo '<p class="card-text">' . $room['text'] . '</p>';
+                                echo '<p class="card-text">Price: $' . number_format($room['price'], 2) . '</p>';
+                                echo '<a href="booking.php?room=' . urlencode($room['title']) . '" class="btn btn-primary">Book Now</a>';
+                                echo '</div>';
+                                echo '</div>';
+                                echo '</div>';
+                            }
+                            ?>
                         </div>
                     </div>
                 </section>
+
                 <?php endif; ?>
-                <!-- News -->
-                <?php
-                
-                foreach (findAllNews() as $news) {
-                    echo "<div>";
-                    echo "<h2>" . $news['title'] . "</h2>";
-                    echo "<p>" . $news['text'] . "</p>";
-                    // Bilder:
-                    // echo "<img src='" . $news['image'] . "' alt='News Image'>";
-                    echo "<span>" . $news['date'] . "</span>";
-                    echo "</div>";
-                }
-                // var_dump($_SESSION); for debugging
-                ?>
-                <!-- ADMIN ONLY: Adding News -->
+<!-- If user is not logged in, display news -->
+    <!-- News -->
+                <div class="container my-4">
+                    <div class="row">
+                        <?php
+                        foreach (findAllNews() as $news) {
+                            echo '<div class="col-md-4 mb-3">';
+                            echo '<div class="card">';
+
+                            // display image if available
+                            if (isset($news['image_url']) && !empty($news['image_url']) && file_exists($news['image_url'])) {
+                                echo '<img src="' . $news['image_url'] . '" class="card-img-top" alt="News Image">';
+                            } else {
+                                echo '<img src="Content/default_news_image.png" class="card-img-top" alt="Default News Image">';
+                            }
+
+                            echo '<div class="card-body">';
+                            
+                            // add news form if user is admin
+                            if (isset($_SESSION['admin']) && $_SESSION['admin'] == true) {
+                                echo '<form enctype="multipart/form-data" method="post" action="logic/upload.php">';
+                                echo '<input type="file" name="image" id="image">';
+                                echo '<input type="submit" value="Upload" name="submit">';
+                                echo '</form>';
+                            }
+                            
+                            echo '<h5 class="card-title">' . $news['title'] . '</h5>';
+                            echo '<p class="card-text">' . $news['text'] . '</p>';
+                            echo '<span>' . $news['date'] . '</span>';
+                            echo '</div>';
+                            echo '</div>';
+                            echo '</div>';
+                        }
+                        ?>
+                    </div>
+                </div>
+
+        <!-- ADMIN ONLY: Adding News -->
                 <?php if (isset($_SESSION['admin']) && $_SESSION['admin']): ?>
-                <h3>Add new News</h3>
-                <form method="post" action="data/savenews.php">
+                    <h3>Add new News</h3>
+                    <form method="post" action="data/savenews.php" enctype="multipart/form-data">
+                        <div>
+                            <label for="title">Title</label>
+                            <input type="text" name="title" id="title">
+                        </div>
+                        <div>
+                            <label for="text">Text</label>
+                            <input type="text" name="text" id="text">
+                        </div>
+                        <div>
+                            <label for="image">Image</label>
+                            <input type="file" name="image" id="image">
+                        </div>
+                        <div>
+                            <input type="submit" value="Save News">
+                        </div>
+                    </form>
+
+                <!-- ADMIN ONLY: Adding Rooms -->
+                <h3>Add new Room</h3>
+                <form method="post" action="data/saveroom.php" enctype="multipart/form-data">
                     <div>
                         <label for="title">Title</label>
                         <input type="text" name="title" id="title">
@@ -164,135 +181,20 @@ require_once("data/dbaccess.php");
                         <input type="text" name="text" id="text">
                     </div>
                     <div>
-                        <input type="submit" value="Save News">
+                        <label for="price">Price</label>
+                        <input type="text" name="price" id="price">
+                    </div>
+                    <div>
+                        <label for="image">Image</label>
+                        <input type="file" name="image" id="image">
+                    </div>
+                    <div>
+                        <input type="submit" value="Save Room">
                     </div>
                 </form>
+
                 <?php endif; ?>
 
-
-
-
-                <div class="container my-4">
-                    <div class="row">
-                        <!-- News 1 -->
-                        <div class="col-md-4 mb-3">
-                            <div class="card">
-                                <?php
-                                $uploadKey = 'uploadPath_news' . 1; // TODO: loop, doesnt work yet so change numbers manually per news
-                                    // Check if uploadPath is set in the session and if the file exists
-                                    if (isset($_SESSION[$uploadKey])) {
-                                        $uploadDir = substr($_SESSION[$uploadKey], 3); // entfernt ../ von Path
-                                        //echo 'Session variable is set: ' . $_SESSION['uploadPath']; // Debug line
-                                        if (file_exists($uploadDir)) {
-                                            // Display the uploaded image
-                                            echo '<img src="' . $uploadDir . '" class="card-img-top" alt="Room 1 Image">';
-                                        } else {
-                                            // Display a default if the file doesn't exist
-                                            echo '<img src="Content/Culinary.jpg" class="card-img-top" alt="Room 1 Image">';
-                                        }
-                                    } else {
-                                        // Display a default if $_SESSION['uploadPath'] is not set
-                                        echo '<img src="Content/Culinary.jpg" class="card-img-top" alt="Room 1 Image">';
-                                    }
-                                ?>
-                                <!-- If user is admin -->
-                                <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] == true): ?> <!-- TODO: if user is admin -->
-                                        <form enctype="multipart/form-data" method="post" action="logic/upload.php">
-                                            <input type="file" name="news1" id="news1"> <!-- TODO: loop, doesnt work yet so change numbers manually per news -->
-                                            <input type="submit" value="Upload" name="submit">
-                                        </form> 
-                                <?php endif; ?>
-                                <div class="card-body">
-                                    <h5 class="card-title">Local Culinary Delights: Exploring the Best Eateries Near Our Hotel</h5>
-                                <p class="card-text">Discover the gastronomic pleasures that await you just steps from our hotel. Our neighborhood is a treasure trove of culinary delights, featuring a diverse range of cuisines that cater to every palate. 
-                                From the aromatic street food stalls offering local specialties to high-end restaurants serving international delicacies, there’s something for everyone. </p>
-                                <p class="card-text">One can't-miss spot is Ristorante Tricolore renowned for its Classic Italian Pizza´s that perfectly encapsulates the local flavors. 
-                                For those looking for a more global taste, Brasserie Julio offers an exquisite fusion menu that combines elements of Spanish and Mexican. 
-                                Not only does our location offer a variety of dining options, but many of these eateries also offer exclusive discounts to our guests. 
-                                So, whether you're craving a quick bite or a luxurious dining experience, our hotel is the perfect base for your culinary adventures. 
-                                Don't forget to ask our front desk for personalized recommendations and the latest foodie tips!</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- News 2 -->
-                        <div class="col-md-4 mb-3">
-                            <div class="card">
-                            <?php
-                                $uploadKey = 'uploadPath_news' . 2; // TODO: loop, doesnt work yet so change numbers manually per news
-                                    // Check if uploadPath is set in the session and if the file exists
-                                    if (isset($_SESSION[$uploadKey])) {
-                                        $uploadDir = substr($_SESSION[$uploadKey], 3); // entfernt ../ von Path
-                                        //echo 'Session variable is set: ' . $_SESSION['uploadPath']; // Debug line
-                                        if (file_exists($uploadDir)) {
-                                            // Display the uploaded image
-                                            echo '<img src="' . $uploadDir . '" class="card-img-top" alt="Room 1 Image">';
-                                        } else {
-                                            // Display a message if the file doesn't exist
-                                            echo '<img src="Content/Spa.jpg" class="card-img-top" alt="Room 1 Image">';
-                                        }
-                                    } else {
-                                        // Display a message if $_SESSION['uploadPath'] is not set
-                                        echo '<img src="Content/Spa.jpg" class="card-img-top" alt="Room 1 Image">';
-                                    }
-                            ?>
-                                <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] == true): ?> <!-- TODO: if user is admin -->
-                                        <form enctype="multipart/form-data" method="post" action="logic/upload.php">
-                                            <input type="file" name="news2" id="news2">
-                                            <input type="submit" value="Upload" name="submit">
-                                        </form> 
-                                <?php endif; ?>
-                                <!--<img src="Content/Spa.jpg" class="card-img-top" alt="Spa">-->
-                                <div class="card-body">
-                                <h5 class="card-title">Unwind and Rejuvenate: Introducing Our New Spa and Wellness Center</h5>
-                                <p class="card-text">We are thrilled to announce the opening of our new Spa and Wellness Center, a sanctuary designed for your ultimate relaxation and rejuvenation. 
-                                Our state-of-the-art facility offers a wide range of services, from traditional massages and facials to innovative therapies that blend ancient techniques with modern wellness practices. </p>
-                                <p class="card-text">  Our skilled therapists are trained in a variety of modalities, ensuring a personalized experience that caters to your specific needs. The highlight of our spa is the Thai Massage, an exclusive treatment that promises to transport you to a state of blissful tranquility.
-                                In addition to spa services, our wellness center also features a fully equipped gym, a serene yoga studio, and a relaxing sauna. </p>
-                                <p class="card-text">  Guests can also participate in our wellness programs, which include guided meditation sessions, fitness classes, and health workshops.
-                                Whether you're seeking to de-stress, improve your fitness, or simply indulge in some pampering, our Spa and Wellness Center is your haven of tranquility. Book your appointment today and embark on a journey of wellness and relaxation.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- News 3 -->
-                        <div class="col-md-4 mb-3">
-                            <div class="card">
-                            <?php
-                                $uploadKey = 'uploadPath_news' . 3; // TODO: loop, doesnt work yet so change numbers manually per news
-                                    // Check if uploadPath is set in the session and if the file exists
-                                    if (isset($_SESSION[$uploadKey])) {
-                                        $uploadDir = substr($_SESSION[$uploadKey], 3); // entfernt ../ von Path
-                                        //echo 'Session variable is set: ' . $_SESSION['uploadPath']; // Debug line
-                                        if (file_exists($uploadDir)) {
-                                            // Display the uploaded image
-                                            echo '<img src="' . $uploadDir . '" class="card-img-top" alt="Room 1 Image">';
-                                        } else {
-                                            // Display a message if the file doesn't exist
-                                            echo '<img src="Content/Festival.jpg" class="card-img-top" alt="Room 1 Image">';
-                                        }
-                                    } else {
-                                        // Display a message if $_SESSION['uploadPath'] is not set
-                                        echo '<img src="Content/Festival.jpg" class="card-img-top" alt="Room 1 Image">';
-                                    }
-                            ?>
-                                <?php if (isset($_SESSION['admin']) && $_SESSION['admin'] == true): ?> <!-- TODO: if user is admin -->
-                                        <form enctype="multipart/form-data" method="post" action="logic/upload.php">
-                                            <input type="file" name="news3" id="news3">
-                                            <input type="submit" value="Upload" name="submit">
-                                        </form> 
-                                <?php endif; ?>
-                                <!--<img src="Content/Festival.jpg" class="card-img-top" alt="Festival">-->
-                                <div class="card-body">
-                                <h5 class="card-title">Experience Local Culture: Upcoming Events and Festivals Near Our Hotel</h5>
-                                <p class="card-text">Immerse yourself in the vibrant local culture by participating in the exciting events and festivals happening near our hotel. Our city is a hub of cultural activities, offering a rich tapestry of experiences that showcase the local heritage, arts, and community spirit.
-                                <p class="card-text">  This month, don't miss the Pumpkin Festival, a colorful celebration featuring parades, live music, and traditional dance performances. The festival is a fantastic opportunity to experience the local customs and enjoy the lively atmosphere.
-                                Art enthusiasts will be delighted by the Modern Light Arts, showcasing the works of local artists and craftsmen. It's a perfect occasion to appreciate the creativity of our community and perhaps find a unique souvenir to take home.</p>
-                                For those interested in more contemporary entertainment, the Phantom of the Opera Musical is a must-see. Featuring renowned performers and exciting new talents, it promises an evening of unforgettable entertainment.
-                                Our hotel concierge is always ready to provide you with more information on these events, assist with tickets, and offer recommendations for other local attractions. Stay with us and be at the heart of all the cultural excitement!</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </main>    
 
 

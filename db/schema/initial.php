@@ -25,6 +25,16 @@ CREATE TABLE IF NOT EXISTS userdata (
     is_admin BOOLEAN DEFAULT 0
 );
 
+-- create the 'rooms' table
+CREATE TABLE IF NOT EXISTS rooms (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    text VARCHAR(255) NOT NULL,
+    price FLOAT(2, 10) NOT NULL,
+    image_url VARCHAR(255) NOT NULL
+);
+
+
 -- test data for the 'news' table
 INSERT INTO news (title, text) VALUES
     ('News Title 1', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'),

@@ -31,7 +31,7 @@ function findAllNews () {
 function saveNews($title, $text, $imagePath) {
     global $db;
 
-    $sql = "INSERT INTO `news` (`title`, `text`, `image`) VALUES (?, ?, ?)";
+    $sql = "INSERT INTO `news` (`title`, `text`, `image_url`) VALUES (?, ?, ?)";
     $stmt = $db->prepare($sql);
     $stmt->bind_param("sss", $title, $text, $imagePath);
 
@@ -54,16 +54,28 @@ function findAllRooms() {
 function saveRoom($title, $text, $price, $image) {
     global $db;
 
-    // upload image
-    $targetDirectory = "../Content";
-    $imageName = basename($image["name"]);
-    $targetFilePath = $targetDirectory . $imageName;
-    move_uploaded_file($image["tmp_name"], $targetFilePath);
+    // Set default image URL
+    $defaultImageUrl = "Content/default_news_image.png";
 
-    // insert room
+    // Check if an image is uploaded
+    if (isset($image["name"]) && !empty($image["name"])) {
+        // Upload the image
+        $targetDirectory = "Content/";  // Adjusted relative path
+        $imageName = basename($image["name"]);
+        $targetFilePath = $targetDirectory . $imageName;
+        move_uploaded_file($image["tmp_name"], "../" . $targetFilePath);  // Adjusted path for move_uploaded_file
+
+        // Set the image URL to the uploaded image path
+        $imageUrl = $targetFilePath;
+    } else {
+        // No image uploaded, use default image URL
+        $imageUrl = $defaultImageUrl;
+    }
+
+    // Insert room
     $sql = "INSERT INTO `rooms` (`title`, `text`, `price`, `image_url`) VALUES (?, ?, ?, ?)";
     $stmt = $db->prepare($sql);
-    $stmt->bind_param("ssds", $title, $text, $price, $targetFilePath);
+    $stmt->bind_param("ssds", $title, $text, $price, $imageUrl);
     $stmt->execute();
 }
 

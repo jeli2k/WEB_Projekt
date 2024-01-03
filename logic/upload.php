@@ -20,17 +20,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['admin']) && $_SESSI
 
                 if (in_array($fileFormat, $allowedFormats)) {
                     // Move the uploaded file to the specified directory with the original filename
-                    $uploadPath = $uploadDirectory . basename($_FILES['image']['name']);
+                    $uploadPath = 'Content/' . basename($_FILES['image']['name']);
 
-                    if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadPath)) {
+                    if (move_uploaded_file($_FILES['image']['tmp_name'], '../' . $uploadPath)) {
                         // Update the image_url for the existing news article
                         $newsId = $_POST['news_id']; // Assuming you have a hidden input field for news_id in your form
                         $image_url = $uploadPath;
-
+                    
                         $sql = "UPDATE `news` SET `image_url` = ? WHERE `id` = ?";
                         $stmt = $db->prepare($sql);
                         $stmt->bind_param("si", $image_url, $newsId);
-
+                    
                         if ($stmt->execute()) {
                             // Success message
                             echo "File successfully uploaded and data updated in the database.";

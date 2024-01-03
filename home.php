@@ -115,83 +115,105 @@ require_once("data/dbaccess.php");
     <!-- News -->
                 <div class="container my-4">
                     <div class="row">
-                        <?php
-                        foreach (findAllNews() as $news) {
-                            echo '<div class="col-md-4 mb-3">';
-                            echo '<div class="card">';
+                    <?php
+                    foreach (findAllNews() as $news) {
+                        echo '<div class="col-md-4 mb-3">';
+                        echo '<div class="card">';
 
-                            // display image if available
-                            if (isset($news['image_url']) && !empty($news['image_url']) && file_exists($news['image_url'])) {
-                                echo '<img src="' . $news['image_url'] . '" class="card-img-top" alt="News Image">';
-                            } else {
-                                echo '<img src="Content/default_news_image.png" class="card-img-top" alt="Default News Image">';
-                            }
-
-                            echo '<div class="card-body">';
-                            
-                            // add news form if user is admin
-                            if (isset($_SESSION['admin']) && $_SESSION['admin'] == true) {
-                                echo '<form enctype="multipart/form-data" method="post" action="logic/upload.php">';
-                                echo '<input type="file" name="image" id="image">';
-                                echo '<input type="submit" value="Upload" name="submit">';
-                                echo '</form>';
-                            }
-                            
-                            echo '<h5 class="card-title">' . $news['title'] . '</h5>';
-                            echo '<p class="card-text">' . $news['text'] . '</p>';
-                            echo '<span>' . $news['date'] . '</span>';
-                            echo '</div>';
-                            echo '</div>';
-                            echo '</div>';
+                        // display image if available
+                        $imagePath = isset($news['image_url']) ? $news['image_url'] : '';
+                        if (!empty($imagePath) && file_exists($imagePath)) {
+                            echo '<img src="' . $imagePath . '" class="card-img-top" alt="News Image">';
+                        } else {
+                            echo '<img src="Content/default_news_image.png" class="card-img-top" alt="Default News Image">';
                         }
-                        ?>
+
+                        echo '<div class="card-body">';
+                        
+                        // add news form if user is admin
+                        if (isset($_SESSION['admin']) && $_SESSION['admin'] == true) {
+                            echo '<form enctype="multipart/form-data" method="post" action="logic/upload.php">';
+                            echo '<input type="hidden" name="news_id" value="' . $news['id'] . '">';  // Add this line
+                            echo '<input type="file" name="image" id="image">';
+                            echo '<input type="submit" value="Upload" name="submit">';
+                            echo '</form>';
+                        }
+                        
+                        echo '<h5 class="card-title">' . $news['title'] . '</h5>';
+                        echo '<p class="card-text">' . $news['text'] . '</p>';
+                        echo '<span>' . "Upload-Date: " . $news['date'] . '</span>';
+                        echo '</div>';
+                        echo '</div>';
+                        echo '</div>';
+                    }
+                    ?>
                     </div>
                 </div>
 
         <!-- ADMIN ONLY: Adding News -->
                 <?php if (isset($_SESSION['admin']) && $_SESSION['admin']): ?>
-                    <h3>Add new News</h3>
-                    <form method="post" action="data/savenews.php" enctype="multipart/form-data">
-                        <div>
-                            <label for="title">Title</label>
-                            <input type="text" name="title" id="title">
+                    <div class="container my-4">
+                        <div class="row justify-content-center">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h3 class="card-title">Add new News-Article</h3>
+                                        <form method="post" action="data/savenews.php" enctype="multipart/form-data">
+                                            <div class="mb-3">
+                                                <label for="title" class="form-label">Title</label>
+                                                <input type="text" name="title" id="title" class="form-control">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="text" class="form-label">Text</label>
+                                                <input type="text" name="text" id="text" class="form-control">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="image" class="form-label">Image</label>
+                                                <input type="file" name="image" id="image" class="form-control">
+                                            </div>
+                                            <div class="mb-3">
+                                                <input type="submit" value="Save News" class="btn btn-primary">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <label for="text">Text</label>
-                            <input type="text" name="text" id="text">
-                        </div>
-                        <div>
-                            <label for="image">Image</label>
-                            <input type="file" name="image" id="image">
-                        </div>
-                        <div>
-                            <input type="submit" value="Save News">
-                        </div>
-                    </form>
+                    </div>
 
                 <!-- ADMIN ONLY: Adding Rooms -->
-                <h3>Add new Room</h3>
-                <form method="post" action="data/saveroom.php" enctype="multipart/form-data">
-                    <div>
-                        <label for="title">Title</label>
-                        <input type="text" name="title" id="title">
+                <div class="container my-4">
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h3 class="card-title">Add new Room</h3>
+                                    <form method="post" action="data/saveroom.php" enctype="multipart/form-data">
+                                        <div class="mb-3">
+                                            <label for="title" class="form-label">Title</label>
+                                            <input type="text" name="title" id="title" class="form-control">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="text" class="form-label">Text</label>
+                                            <input type="text" name="text" id="text" class="form-control">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="price" class="form-label">Price</label>
+                                            <input type="text" name="price" id="price" class="form-control">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="image" class="form-label">Image</label>
+                                            <input type="file" name="image" id="image" class="form-control">
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="submit" value="Save Room" class="btn btn-primary">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <label for="text">Text</label>
-                        <input type="text" name="text" id="text">
-                    </div>
-                    <div>
-                        <label for="price">Price</label>
-                        <input type="text" name="price" id="price">
-                    </div>
-                    <div>
-                        <label for="image">Image</label>
-                        <input type="file" name="image" id="image">
-                    </div>
-                    <div>
-                        <input type="submit" value="Save Room">
-                    </div>
-                </form>
+                </div>
 
                 <?php endif; ?>
 

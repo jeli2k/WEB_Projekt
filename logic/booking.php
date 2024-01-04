@@ -1,65 +1,80 @@
 <?php
 session_start();
 
+include_once(__DIR__ . "/../data/dbaccess.php");
+
+// form submitted?
 if (isset($_POST['bookRoom'])) {
-    $selectedRoom = $_POST['selectedRoom'];
-    $arrivalDate = $_POST['arrivalDate'];
-    $departureDate = $_POST['departureDate'];
-    $withBreakfast = isset($_POST['withBreakfast']) ? "checked" : "notchecked";
-    $withParking = isset($_POST['withParking']) ? "checked" : "notchecked";
-    $withPets = isset($_POST['withPets']) ? "checked" : "notchecked";
+    // retrieve the selected room ID
+    $selectedRoomId = $_POST['selectedRoom'];
 
-    // Check if dates are within 100 years
-    //$maxDate = date('Y-m-d', strtotime('+100 years'));
-    //$minDate = date('Y-m-d', strtotime('-100 years'));
-    
-    // Perform date validation
-    /*
-    if ($arrivalDate < $minDate || $arrivalDate > $maxDate || $departureDate < $minDate || $departureDate > $maxDate) {
-        // Invalid date range. Please select dates within the next 100 years"
-        $datevalidation = "invalid";
-    } 
-    */
+    // retrieve the room details
+    $roomDetails = findRoom($selectedRoomId);
 
-    // bookingCounter
-    // check if the counter is not set in the session
-    if (!isset($_SESSION['counter'])) {
-        // not set = initialize it to 0
-        $_SESSION['counter'] = 0;
-    }
-    $_SESSION['counter']++;
-    $currentCounter = $_SESSION['counter'];
+    // check if the room was found
+    if ($roomDetails) {
+        $room_id = $selectedRoomId;
+        $arrivalDate = $_POST['arrivalDate'];
+        $departureDate = $_POST['departureDate'];
+        $withBreakfast = isset($_POST['withBreakfast']) ? 1 : 0; // Store as 1 for true, 0 for false
+        $withParking = isset($_POST['withParking']) ? 1 : 0;
+        $withPets = isset($_POST['withPets']) ? 1 : 0;
 
-    if (strtotime($departureDate) <= strtotime($arrivalDate)) {
-        // Departure date must be later than arrival date
-        $datevalidation = "invalid";
-        setcookie("datevalidation", $datevalidation, time() + (86400 * 30), "/");
-        // safe room + dates so they dont have to be entered again
-        $_SESSION["selectedRoom"] = $selectedRoom;
-        $_SESSION["arrivalDate"] = $arrivalDate;
-        $_SESSION["departureDate"] = $departureDate;
-        $_SESSION["withBreakfast"] = $withBreakfast;
-        $_SESSION["withParking"] = $withParking;
-        $_SESSION["withPets"] = $withPets;
-        header("Location: ../booking.php");
-        exit();
+        // fetch user ID
+        $userEmail = $_SESSION['email'];
+        $userDetails = findUserByEmail($userEmail);
+
+        if ($userDetails) {
+            $user_id = $userDetails['id'];
+            // date validation
+                    if (strtotime($departureDate) <= strtotime($arrivalDate)) {
+                        // departure date must be later than arrival date
+                        $datevalidation = "invalid";
+                        setcookie("datevalidation", $datevalidation, time() + (86400 * 30), "/");
+                        // save room + dates so they don't have to be entered again
+                        $_SESSION["selectedRoom"] = $selectedRoom;
+                        $_SESSION["arrivalDate"] = $arrivalDate;
+                        $_SESSION["departureDate"] = $departureDate;
+                        $_SESSION["withBreakfast"] = $withBreakfast;
+                        $_SESSION["withParking"] = $withParking;
+                        $_SESSION["withPets"] = $withPets;
+
+                        header("Location: ../booking.php");
+                        exit();
+                    } else {
+                        // save booking details
+                        $bookingId = saveBooking($room_id, $arrivalDate, $departureDate, $withBreakfast, $withParking, $withPets, $user_id);
+
+                        // save booking details in the session for confirmation.php
+                        $_SESSION['bookingDetails'] = [
+                            'bookingId' => $bookingId,
+                            'selectedRoom' => $selectedRoom,
+                            'arrivalDate' => $arrivalDate,
+                            'departureDate' => $departureDate,
+                            'withBreakfast' => $withBreakfast,
+                            'withParking' => $withParking,
+                            'withPets' => $withPets,
+                            'status' => 'new', // Initial status is set to "new"
+                        ];
+
+                        // demo: Session
+                        $datevalidation = "valid";
+
+                        header("Location: ../confirmation.php");
+                        exit();
+                    }
+        } else {
+            echo "Error: User details not found.";
+            exit();
+        }
+
+        
     } else {
-        // Store booking details in session or database (TODO)
-        // demo: Session
-        $datevalidation = "valid";
-        $_SESSION['bookingDetails' . $currentCounter] = [
-            'selectedRoom' => $selectedRoom,
-            'arrivalDate' => $arrivalDate,
-            'departureDate' => $departureDate,
-            'withBreakfast' => $withBreakfast,
-            'withParking' => $withParking,
-            'withPets' => $withPets,
-            'status' => 'new', // Initial status is set to "new"
-        ];
-
-        echo "$selectedRoom booked successfully!"; // Maybe implement Message
-        header("Location: ../confirmation.php");
+        echo "Error: Room details not found.";
+        exit();
     }
+} else {
+    header("Location: ../booking.php");
+    exit();
 }
-header("Location: ../confirmation.php");
 ?>

@@ -1,7 +1,18 @@
+<?php
+require_once("data/dbaccess.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <?php include 'includes/head.php'; ?>
+    <?php
+        // Check if the user is not logged in
+        if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] !== true) {
+            header("Location: login.php");
+            exit();
+        }
+    ?>
     <title>Booking Confirmation</title>
     <style>
         body {
@@ -15,6 +26,7 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <!-- header -->
@@ -31,58 +43,47 @@
 
     <main>
         <?php
-            // get the current counter value
-            $currentCounter = $_SESSION['counter'];
-            // create the key for the current bookingDetails based on the counter
-            $bookingDetailsKey = 'bookingDetails' . $currentCounter;
+        // check if booking details are available in the session
+        if (isset($_SESSION['bookingDetails'])) {
+            $bookingId = $_SESSION['bookingDetails']['bookingId'];
 
+            // Additional code to retrieve booking details from the database
+            $bookingInfo = getBookingInfo($bookingId); // retrieve booking info by ID
 
-            // check if booking details are available in the session
-            if (isset($_SESSION[$bookingDetailsKey])) {         // Maybe auf Profile page einfügen (Show Booking Details?)
-                $bookingDetails = $_SESSION[$bookingDetailsKey];
-                
-                // clear the booking details from the session to avoid displaying them again on refresh
-                // unset($_SESSION['bookingDetails']);
+            // Display booking information from the database
+            if ($bookingInfo) {
+                echo '<section class="container mt-5">';
+                echo '<h2>Booking Confirmation</h2>';
+                echo '<p>Thank you for your reservation! Your booking details:</p>';
+                echo '<ul>';
+                echo '<li><strong>Room:</strong> ' . $bookingInfo['room_title'] . '</li>';
+                echo '<li><strong>Arrival Date:</strong> ' . $bookingInfo['arrival_date'] . '</li>';
+                echo '<li><strong>Departure Date:</strong> ' . $bookingInfo['departure_date'] . '</li>';
+                echo '<li><strong>With Breakfast:</strong> ' . ($bookingInfo['with_breakfast'] ? 'Yes' : 'No') . '</li>';
+                echo '<li><strong>With Parking:</strong> ' . ($bookingInfo['with_parking'] ? 'Yes' : 'No') . '</li>';
+                echo '<li><strong>With Pets:</strong> ' . ($bookingInfo['with_pets'] ? 'Yes' : 'No') . '</li>';
+                echo '<li><strong>Status:</strong> ' . $bookingInfo['status'] . '</li>';
+                echo '</ul>';
+                echo '</section>';
             } else {
-                // redirect to the home page or other page if no booking details are found
+                // Handle the case where no booking information is found
+                echo '<section class="container mt-5">';
+                echo '<p>No booking information found.</ap>';
+                echo '</section>';
             }
+
+            // Clear the booking ID from the session to avoid displaying them again on refresh
+            unset($_SESSION['bookingId']);
+        } else {
+            // redirect to the home page or other page if no booking details are found
+            header("Location: home.php");
+            exit();
+        }
         ?>
-        <section class="container mt-5">
-            <h2>Booking Confirmation</h2>
-            <p>Thank you for your reservation! Your booking details:</p>
-            
-            <?php
-            // convert "checked/notchecked" to "Yes/No" for better display
-            if (isset($_SESSION['withBreakfast']) && $_SESSION['withBreakfast'] === "checked") {
-                $breakfast = "Yes";
-            } else {
-                $breakfast = "No";
-            }
-            if (isset($_SESSION['withParking']) && $_SESSION['withParking'] === "checked") {
-                $parking = "Yes";
-            } else {
-                $parking = "No";
-            }
-            if (isset($_SESSION['withPets']) && $_SESSION['withPets'] === "checked") {
-                $pets = "Yes";
-            } else {
-                $pets = "No";
-            }
-            ?>
-            <ul>
-                <li><strong>Room:</strong> <?php echo $bookingDetails['selectedRoom']; ?></li>
-                <li><strong>Arrival Date:</strong> <?php echo $bookingDetails['arrivalDate']; ?></li>
-                <li><strong>Departure Date:</strong> <?php echo $bookingDetails['departureDate']; ?></li>
-                <li><strong>With Breakfast:</strong> <?php echo $breakfast ?></li>
-                <li><strong>With Parking:</strong> <?php echo $parking; ?></li>
-                <li><strong>With Pets:</strong> <?php echo $pets; ?></li>
-                <li><strong>Status:</strong> <?php echo $bookingDetails['status']; ?></li>
-            </ul>
-        </section>
-            
     </main>
 
     <?php include 'components/footer.php'; ?>
     <?php include 'includes/scripts.php'; ?>
 </body>
+
 </html>

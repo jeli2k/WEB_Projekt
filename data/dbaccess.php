@@ -158,4 +158,81 @@ function findAdminLogin($email) {
 }
 
 
+///// for booking
+function findRoom($roomId) {
+    global $db;
+
+    $sql = "SELECT * FROM `rooms` WHERE `id` = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bind_param("i", $roomId); // i = integer
+
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    return $result->fetch_assoc();
+}
+
+function saveBooking($room_id, $arrival_date, $departure_date, $with_breakfast, $with_parking, $with_pets, $user_id) {
+    global $db;
+
+    // Insert booking into the "bookings" table
+    $sql = "INSERT INTO `bookings` (`user_id`, `room_id`, `arrival_date`, `departure_date`, `with_breakfast`, `with_parking`, `with_pets`) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $db->prepare($sql);
+    $stmt->bind_param("iissssi", $user_id, $room_id, $arrival_date, $departure_date, $with_breakfast, $with_parking, $with_pets);
+    $stmt->execute();
+    // get the last inserted ID
+    $lastInsertId = mysqli_insert_id($db);
+
+    return $lastInsertId;
+}
+
+
+
+
+function getBookingInfo($bookingId) {
+    global $db;
+
+    $sql = "SELECT b.id, b.room_id, b.arrival_date, b.departure_date, b.with_breakfast, b.with_parking, b.with_pets, b.status, r.title as room_title
+            FROM bookings b
+            INNER JOIN rooms r ON b.room_id = r.id
+            WHERE b.id = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bind_param("i", $bookingId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        return $result->fetch_assoc();
+    } else {
+        return false;
+    }
+}
+
+function getUserBookings($userEmail) {
+    global $db;
+
+    $sql = "SELECT b.id, b.room_id, b.arrival_date, b.departure_date, b.with_breakfast, b.with_parking, b.with_pets, b.status, r.title as room_title
+            FROM bookings b
+            INNER JOIN rooms r ON b.room_id = r.id
+            INNER JOIN userdata u ON b.user_id = u.id
+            WHERE u.email = ?";
+
+    $stmt = $db->prepare($sql);
+    $stmt->bind_param("s", $userEmail);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    $bookings = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $bookings[] = $row;
+    }
+
+    return $bookings;
+}
+
+
+
+
 ?>

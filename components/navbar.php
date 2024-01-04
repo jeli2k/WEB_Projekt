@@ -51,27 +51,32 @@
         <?php if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true): ?>
           <!-- Reservations Dropdown -->
           <div class="dropdown">
-              <button class="btn btn-light dropdown-toggle" type="button" id="reservationsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="btn btn-light dropdown-toggle" type="button" id="reservationsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                 Reservations
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="reservationsDropdown">
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="reservationsDropdown">
                 <?php
-                // Use PHP to generate reservations from the session (if any)
-                // important: before accessing $_SESSION variable/array, always introduce with this:
-                // if (isset($_SESSION['bookingDetails'])) {  $bookingDetails = $_SESSION['bookingDetails'];  }
-                if (isset($_SESSION['counter'])) {
-                  for ($i = 1; $i <= $_SESSION['counter']; $i++) {
-                      $bookingDetailsKey = 'bookingDetails' . $i;
-          
-                      if (isset($_SESSION[$bookingDetailsKey])) {
-                          $bookingDetails = $_SESSION[$bookingDetailsKey];
-                          // TODO: swap href to different confirmation or make confirmation.php interactive (confirmation shows info of the clicked reservation)
-                          echo '<li><a a href="confirmation.php"  class="dropdown-item">' . $bookingDetails['selectedRoom'] . '</a></li>'; 
-                        }
-                    }
+                // fetch user bookings from the database
+                $userEmail = $_SESSION['email'];
+                $userBookings = getUserBookings($userEmail);
+
+                // compare two bookings based on their date
+                function compareBookings($booking1, $booking2) {
+                  $date1 = strtotime($booking1['arrival_date']);
+                  $date2 = strtotime($booking2['arrival_date']);
+
+                  return $date1 - $date2;
+                }
+
+                // sort the user bookings based on date
+                usort($userBookings, 'compareBookings');
+
+                // display user bookings in the dropdown
+                foreach ($userBookings as $booking) {
+                    echo '<li><a href="details.php?bookingId=' . $booking['id'] . '" class="dropdown-item">' . $booking['room_title'] . '</a></li>';
                 }
                 ?>
-              </ul>
+            </ul>
           </div>
           <!-- Profile Link -->
           <li class="nav-item">

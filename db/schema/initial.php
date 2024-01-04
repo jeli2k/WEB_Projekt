@@ -30,9 +30,24 @@ CREATE TABLE IF NOT EXISTS userdata (
 CREATE TABLE IF NOT EXISTS rooms (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
-    text VARCHAR(255) NOT NULL,
+    text TEXT NOT NULL,
     price FLOAT(10, 2) NOT NULL,
     image_url VARCHAR(255) NOT NULL
+);
+
+-- create the "bookings" table
+CREATE TABLE IF NOT EXISTS bookings (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    room_id INT NOT NULL,
+    arrival_date DATE NOT NULL,
+    departure_date DATE NOT NULL,
+    with_breakfast BOOLEAN DEFAULT 0,
+    with_parking BOOLEAN DEFAULT 0,
+    with_pets BOOLEAN DEFAULT 0,
+    status VARCHAR(50) NOT NULL DEFAULT 'new',
+    user_id INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES userdata(id),
+    FOREIGN KEY (room_id) REFERENCES rooms(id)
 );
 
 

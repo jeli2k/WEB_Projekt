@@ -1,6 +1,21 @@
 <?php
 session_start();
 
+// unset the datevalidation cookie (for when the form is sucessfully submitted)
+setcookie("datevalidation", "", time() - 3600, "/");
+if (isset($_SESSION['bookingConfirmed']) && $_SESSION['bookingConfirmed'] === true) {
+    // Unset session variables for dates and other booking details
+    unset($_SESSION["arrivalDate"]);
+    unset($_SESSION["departureDate"]);
+    unset($_SESSION["withBreakfast"]);
+    unset($_SESSION["withParking"]);
+    unset($_SESSION["withPets"]);
+    unset($_SESSION["selectedRoom"]);
+
+    // Reset the confirmation flag to avoid unsetting on subsequent visits
+    $_SESSION['bookingConfirmed'] = false;
+}
+
 include_once(__DIR__ . "/../data/dbaccess.php");
 
 // form submitted?
@@ -31,8 +46,9 @@ if (isset($_POST['bookRoom'])) {
                         // departure date must be later than arrival date
                         $datevalidation = "invalid";
                         setcookie("datevalidation", $datevalidation, time() + (86400 * 30), "/");
+                        // Retrieve the previously selected room from the session
+                        $_SESSION["selectedRoom"] = isset($_SESSION["selectedRoom"]) ? $_SESSION["selectedRoom"] : '';
                         // save room + dates so they don't have to be entered again
-                        $_SESSION["selectedRoom"] = $selectedRoom;
                         $_SESSION["arrivalDate"] = $arrivalDate;
                         $_SESSION["departureDate"] = $departureDate;
                         $_SESSION["withBreakfast"] = $withBreakfast;
@@ -48,7 +64,7 @@ if (isset($_POST['bookRoom'])) {
                         // save booking details in the session for confirmation.php
                         $_SESSION['bookingDetails'] = [
                             'bookingId' => $bookingId,
-                            'selectedRoom' => $selectedRoom,
+                            'selectedRoom' => $_POST["selectedRoom"],
                             'arrivalDate' => $arrivalDate,
                             'departureDate' => $departureDate,
                             'withBreakfast' => $withBreakfast,
@@ -59,6 +75,12 @@ if (isset($_POST['bookRoom'])) {
 
                         // demo: Session
                         $datevalidation = "valid";
+                        // Unset session variables for dates after successful booking
+                        unset($_SESSION["arrivalDate"]);
+                        unset($_SESSION["departureDate"]);
+                        unset($_SESSION["withBreakfast"]);
+                        unset($_SESSION["withParking"]);
+                        unset($_SESSION["withPets"]);
 
                         header("Location: ../confirmation.php");
                         exit();

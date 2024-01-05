@@ -1,6 +1,5 @@
 <?php
 require_once("data/dbaccess.php");
-
 ?>
 
 <!DOCTYPE html>
@@ -8,8 +7,16 @@ require_once("data/dbaccess.php");
     <head>
         <?php include 'includes/head.php'; ?>
         <?php
-        
+        // clear datevalidation cookie
+        setcookie("datevalidation", "", time() - 3600, "/");
 
+        // unset the session variables related to booking when a new room is selected
+        unset($_SESSION["arrivalDate"]);
+        unset($_SESSION["departureDate"]);
+        unset($_SESSION["withBreakfast"]);
+        unset($_SESSION["withParking"]);
+        unset($_SESSION["withPets"]);
+        unset($_SESSION["selectedRoom"]);
         // check if the user is logged in
         $loggedIn = false;
         if (isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true) {
@@ -24,9 +31,7 @@ require_once("data/dbaccess.php");
                 }
             }
         }
-
         ?>
-        
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
         <link href="override.css" rel="stylesheet">
         <title>Home</title>

@@ -12,6 +12,8 @@ require_once("data/dbaccess.php");
             header("Location: login.php");
             exit();
         }
+        // Set a flag indicating that the user has confirmed the booking
+        $_SESSION['bookingConfirmed'] = true;
     ?>
     <title>Booking Confirmation</title>
     <style>

@@ -39,21 +39,21 @@ require_once("data/dbaccess.php");
                         <div class="card border-0 shadow">
                             <div class="card-body d-flex flex-column align-items-center">
                             <?php
-                            // Retrieve the selected room from the URL (or previously saved room)
-                            $selectedRoom = isset($_GET['room']) ? $_GET['room'] : (isset($_SESSION['selectedRoom']) ? $_SESSION['selectedRoom'] : '');
-
                             // Check if a room is selected in the form submission
                             if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['selectedRoom'])) {
                                 $selectedRoom = $_POST['selectedRoom'];
                                 // Save the selected room in the session immediately after form submission
                                 $_SESSION['selectedRoom'] = $selectedRoom;
+                            } elseif (isset($_GET['room']) && !isset($_POST['bookRoom'])) {
+                                // Set the selected room to the room from the URL only if the form is not submitted
+                                $_SESSION['selectedRoom'] = $_GET['room'];
                             }
 
-                            // Save the selected room in the session anyways (important)
-                            $_SESSION['selectedRoom'] = $selectedRoom;
+                            // Retrieve the selected room from the session
+                            $selectedRoom = isset($_SESSION['selectedRoom']) ? $_SESSION['selectedRoom'] : '';
 
                             // Fetch rooms from the database
-                            $rooms = findAllRooms();
+                            $roomsFromDB = findAllRooms();
 
                             // Debugging output to trace the value of $selectedRoom
                             // echo "selectedRoom (before validation): $selectedRoom<br>";

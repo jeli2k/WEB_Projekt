@@ -58,9 +58,10 @@ if (isset($_POST['bookRoom'])) {
                         header("Location: ../booking.php");
                         exit();
                     } else {
+                        // Calculate the total price based on selected options
+                        $totalPrice = $_POST['currentPrice'];
                         // save booking details
-                        $bookingId = saveBooking($room_id, $arrivalDate, $departureDate, $withBreakfast, $withParking, $withPets, $user_id);
-
+                        $bookingId = saveBooking($room_id, $arrivalDate, $departureDate, $withBreakfast, $withParking, $withPets, $user_id, $totalPrice);
                         // save booking details in the session for confirmation.php
                         $_SESSION['bookingDetails'] = [
                             'bookingId' => $bookingId,
@@ -70,6 +71,7 @@ if (isset($_POST['bookRoom'])) {
                             'withBreakfast' => $withBreakfast,
                             'withParking' => $withParking,
                             'withPets' => $withPets,
+                            'totalPrice' => $totalPrice,
                             'status' => 'new', // Initial status is set to "new"
                         ];
 

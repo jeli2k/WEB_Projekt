@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS bookings (
     with_pets BOOLEAN DEFAULT 0,
     status VARCHAR(50) NOT NULL DEFAULT 'new',
     user_id INT NOT NULL,
+    total_price DECIMAL(10, 2) DEFAULT 0,
     FOREIGN KEY (user_id) REFERENCES userdata(id),
     FOREIGN KEY (room_id) REFERENCES rooms(id)
 );
@@ -95,4 +96,4 @@ INSERT INTO rooms (title, text, price, image_url) VALUES
 
 -- admin data for the 'userdata' table (TODO: maybe dont save admin login here?)
 INSERT INTO userdata (firstname, lastname, email, hashedPassword, city, street, zipCode, is_admin) VALUES
-    ('admin', 'admin', 'admin', '$2y$10$pi6h3bVdRIk330RxCOwbDuVEwuRuUwX0XQ4Yg4AV.JbkYoF84CJO6', 'City', 'Street', 1234, 1);
+    ('admin', 'admin', 'admin@admin.com', '$2y$10$pi6h3bVdRIk330RxCOwbDuVEwuRuUwX0XQ4Yg4AV.JbkYoF84CJO6', 'City', 'Street', 1234, 1);

@@ -93,6 +93,7 @@ require_once("data/dbaccess.php");
                 echo '<li><strong>With Parking:</strong> ' . ($bookingInfo['with_parking'] ? 'Yes' : 'No') . '</li>';
                 echo '<li><strong>With Pets:</strong> ' . ($bookingInfo['with_pets'] ? 'Yes' : 'No') . '</li>';
                 echo '<li><strong>Status:</strong> ' . $bookingInfo['status'] . '</li>';
+                echo '<li><strong>Total Price:</strong> ' . $bookingInfo['total_price'] . ' €</li>';
                 echo '</ul>';
                 echo '</div>';
                 echo '</div>';

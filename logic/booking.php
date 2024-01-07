@@ -46,16 +46,18 @@ if (isset($_POST['bookRoom'])) {
                         // departure date must be later than arrival date
                         $datevalidation = "invalid";
                         setcookie("datevalidation", $datevalidation, time() + (86400 * 30), "/");
-                        // Retrieve the previously selected room from the session
-                        $_SESSION["selectedRoom"] = isset($_SESSION["selectedRoom"]) ? $_SESSION["selectedRoom"] : '';
+                        // Retrieve the previously selected room from the session or URL parameter
+                        $selectedRoomId = isset($_SESSION["selectedRoom"]) ? $_SESSION["selectedRoom"] : '';
+                        $selectedRoomId = isset($_GET['roomId']) ? $_GET['roomId'] : $selectedRoomId;
                         // save room + dates so they don't have to be entered again
+                        $_SESSION["selectedRoom"] = $selectedRoomId;
                         $_SESSION["arrivalDate"] = $arrivalDate;
                         $_SESSION["departureDate"] = $departureDate;
                         $_SESSION["withBreakfast"] = $withBreakfast;
                         $_SESSION["withParking"] = $withParking;
                         $_SESSION["withPets"] = $withPets;
 
-                        header("Location: ../booking.php");
+                        header("Location: ../booking.php?roomId=$selectedRoomId");
                         exit();
                     } else {
                         // Calculate the total price based on selected options
@@ -65,7 +67,7 @@ if (isset($_POST['bookRoom'])) {
                         // save booking details in the session for confirmation.php
                         $_SESSION['bookingDetails'] = [
                             'bookingId' => $bookingId,
-                            'selectedRoom' => $_POST["selectedRoom"],
+                            'selectedRoom' => $selectedRoomId,
                             'arrivalDate' => $arrivalDate,
                             'departureDate' => $departureDate,
                             'withBreakfast' => $withBreakfast,

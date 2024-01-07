@@ -1,3 +1,7 @@
+<?php
+require_once("data/dbaccess.php");
+?>
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -14,11 +18,9 @@
     <title>Impressum</title>
 </head>
 <body>
-    <header>
-        <!-- Header content -->
-    </header>
-
-    <?php include 'components/navbar.php'; ?>
+    <nav>
+       <?php include 'components/navbar.php'; ?> 
+    </nav>
 
     <main class="container my-4">
         <div class="row">
@@ -51,8 +53,9 @@
             </div>
         </div>
     </main>
-
-    <?php include 'components/footer.php'; ?>
+    <footer>
+       <?php include 'components/footer.php'; ?> 
+    </footer>
     <?php include 'includes/scripts.php'; ?>
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

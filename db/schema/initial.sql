@@ -45,9 +45,12 @@ CREATE TABLE IF NOT EXISTS bookings (
     with_parking BOOLEAN DEFAULT 0,
     with_pets BOOLEAN DEFAULT 0,
     status VARCHAR(50) NOT NULL DEFAULT 'new',
-    user_id INT NOT NULL,
+    user_id INT,
+    user_firstname VARCHAR(255) NOT NULL,
+    user_lastname VARCHAR(255) NOT NULL,
+    user_email VARCHAR(255) NOT NULL,
     total_price DECIMAL(10, 2) DEFAULT 0,
-    FOREIGN KEY (user_id) REFERENCES userdata(id),
+    FOREIGN KEY (user_id) REFERENCES userdata(id) ON DELETE SET NULL, -- ON DELETE CASCADE
     FOREIGN KEY (room_id) REFERENCES rooms(id)
 );
 

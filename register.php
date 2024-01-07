@@ -6,11 +6,9 @@
     <title>Register</title>
 </head>
 <body>
-    <header>
-        <!-- Header content -->
-    </header>
-
-    <?php include 'components/navbar.php'; ?>
+    <nav>
+      <?php include 'components/navbar.php'; ?>
+    </nav>
 
     <main>   
       <div class="container mt-3 pt-5">
@@ -143,8 +141,9 @@
         </form>
       </div>
     </main>
-
-    <?php include 'components/footer.php'; ?>
+    <footer>
+      <?php include 'components/footer.php'; ?>
+    </footer>
     <?php include 'includes/scripts.php'; ?>
 </body>
 </html>

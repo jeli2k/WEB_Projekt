@@ -60,17 +60,29 @@ require_once("data/dbaccess.php");
             height: 240px; /* Adjust the height as needed */
             object-fit: cover; /* Maintain aspect ratio and cover the entire container */
             }
+
+            body {
+                background: linear-gradient(
+                    to bottom, 
+                    rgba(240, 240, 240, 0.7) 0%, 
+                    rgba(204, 204, 204, 0.9) 50%, 
+                    rgba(255, 255, 255, 1) 100%
+                ), 
+                url('Content/background.jpg');
+                background-size: cover;
+                background-position: top center;
+                background-repeat: no-repeat;
+            }
+
         </style>
     </head>
 
     <body>
-        <header>
-            
-        </header>
-
+        <nav>
         <?php
             include 'components/navbar.php';
         ?>
+        </nav>
     
         <!-- Navbar nicht responsive für Handy, und echo muss noch mit html code -->
                 <div class="row">
@@ -105,7 +117,7 @@ require_once("data/dbaccess.php");
                                 echo '<h5 class="card-title">' . $room['title'] . '</h5>';
                                 echo '<p class="card-text">' . $room['text'] . '</p>';
                                 echo '<p class="card-text">Price: $' . number_format($room['price'], 2) . '</p>';
-                                echo '<a href="booking.php?room=' . urlencode($room['title']) . '" class="btn btn-primary">Book Now</a>';
+                                echo '<a href="booking.php?room=' . urlencode($room['title']) . '&roomId=' . urlencode($room['id']) . '" class="btn btn-primary">Book Now</a>';
                                 echo '</div>';
                                 echo '</div>';
                                 echo '</div>';
@@ -118,52 +130,89 @@ require_once("data/dbaccess.php");
                 <?php endif; ?>
 <!-- If user is not logged in, display news -->
     <!-- News -->
-                <div class="container my-4">
-                    <div class="row">
-                    <?php
-                    foreach (findAllNews() as $news) {
-                        echo '<div class="col-md-4 mb-3">';
-                        echo '<div class="card">';
+                <section>
+                    <div class="container my-4">
+                        <div class="row">
+                        <?php
+                        foreach (findAllNews() as $news) {
+                            echo '<div class="col-md-4 mb-3">';
+                            echo '<div class="card">';
 
-                        // display image if available
-                        $imagePath = isset($news['image_url']) ? $news['image_url'] : '';
-                        if (!empty($imagePath) && file_exists($imagePath)) {
-                            echo '<img src="' . $imagePath . '" class="card-img-top" alt="News Image">';
-                        } else {
-                            echo '<img src="Content/default_news_image.png" class="card-img-top" alt="Default News Image">';
-                        }
+                            // display image if available
+                            $imagePath = isset($news['image_url']) ? $news['image_url'] : '';
+                            $imageName = pathinfo($imagePath, PATHINFO_FILENAME);
+                            if (!empty($imagePath) && file_exists($imagePath)) {
+                                echo '<img src="' . $imagePath . '" class="card-img-top" alt="' . $imageName . '">';
+                            } else {
+                                echo '<img src="Content/default_news_image.png" class="card-img-top" alt="Default News Image">';
+                            }
 
-                        echo '<div class="card-body">';
-                        
-                        // add news form if user is admin
-                        if (isset($_SESSION['admin']) && $_SESSION['admin'] == true) {
-                            echo '<form enctype="multipart/form-data" method="post" action="logic/upload.php">';
-                            echo '<input type="hidden" name="news_id" value="' . $news['id'] . '">';  // Add this line
-                            echo '<input type="file" name="image" id="image">';
-                            echo '<input type="submit" value="Upload" name="submit">';
-                            echo '</form>';
+                            echo '<div class="card-body">';
+                            
+                            // add news form if user is admin
+                            if (isset($_SESSION['admin']) && $_SESSION['admin'] == true) {
+                                echo '<form enctype="multipart/form-data" method="post" action="logic/upload.php">';
+                                echo '<input type="hidden" name="news_id" value="' . $news['id'] . '">';  // Add this line
+                                echo '<input type="file" name="image" id="image">';
+                                echo '<input type="submit" value="Upload" name="submit">';
+                                echo '</form>';
+                            }
+                            
+                            echo '<h5 class="card-title">' . $news['title'] . '</h5>';
+                            echo '<p class="card-text">' . $news['text'] . '</p>';
+                            echo '<span>' . "Upload-Date: " . $news['date'] . '</span>';
+                            echo '</div>';
+                            echo '</div>';
+                            echo '</div>';
                         }
-                        
-                        echo '<h5 class="card-title">' . $news['title'] . '</h5>';
-                        echo '<p class="card-text">' . $news['text'] . '</p>';
-                        echo '<span>' . "Upload-Date: " . $news['date'] . '</span>';
-                        echo '</div>';
-                        echo '</div>';
-                        echo '</div>';
-                    }
-                    ?>
+                        ?>
+                        </div>
                     </div>
-                </div>
+                </section>
+                
 
         <!-- ADMIN ONLY: Adding News -->
                 <?php if (isset($_SESSION['admin']) && $_SESSION['admin']): ?>
+                    <section>
+                        <div class="container my-4">
+                            <div class="row justify-content-center">
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h3 class="card-title">Add new News-Article</h3>
+                                            <form method="post" action="data/savenews.php" enctype="multipart/form-data">
+                                                <div class="mb-3">
+                                                    <label for="title" class="form-label">Title</label>
+                                                    <input type="text" name="title" id="title" class="form-control">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="text" class="form-label">Text</label>
+                                                    <input type="text" name="text" id="text" class="form-control">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="image" class="form-label">Image</label>
+                                                    <input type="file" name="image" id="image" class="form-control">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <input type="submit" value="Save News" class="btn btn-primary">
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                    </section>
+
+                <!-- ADMIN ONLY: Adding Rooms -->
+                <section>
                     <div class="container my-4">
                         <div class="row justify-content-center">
                             <div class="col-md-6">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h3 class="card-title">Add new News-Article</h3>
-                                        <form method="post" action="data/savenews.php" enctype="multipart/form-data">
+                                        <h3 class="card-title">Add new Room</h3>
+                                        <form method="post" action="data/saveroom.php" enctype="multipart/form-data">
                                             <div class="mb-3">
                                                 <label for="title" class="form-label">Title</label>
                                                 <input type="text" name="title" id="title" class="form-control">
@@ -173,11 +222,15 @@ require_once("data/dbaccess.php");
                                                 <input type="text" name="text" id="text" class="form-control">
                                             </div>
                                             <div class="mb-3">
+                                                <label for="price" class="form-label">Price</label>
+                                                <input type="text" name="price" id="price" class="form-control">
+                                            </div>
+                                            <div class="mb-3">
                                                 <label for="image" class="form-label">Image</label>
                                                 <input type="file" name="image" id="image" class="form-control">
                                             </div>
                                             <div class="mb-3">
-                                                <input type="submit" value="Save News" class="btn btn-primary">
+                                                <input type="submit" value="Save Room" class="btn btn-primary">
                                             </div>
                                         </form>
                                     </div>
@@ -185,47 +238,14 @@ require_once("data/dbaccess.php");
                             </div>
                         </div>
                     </div>
-
-                <!-- ADMIN ONLY: Adding Rooms -->
-                <div class="container my-4">
-                    <div class="row justify-content-center">
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h3 class="card-title">Add new Room</h3>
-                                    <form method="post" action="data/saveroom.php" enctype="multipart/form-data">
-                                        <div class="mb-3">
-                                            <label for="title" class="form-label">Title</label>
-                                            <input type="text" name="title" id="title" class="form-control">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="text" class="form-label">Text</label>
-                                            <input type="text" name="text" id="text" class="form-control">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="price" class="form-label">Price</label>
-                                            <input type="text" name="price" id="price" class="form-control">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="image" class="form-label">Image</label>
-                                            <input type="file" name="image" id="image" class="form-control">
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="submit" value="Save Room" class="btn btn-primary">
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                </section>
                 <?php endif; ?>
 
             </main>    
 
-
-        <?php include 'components/footer.php'; ?>
+        <footer>
+           <?php include 'components/footer.php'; ?> 
+        </footer>
         <?php include 'includes/scripts.php'; ?>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

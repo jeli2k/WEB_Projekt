@@ -30,11 +30,9 @@ require_once("data/dbaccess.php");
 </head>
 
 <body>
-    <header>
-        <!-- header -->
-    </header>
-
-    <?php include 'components/navbar.php'; ?>
+    <nav>
+       <?php include 'components/navbar.php'; ?> 
+    </nav>
     <?php
     // check if user is logged in
     if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] !== true) {
@@ -84,8 +82,9 @@ require_once("data/dbaccess.php");
         }
         ?>
     </main>
-
-    <?php include 'components/footer.php'; ?>
+    <footer>
+      <?php include 'components/footer.php'; ?>  
+    </footer>
     <?php include 'includes/scripts.php'; ?>
 </body>
 

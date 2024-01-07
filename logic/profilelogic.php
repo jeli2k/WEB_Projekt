@@ -34,21 +34,6 @@ $_SESSION['userData'] = [
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    /*
-    if (isset($_SESSION['admin']) && $_SESSION['admin'] === true) {
-        // set profile data to admin
-        $_SESSION['userData'] = [
-            'name' => "admin",
-            'lastname' => "admin",
-            'email' => "admin@admin.com",
-            'password' => "admin",
-            'city' => "admin",
-            'street' => "admin",
-            'zipCode' => "1234"
-        ];
-    }
-    */
-
     $name = htmlspecialchars($_POST['name']);
     $lastname = htmlspecialchars($_POST['lastname']);
     $email = htmlspecialchars($_POST['email']);
@@ -84,7 +69,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (empty($zipCode)) {
         $errors['zipCode'] = "Zip code is required";
     }
-    
+
+    $successMessage = '';
     if (count($errors) === 0) {
         // hash the new password if provide
         if (!empty($newPassword)) {
@@ -104,6 +90,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_SESSION['userData']['city'] = $city;
         $_SESSION['userData']['street'] = $street;
         $_SESSION['userData']['zipCode'] = $zipCode;
+
+        $successMessage = "Change successful!";
         
     }
 

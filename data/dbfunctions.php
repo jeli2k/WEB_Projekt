@@ -248,6 +248,45 @@ function calculateTotalPrice($basePrice, $withBreakfast, $withParking, $withPets
     return $totalPrice;
 }
 
+function findAllBookingsWithRoomNames() {
+    global $db;
 
+    $sql = "SELECT bookings.*, userdata.firstname, userdata.lastname, userdata.email, rooms.title AS room_title 
+            FROM bookings 
+            JOIN userdata ON bookings.user_id = userdata.id
+            JOIN rooms ON bookings.room_id = rooms.id";
+    $result = $db->query($sql);
+
+    $bookings = [];
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $bookings[] = $row;
+        }
+    }
+
+    return $bookings;
+}
+
+function findBookingsByUserId($userId) {
+    global $db;
+
+    $sql = "SELECT bookings.*, rooms.title AS room_title, userdata.firstname AS user_firstname, userdata.lastname AS user_lastname, userdata.email AS user_email
+            FROM bookings 
+            JOIN rooms ON bookings.room_id = rooms.id
+            JOIN userdata ON bookings.user_id = userdata.id
+            WHERE bookings.user_id = $userId";
+
+    $result = $db->query($sql);
+
+    $bookings = [];
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $bookings[] = $row;
+        }
+    }
+
+    return $bookings;
+}
 
 ?>
+

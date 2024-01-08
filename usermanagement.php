@@ -37,9 +37,6 @@ $users = findAllNonAdmin();
     ?>
 </head>
 <body>
-    <header>
-        <!-- Header content -->
-    </header>
 
     <?php include 'components/navbar.php'; ?>
 
@@ -66,7 +63,10 @@ $users = findAllNonAdmin();
     <?php foreach ($users as $user): ?>
         <tr>
             <form action="data/updateuser.php" method="post">
-                <td><?php echo $user['id']; ?>
+                <td>
+                    <a href="bookings.php?userId=<?php echo $user['id']; ?>" class="btn btn-outline-dark" style="background-color: white; color: black;">
+                        <strong><?php echo $user['id']; ?></strong>
+                    </a>
                     <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
                 </td>
                 <td><input type="text" name="firstname" value="<?php echo $user['firstname']; ?>" class="form-control"></td>

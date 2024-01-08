@@ -2,7 +2,7 @@
 // general access
 $host = "localhost";
 $user = "root";
-$password = "";
+$password = "root";
 $database = "hotel";
 
 $db = new mysqli($host, $user, $password, $database); // standardmäßig Port 3306
@@ -55,12 +55,12 @@ function saveRoom($title, $text, $price, $image) {
     global $db;
 
     // Set default image URL
-    $defaultImageUrl = "Content/default_news_image.png";
+    $defaultImageUrl = "../uploads/news/default_news_image.png";
 
     // Check if an image is uploaded
     if (isset($image["name"]) && !empty($image["name"])) {
         // Upload the image
-        $targetDirectory = "Content/";  // Adjusted relative path
+        $targetDirectory = "uploads/rooms/";  // Adjusted relative path
         $imageName = basename($image["name"]);
         $targetFilePath = $targetDirectory . $imageName;
         move_uploaded_file($image["tmp_name"], "../" . $targetFilePath);  // Adjusted path for move_uploaded_file
@@ -139,8 +139,9 @@ function findUserByEmail($email) {
     $stmt->execute();
     $result = $stmt->get_result();
 
-    return $result->fetch_array();
+    return $result->fetch_assoc(); // Fetch as associative array
 }
+
 
 function findAdminLogin($email) {
     global $db;

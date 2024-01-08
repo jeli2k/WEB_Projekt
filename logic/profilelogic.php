@@ -104,7 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_SESSION['userData']['city'] = $city;
         $_SESSION['userData']['street'] = $street;
         $_SESSION['userData']['zipCode'] = $zipCode;
-        
+        $_SESSION['updateSuccess'] = true;
     }
 
 }

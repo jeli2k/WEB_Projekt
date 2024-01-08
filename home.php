@@ -125,7 +125,7 @@ require_once("data/dbaccess.php");
                         if (!empty($imagePath) && file_exists($imagePath)) {
                             echo '<img src="' . $imagePath . '" class="card-img-top" alt="News Image">';
                         } else {
-                            echo '<img src="Content/default_news_image.png" class="card-img-top" alt="Default News Image">';
+                            echo '<img src="/uploads/news/default_news_image.png" class="card-img-top" alt="Default News Image">';
                         }
 
                         echo '<div class="card-body">';

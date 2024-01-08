@@ -9,26 +9,31 @@ $_SESSION['admin'] = false;
 // check if the user is an admin
 $adminLogin = findAdminLogin($userEmail);
 
-if ($adminLogin !== null && password_verify($password, $adminLogin['hashedPassword'])) { // important: always use hashedPassword, no 'password' in the database, only 'hashedPassword'
+if ($adminLogin !== null && password_verify($password, $adminLogin['hashedPassword'])) { 
     $_SESSION['admin'] = true;
     $_SESSION['loggedIn'] = true;
-    $_SESSION['email'] = $userEmail;  // Set the user's email in the session
+    $_SESSION['email'] = $userEmail;  
     header("Location: ../home.php");
     exit();
 }
 
 // if not an admin, check regular user login
-if (login($userEmail, $password)) {
+$userData = login($userEmail, $password); // Assuming login function now returns user data including status
+
+if ($userData && $userData['status'] == 1) {
+    $_SESSION['error'] = "Your account is currently inactive. Please contact support.";
+    header("Location: ../login.php");
+    exit();
+} elseif ($userData) {
     // set Session
     $_SESSION['loggedIn'] = true;
-    $_SESSION['email'] = $userEmail;  // Set the user's email in the session
-    // debug at the end
+    $_SESSION['email'] = $userEmail;
     header("Location: ../home.php");
     exit();
 }
 
-// if neither admin nor regular user, show error
+// if neither admin nor regular user, or if status is not 1, show error
 $_SESSION['error'] = "Invalid email or password";
-// debug at the end
 header("Location: ../login.php");
+exit();
 ?>

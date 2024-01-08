@@ -14,7 +14,7 @@
 
     <main>   
       <div class="container mt-3 pt-5">
-        <form class="row needs-validation" action="logic/registerlogic.php" method="post" novalidate>
+        <form class="row needs-validation" action="logic/registerlogic.php" method="post">
           <div class="col-12 col-sm-7 col-md-6 m-auto">
             <div class="card border-0 shadow">
               <div class="card-body">
@@ -122,12 +122,13 @@
                 </div>
 
                 <div class="mb-3">
-                      <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
-                      <label class="form-check-label" for="invalidCheck2">
-                        Agree to terms and conditions
+                  <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="termsAndConditions" id="termsAndConditions" required>
+                      <label class="form-check-label" for="termsAndConditions">
+                          Agree to terms and conditions
                       </label>
-                    </div>
+                  </div>
+                </div>
 
                 <!-- Submit Button -->
                 <div class="mb-3 text-center">

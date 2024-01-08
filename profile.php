@@ -20,6 +20,22 @@
                 <div class="col-12 col-sm-7 col-md-6 m-auto">
                     <div class="card border-0 shadow">
                         <div class="card-body">
+
+                        <div class="container mt-1 pt-1">
+                        <!-- Title for Profile Management -->
+                            <div class="col-12 text-center">
+                                <h2 class="mb-0.5">Profile Management</h2>
+                        </div>
+
+                        <div class="container mt-3 pt-5">
+                                <!-- Success Message -->
+                                <?php if (isset($_SESSION['updateSuccess']) && $_SESSION['updateSuccess']): ?>
+                                    <div class="alert alert-success text-center" role="alert">
+                                        Profile successfully updated!
+                                    </div>
+                                    <?php unset($_SESSION['updateSuccess']); ?>
+                                <?php endif; ?>
+                            </div>
                             <!-- Name Field -->
                             <div class="mb-3">
                                 <label for="name" class="form-label">Name</label>
@@ -96,7 +112,6 @@
                             <!-- Submit Button -->
                             <div class="mb-3 text-center">
                                 <button class="btn btn-primary" type="submit">Update Profile</button>
-                            </div>
                         </div>
                     </div>
                 </div>

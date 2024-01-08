@@ -24,6 +24,9 @@ if (strlen($lastname) < 3) {
 if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $errors['email'] = "Valid email is required";
 }
+if (emailExists($email)) {
+    $errors['email'] = "Email already in use";
+}
 if (empty($password)) {
     $errors['password'] = "Password is required";
 }

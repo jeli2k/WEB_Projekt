@@ -35,10 +35,10 @@
             Useful links
           </h6>
           <p>
-            <a href="impressum.php" class="text-reset">Impressum</a>
+            <a href="../impressum.php" class="text-reset">Impressum</a>
           </p>
           <p>
-            <a href="faq.php" class="text-reset">FAQ</a>
+            <a href="../faq.php" class="text-reset">FAQ</a>
           </p>
 
         </div>

@@ -37,11 +37,11 @@
                     <p style="margin-bottom: 70px">Sargsyan Jelinek & Partners is represented by the personally liable partner:<br> Sargsyan Jelinek & Partners GmbH, Tulln, FN 251845</p>
                     <div class="row">
                         <div class="col-md-6 mb-3 text-center">
-                            <img src="./Content/Hayk.jpg" alt="Hayk" title="Hayk" class="rounded-img img-fluid mb-2">
+                            <img src="/uploads/impressum/Hayk.jpg" alt="Hayk" title="Hayk" class="rounded-img img-fluid mb-2">
                             <p class="lead">Managing Director Hayk Sargsyan</p>
                         </div>
                         <div class="col-md-6 mb-3 text-center">
-                            <img src="./Content/Fabian_Jelinek.jpg" alt="Fabian Jelinek" title="Fabian Jelinek" class="rounded-img img-fluid mb-2">
+                            <img src="/uploads/impressum/Fabian_Jelinek.jpg" alt="Fabian Jelinek" title="Fabian Jelinek" class="rounded-img img-fluid mb-2">
                             <p class="lead">Managing Director Fabian Jelinek</p>
                         </div>
                     </div>

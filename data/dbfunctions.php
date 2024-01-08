@@ -1,7 +1,7 @@
 <?php
 function findAllNews () {
     global $db;
-    $sql = "SELECT * FROM `news`";
+    $sql = "SELECT * FROM `news` ORDER BY `date` DESC";
     $result = $db->query($sql);
 
     $news = [];
@@ -11,7 +11,9 @@ function findAllNews () {
     return $news;
 }
 
-// ? placeholder against SQL Injection // prepared Statement
+
+
+// '?' = placeholder against SQL Injection // prepared Statement
 
 function saveNews($title, $text, $imagePath) {
     global $db;

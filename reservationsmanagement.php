@@ -37,6 +37,15 @@ $bookings = findAllBookingsWithRoomNames();
             exit();
         }
     ?>
+    <style>
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            min-width: 1400px; /* Adjust the min-width according to your needs */
+        }
+    </style>
 </head>
 <body>
 
@@ -49,6 +58,7 @@ $bookings = findAllBookingsWithRoomNames();
                 <table class="table table-bordered">
                     <thead class="thead-light">
                         <tr>
+                            <th>Booking ID</th>
                             <th>Room</th>
                             <th>Arrival Date</th>
                             <th>Departure Date</th>
@@ -65,6 +75,7 @@ $bookings = findAllBookingsWithRoomNames();
                     <tbody>
                         <?php foreach ($bookings as $booking): ?>
                             <tr>
+                                <td><a href="details.php?bookingId=<?php echo $booking['id']; ?>" class="btn btn-outline-dark" style="background-color: white; color: black;"><strong><?php echo $booking['id']; ?></strong></a></td>
                                 <td><?php echo $booking['room_title']; ?></td>
                                 <td><?php echo date("d.m.Y", strtotime($booking['arrival_date'])); ?></td>
                                 <td><?php echo date("d.m.Y", strtotime($booking['departure_date'])); ?></td>

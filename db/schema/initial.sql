@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS bookings (
     user_email VARCHAR(255) NOT NULL,
     total_price DECIMAL(10, 2) DEFAULT 0,
     FOREIGN KEY (user_id) REFERENCES userdata(id) ON DELETE SET NULL, -- ON DELETE CASCADE
-    FOREIGN KEY (room_id) REFERENCES rooms(id)
+    FOREIGN KEY (room_id) REFERENCES rooms(id) ON DELETE CASCADE
 );
 
 

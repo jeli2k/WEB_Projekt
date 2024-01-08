@@ -173,14 +173,14 @@ function findRoom($roomId) {
     return $result->fetch_assoc();
 }
 
-function saveBooking($room_id, $arrival_date, $departure_date, $with_breakfast, $with_parking, $with_pets, $user_id) {
+function saveBooking($room_id, $arrival_date, $departure_date, $with_breakfast, $with_parking, $with_pets, $user_id, $total_price) {
     global $db;
 
     // Insert booking into the "bookings" table
-    $sql = "INSERT INTO `bookings` (`user_id`, `room_id`, `arrival_date`, `departure_date`, `with_breakfast`, `with_parking`, `with_pets`) 
-            VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO `bookings` (`user_id`, `room_id`, `arrival_date`, `departure_date`, `with_breakfast`, `with_parking`, `with_pets`, `total_price`) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $db->prepare($sql);
-    $stmt->bind_param("iissssi", $user_id, $room_id, $arrival_date, $departure_date, $with_breakfast, $with_parking, $with_pets);
+    $stmt->bind_param("iissssid", $user_id, $room_id, $arrival_date, $departure_date, $with_breakfast, $with_parking, $with_pets, $total_price);
     $stmt->execute();
     // get the last inserted ID
     $lastInsertId = mysqli_insert_id($db);
@@ -188,13 +188,10 @@ function saveBooking($room_id, $arrival_date, $departure_date, $with_breakfast, 
     return $lastInsertId;
 }
 
-
-
-
 function getBookingInfo($bookingId) {
     global $db;
 
-    $sql = "SELECT b.id, b.room_id, b.arrival_date, b.departure_date, b.with_breakfast, b.with_parking, b.with_pets, b.status, r.title as room_title
+    $sql = "SELECT b.id, b.room_id, b.arrival_date, b.departure_date, b.with_breakfast, b.with_parking, b.with_pets, b.status, b.total_price, r.title as room_title
             FROM bookings b
             INNER JOIN rooms r ON b.room_id = r.id
             WHERE b.id = ?";
@@ -209,7 +206,7 @@ function getBookingInfo($bookingId) {
         return false;
     }
 }
-
+ 
 function getUserBookings($userEmail) {
     global $db;
 
@@ -233,6 +230,43 @@ function getUserBookings($userEmail) {
     return $bookings;
 }
 
+function getCurrentRoomPrice($roomId) {
+    global $db; // Assuming $db is your database connection
+
+    $sql = "SELECT `price` FROM `rooms` WHERE `id` = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bind_param("i", $roomId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $roomData = $result->fetch_assoc();
+        return $roomData['price'];
+    } else {
+        // Default to a fallback value if room is not found
+        return 0;
+    }
+}
+
+function calculateTotalPrice($basePrice, $withBreakfast, $withParking, $withPets) {
+    // start with base room price
+    $totalPrice = $basePrice;
+
+    // add additional fees (selected options)
+    if ($withBreakfast) {
+        $totalPrice += 40;
+    }
+
+    if ($withParking) {
+        $totalPrice += 50;
+    }
+
+    if ($withPets) {
+        $totalPrice += 30;
+    }
+
+    return $totalPrice;
+}
 
 
 

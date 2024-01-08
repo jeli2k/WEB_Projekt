@@ -6,18 +6,24 @@
 
     <link href="override.css" rel="stylesheet">
     <title>Update Profile</title>
+    <style>
+        .success-container {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <!-- Header content -->
-    </header>
-
-    <?php include 'components/navbar.php'; ?>
+    <nav>
+       <?php include 'components/navbar.php'; ?> 
+    </nav>
 
     <main>
         <div class="container mt-3 pt-5">
             <form class="row needs-validation" action="profile.php" method="post" novalidate>
                 <div class="col-12 col-sm-7 col-md-6 m-auto">
+               
                     <div class="card border-0 shadow">
                         <div class="card-body">
 
@@ -118,8 +124,9 @@
             </form>
         </div>
     </main>
-
-    <?php include 'components/footer.php'; ?>
+    <footer>
+       <?php include 'components/footer.php'; ?> 
+    </footer>
     <?php include 'includes/scripts.php'; ?>
 </body>
 </html>

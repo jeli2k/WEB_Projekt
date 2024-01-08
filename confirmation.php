@@ -12,6 +12,8 @@ require_once("data/dbaccess.php");
             header("Location: login.php");
             exit();
         }
+        // Set a flag indicating that the user has confirmed the booking
+        $_SESSION['bookingConfirmed'] = true;
     ?>
     <title>Booking Confirmation</title>
     <style>
@@ -28,11 +30,9 @@ require_once("data/dbaccess.php");
 </head>
 
 <body>
-    <header>
-        <!-- header -->
-    </header>
-
-    <?php include 'components/navbar.php'; ?>
+    <nav>
+       <?php include 'components/navbar.php'; ?> 
+    </nav>
     <?php
     // check if user is logged in
     if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] !== true) {
@@ -63,6 +63,7 @@ require_once("data/dbaccess.php");
                 echo '<li><strong>With Parking:</strong> ' . ($bookingInfo['with_parking'] ? 'Yes' : 'No') . '</li>';
                 echo '<li><strong>With Pets:</strong> ' . ($bookingInfo['with_pets'] ? 'Yes' : 'No') . '</li>';
                 echo '<li><strong>Status:</strong> ' . $bookingInfo['status'] . '</li>';
+                echo '<li><strong>Total Price:</strong> ' . $bookingInfo['total_price'] . ' &euro;</li>'; // display in euros
                 echo '</ul>';
                 echo '</section>';
             } else {
@@ -81,8 +82,9 @@ require_once("data/dbaccess.php");
         }
         ?>
     </main>
-
-    <?php include 'components/footer.php'; ?>
+    <footer>
+      <?php include 'components/footer.php'; ?>  
+    </footer>
     <?php include 'includes/scripts.php'; ?>
 </body>
 

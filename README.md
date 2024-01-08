@@ -9,5 +9,5 @@ For Local Database initialization:
 
 admin User-Login:
 
-E-Mail: 'admin@admin.com\'
+E-Mail: 'admin@admin.com'\
 Password: 'mango'

@@ -13,6 +13,13 @@
             margin-bottom: 15px;
         }
     </style>
+        <?php
+        // Check if the user is not logged in
+        if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] !== true) {
+            header("Location: login.php");
+            exit();
+        }
+        ?>
 </head>
 <body>
     <nav>

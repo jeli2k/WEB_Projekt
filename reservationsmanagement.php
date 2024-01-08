@@ -30,7 +30,13 @@ $bookings = findAllBookingsWithRoomNames();
     <?php include 'includes/head.php'; ?>
     <link href="override.css" rel="stylesheet">
     <title>Booking Management</title>
-    <!-- Bootstrap CSS -->
+    <?php
+        // Check if the user is not logged in
+        if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] !== true) {
+            header("Location: login.php");
+            exit();
+        }
+    ?>
 </head>
 <body>
 

@@ -1,6 +1,6 @@
 <?php
-require_once("dbaccess.php");
-require_once("dbfunctions.php");
+require_once("data/dbaccess.php");
+require_once("data/dbfunctions.php");
 
 function findAllNonAdmin() {
     global $db;
@@ -25,17 +25,23 @@ $users = findAllNonAdmin();
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <?php include '../includes/head.php'; ?>
+    <?php include 'includes/head.php'; ?>
     <link href="override.css" rel="stylesheet">
     <title>User Management</title>
-    <!-- Bootstrap CSS -->
+    <?php
+        // Check if the user is not logged in
+        if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] !== true) {
+            header("Location: login.php");
+            exit();
+        }
+    ?>
 </head>
 <body>
     <header>
         <!-- Header content -->
     </header>
 
-    <?php include '../components/navbar.php'; ?>
+    <?php include 'components/navbar.php'; ?>
 
     <main>   
         <div class="container mt-5">
@@ -59,7 +65,7 @@ $users = findAllNonAdmin();
                     <tbody>
     <?php foreach ($users as $user): ?>
         <tr>
-            <form action="updateuser.php" method="post">
+            <form action="data/updateuser.php" method="post">
                 <td><?php echo $user['id']; ?>
                     <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
                 </td>
@@ -72,7 +78,7 @@ $users = findAllNonAdmin();
                 <td><input type="text" name="zipCode" value="<?php echo $user['zipCode']; ?>" class="form-control"></td>
                 <td><input type="submit" value="Update" class="btn btn-primary"></td>
             </form>
-            <form action="changeStatus.php" method="post">
+            <form action="data/changeStatus.php" method="post">
                 <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
                 <td>
                     <?php if ($user['status'] == 0): ?>
@@ -91,7 +97,7 @@ $users = findAllNonAdmin();
         </div>
     </main>
 
-    <?php include '../components/footer.php'; ?>
-    <?php include '../includes/scripts.php'; ?>
+    <?php include 'components/footer.php'; ?>
+    <?php include 'includes/scripts.php'; ?>
 </body>
 </html>

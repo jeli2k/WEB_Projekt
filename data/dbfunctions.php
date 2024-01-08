@@ -11,7 +11,6 @@ function findAllNews () {
     return $news;
 }
 
-// TODO Bilder als Text mit dem Pfad in Datenbank abspeichern (../Content/img.png)
 // ? placeholder against SQL Injection // prepared Statement
 
 function saveNews($title, $text, $imagePath) {
@@ -43,12 +42,12 @@ function saveRoom($title, $text, $price, $imageUrl = null) {
     $sql = "INSERT INTO `rooms` (`title`, `text`, `price`, `image_url`) VALUES (?, ?, ?, ?)";
     $stmt = $db->prepare($sql);
 
-    // Check for a successful prepare
+    // check for a successful prepare
     if ($stmt === false) {
         die('Error preparing statement.');
     }
 
-    // Bind parameters
+    // bind parameters
     if ($imageUrl === null) {
         // if $imageUrl is null, set a default value
         $defaultImageUrl = "uploads/rooms/default_room_image.png";
@@ -111,8 +110,6 @@ function findRegister($email) {
     return $result->fetch_array();
 }
 
-
-// TODO: Validation im php code, nicht im datenbank code
 function findUserByEmail($email) {
     global $db;
 
@@ -138,12 +135,10 @@ function findAdminLogin($email) {
     $result = $stmt->get_result();
     $user = $result->fetch_assoc();
 
-    // Ensure the user, hashed password, and is_admin field are retrieved
+    // ensure the user, hashed password, and is_admin field are retrieved
     return ($user && isset($user['hashedPassword']) && isset($user['is_admin']) && $user['is_admin'] == 1) ? $user : null;
 }
 
-
-///// for booking
 function findRoom($roomId) {
     global $db;
 
@@ -160,7 +155,6 @@ function findRoom($roomId) {
 function saveBooking($room_id, $arrival_date, $departure_date, $with_breakfast, $with_parking, $with_pets, $user_id, $total_price) {
     global $db;
 
-    // Insert booking into the "bookings" table
     $sql = "INSERT INTO `bookings` (`user_id`, `room_id`, `arrival_date`, `departure_date`, `with_breakfast`, `with_parking`, `with_pets`, `total_price`) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $db->prepare($sql);
@@ -215,7 +209,7 @@ function getUserBookings($userEmail) {
 }
 
 function getCurrentRoomPrice($roomId) {
-    global $db; // Assuming $db is your database connection
+    global $db;
 
     $sql = "SELECT `price` FROM `rooms` WHERE `id` = ?";
     $stmt = $db->prepare($sql);
@@ -227,7 +221,7 @@ function getCurrentRoomPrice($roomId) {
         $roomData = $result->fetch_assoc();
         return $roomData['price'];
     } else {
-        // Default to a fallback value if room is not found
+        // default to a fallback value if room is not found
         return 0;
     }
 }

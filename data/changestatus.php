@@ -23,6 +23,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $updateStmt->execute();
 
     // Redirect back to the user management page
-    header("Location: usermanagement.php");
+    header("Location: ../usermanagement.php");
 }
 ?>

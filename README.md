@@ -7,7 +7,7 @@ For Local Database initialization:
 2. Import the db/schema/initial.php file
 3. Verify the data (e.g. SELECT * FROM userdata;)
 
-admin User-Login:\
+admin User-Login:
 
 E-Mail: admin@admin.com\
 Password: mango

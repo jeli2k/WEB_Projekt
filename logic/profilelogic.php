@@ -1,6 +1,7 @@
 <?php
 // change
 include_once(__DIR__ . "/../data/dbaccess.php");
+require_once(__DIR__ . "/../data/dbfunctions.php");
 
 if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] !== true) {
     header("Location: login.php");
@@ -70,7 +71,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $errors['zipCode'] = "Zip code is required";
     }
 
-    $successMessage = '';
     if (count($errors) === 0) {
         // hash the new password if provide
         if (!empty($newPassword)) {
@@ -90,9 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_SESSION['userData']['city'] = $city;
         $_SESSION['userData']['street'] = $street;
         $_SESSION['userData']['zipCode'] = $zipCode;
-
-        $successMessage = "Change successful!";
-        
+        $_SESSION['updateSuccess'] = true;
     }
 
 }

@@ -1,5 +1,6 @@
 <?php
 require_once("data/dbaccess.php");
+require_once("data/dbfunctions.php");
 ?>
 
 <!DOCTYPE html>
@@ -68,7 +69,7 @@ require_once("data/dbaccess.php");
                     rgba(204, 204, 204, 0.9) 50%, 
                     rgba(255, 255, 255, 1) 100%
                 ), 
-                url('Content/background.jpg');
+                url('uploads/news/background.jpg');
                 background-size: cover;
                 background-position: top center;
                 background-repeat: no-repeat;
@@ -144,7 +145,7 @@ require_once("data/dbaccess.php");
                             if (!empty($imagePath) && file_exists($imagePath)) {
                                 echo '<img src="' . $imagePath . '" class="card-img-top" alt="' . $imageName . '">';
                             } else {
-                                echo '<img src="Content/default_news_image.png" class="card-img-top" alt="Default News Image">';
+                                echo '<img src="uploads/news/default_news_image.png" class="card-img-top" alt="Default News Image">';
                             }
 
                             echo '<div class="card-body">';

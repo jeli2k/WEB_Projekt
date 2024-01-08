@@ -1,5 +1,6 @@
 <?php
 require_once("data/dbaccess.php");
+require_once("data/dbfunctions.php");
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +21,6 @@ require_once("data/dbaccess.php");
                 <h1 class="mb-4">Frequently Asked Questions - FAQ</h1>
                 <hr>
 
-            
                 <div id="accordion">
                     <!-- Section 1 -->
                     <div class="card">

@@ -1,7 +1,6 @@
 <?php
-
-include_once("dbaccess.php");
-
+require_once("dbaccess.php");
+require_once("dbfunctions.php");
 function register($firstname, $lastname, $email, $password, $city, $street, $zipCode) {
 
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
@@ -11,13 +10,36 @@ function register($firstname, $lastname, $email, $password, $city, $street, $zip
 }
 
 function login($email, $password) {
-    $userEmail = findUserByEmail($email);
+    $userData = findUserByEmail($email);
 
-    if ($userEmail === null) {
+    if ($userData === null) {
         return false;
     }
 
-    return password_verify($password, $userEmail['hashedPassword']);
+    if (password_verify($password, $userData['hashedPassword'])) {
+        return $userData; // Returns user data if password is correct
+    }
+
+    return false; // Return false if password is incorrect
+}
+
+function emailExists($email) {
+    global $db;
+
+    $sql = "SELECT COUNT(*) AS count FROM userdata WHERE email = ?";
+    $stmt = $db->prepare($sql);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->store_result();
+
+    if ($stmt->num_rows > 0) {
+        $stmt->bind_result($count);
+        $stmt->fetch();
+
+        return $count > 0;
+    }
+
+    return false;
 }
 
 

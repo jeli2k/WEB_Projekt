@@ -1,11 +1,12 @@
 <?php
 session_start();
 require_once("../data/dbaccess.php");
+require_once("../data/dbfunctions.php");
 
 // Check if the form was submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['admin']) && $_SESSION['admin'] == true) {
     // Specify the upload directory
-    $uploadDirectory = '../Content/';
+    $uploadDirectory = 'uploads/news';
 
     // Check if the file is uploaded successfully
     if ($_FILES['image'] && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
@@ -20,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['admin']) && $_SESSI
 
                 if (in_array($fileFormat, $allowedFormats)) {
                     // Move the uploaded file to the specified directory with the original filename
-                    $uploadPath = 'Content/' . basename($_FILES['image']['name']);
+                    $uploadPath = 'uploads/news' . basename($_FILES['image']['name']);
 
                     if (move_uploaded_file($_FILES['image']['tmp_name'], '../' . $uploadPath)) {
                         // Update the image_url for the existing news article

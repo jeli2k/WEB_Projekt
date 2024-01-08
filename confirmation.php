@@ -1,5 +1,6 @@
 <?php
 require_once("data/dbaccess.php");
+require_once("data/dbfunctions.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">

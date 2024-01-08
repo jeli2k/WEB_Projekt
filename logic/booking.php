@@ -17,6 +17,7 @@ if (isset($_SESSION['bookingConfirmed']) && $_SESSION['bookingConfirmed'] === tr
 }
 
 include_once(__DIR__ . "/../data/dbaccess.php");
+require_once(__DIR__ . "/../data/dbfunctions.php");
 
 // form submitted?
 if (isset($_POST['bookRoom'])) {

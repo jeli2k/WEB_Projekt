@@ -1,6 +1,6 @@
 <section class="pt-5">
       <!-- Whitespace on top -->
-  </section>
+</section>
     
 <footer class="text-center text-lg-start bg-light text-muted">
   <!-- Section: Top Space -->
@@ -26,10 +26,10 @@
             Useful links
           </h6>
           <p>
-            <a href="impressum.php" class="text-reset">Impressum</a>
+            <a href="../impressum.php" class="text-reset">Impressum</a>
           </p>
           <p>
-            <a href="faq.php" class="text-reset">FAQ</a>
+            <a href="../faq.php" class="text-reset">FAQ</a>
           </p>
 
         </div>

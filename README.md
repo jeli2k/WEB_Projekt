@@ -8,5 +8,6 @@ For Local Database initialization:
 3. Verify the data (e.g. SELECT * FROM userdata;)
 
 admin User-Login:\
+
 E-Mail: admin@admin.com\
 Password: mango

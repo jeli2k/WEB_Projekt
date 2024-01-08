@@ -29,7 +29,7 @@
                                 <?php echo $successMessage; ?>
                             </div>
                         </div>
-                    <?php endif; ?>
+                <?php endif; ?>
                     <div class="card border-0 shadow">
                         <div class="card-body">
                             <!-- Name Field -->

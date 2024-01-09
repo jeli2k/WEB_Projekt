@@ -114,7 +114,7 @@ require_once("data/dbfunctions.php");
                                 echo '<div class="card-body">';
                                 echo '<h5 class="card-title">' . $room['title'] . '</h5>';
                                 echo '<p class="card-text">' . $room['text'] . '</p>';
-                                echo '<p class="card-text">Price: $' . number_format($room['price'], 2) . '</p>';
+                                echo '<p class="card-text">Price: $' . number_format($room['price'], 2) . ' per night</p>';
                                 echo '<a href="booking.php?room=' . urlencode($room['title']) . '&roomId=' . urlencode($room['id']) . '" class="btn btn-primary">Book Now</a>';
                                 echo '</div>';
                                 echo '</div>';
@@ -220,7 +220,7 @@ require_once("data/dbfunctions.php");
                                                 <input type="text" name="text" id="text" class="form-control">
                                             </div>
                                             <div class="mb-3">
-                                                <label for="price" class="form-label">Price</label>
+                                                <label for="price" class="form-label">Price (per night)</label>
                                                 <input type="text" name="price" id="price" class="form-control">
                                             </div>
                                             <div class="mb-3">

@@ -61,8 +61,13 @@ if (isset($_POST['bookRoom'])) {
                         header("Location: ../booking.php?roomId=$selectedRoomId");
                         exit();
                     } else {
-                        // calculate the total price based on selected options
-                        $totalPrice = $_POST['currentPrice'];
+                        // calculate the duration between arrival and departure dates
+                        $arrivalTimestamp = strtotime($arrivalDate);
+                        $departureTimestamp = strtotime($departureDate);
+                        $durationInDays = ceil(($departureTimestamp - $arrivalTimestamp) / (60 * 60 * 24));
+
+                        // multiply the current price by the number of days
+                        $totalPrice = $_POST['currentPrice'] * $durationInDays;
                         // save booking details
                         $bookingId = saveBooking($room_id, $arrivalDate, $departureDate, $withBreakfast, $withParking, $withPets, $user_id, $totalPrice);
                         // save booking details in the session for confirmation.php

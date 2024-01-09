@@ -4,8 +4,9 @@ Hotel Website (Room Booking, User Management, ...)
 
 For Local Database initialization:
 1. Start Local Apache Server
-2. Import the db/schema/initial.php file
-3. Verify the data (e.g. SELECT * FROM userdata;)
+2. Change database info in "data/dbaccess.php" ($user, $password)
+3. Import the db/schema/initial.php file
+4. Verify the data (e.g. SELECT * FROM userdata;)
 
 admin User-Login:
 

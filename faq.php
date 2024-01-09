@@ -9,6 +9,17 @@ require_once("data/dbfunctions.php");
     <?php include 'includes/head.php'; ?>
     <link href="override.css" rel="stylesheet">
     <title>FAQ</title>
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+    </style>
 </head>
 <body>
     <nav>

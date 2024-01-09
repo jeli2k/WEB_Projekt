@@ -35,6 +35,17 @@ $users = findAllNonAdmin();
             exit();
         }
     ?>
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+    </style>
 </head>
 <body>
 

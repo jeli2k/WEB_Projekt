@@ -17,6 +17,14 @@ require_once("data/dbfunctions.php");
         <link href="override.css" rel="stylesheet">
         <title>Booking</title>
         <style>
+            body {
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+            }
+            main {
+                flex: 1;
+            }
             .smaller-input {
                 width: 400px; /* Adjust the width percentage as needed */
                 display: flex;

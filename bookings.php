@@ -30,6 +30,15 @@ require_once("data/dbfunctions.php");
     }
     ?>
     <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
         .table-responsive {
             overflow-x: auto;
         }

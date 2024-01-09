@@ -4,7 +4,7 @@
     
 <footer class="text-center text-lg-start bg-light text-muted">
   <!-- Section: Top Space -->
-  <section class="d-flex mt-5 border-bottom">
+  <section class="d-flex mt-0 border-bottom">
 
   </section>
   <!-- Section: Links  -->

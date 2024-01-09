@@ -4,7 +4,7 @@ session_start();
 // unset the datevalidation cookie (for when the form is sucessfully submitted)
 setcookie("datevalidation", "", time() - 3600, "/");
 if (isset($_SESSION['bookingConfirmed']) && $_SESSION['bookingConfirmed'] === true) {
-    // Unset session variables for dates and other booking details
+    // unset session variables for dates and other booking details
     unset($_SESSION["arrivalDate"]);
     unset($_SESSION["departureDate"]);
     unset($_SESSION["withBreakfast"]);
@@ -12,7 +12,7 @@ if (isset($_SESSION['bookingConfirmed']) && $_SESSION['bookingConfirmed'] === tr
     unset($_SESSION["withPets"]);
     unset($_SESSION["selectedRoom"]);
 
-    // Reset the confirmation flag to avoid unsetting on subsequent visits
+    // reset the confirmation flag to avoid unsetting on subsequent visits
     $_SESSION['bookingConfirmed'] = false;
 }
 
@@ -61,7 +61,7 @@ if (isset($_POST['bookRoom'])) {
                         header("Location: ../booking.php?roomId=$selectedRoomId");
                         exit();
                     } else {
-                        // Calculate the total price based on selected options
+                        // calculate the total price based on selected options
                         $totalPrice = $_POST['currentPrice'];
                         // save booking details
                         $bookingId = saveBooking($room_id, $arrivalDate, $departureDate, $withBreakfast, $withParking, $withPets, $user_id, $totalPrice);
@@ -75,10 +75,9 @@ if (isset($_POST['bookRoom'])) {
                             'withParking' => $withParking,
                             'withPets' => $withPets,
                             'totalPrice' => $totalPrice,
-                            'status' => 'new', // Initial status is set to "new"
+                            'status' => 'new', // initial status is set to "new"
                         ];
 
-                        // demo: Session
                         $datevalidation = "valid";
                         // Unset session variables for dates after successful booking
                         unset($_SESSION["arrivalDate"]);

@@ -1,4 +1,3 @@
-<!-- booking.php -> logic/booking.php -> confirmation.php -->
 <?php
 require_once("data/dbaccess.php");
 require_once("data/dbfunctions.php");
@@ -64,17 +63,11 @@ require_once("data/dbfunctions.php");
                                     // Fetch rooms from the database
                                     $roomsFromDB = findAllRooms();
 
-                                    // Debugging output to trace the value of $selectedRoom
-                                    // echo "selectedRoom (before validation): $selectedRoom<br>";
-
                                     // Date Validation + "Keep Variables" after Invalid Validation
                                     $datevalidation = "";
                                     if (isset($_COOKIE["datevalidation"]) && "invalid" === $_COOKIE["datevalidation"]) {
                                         $datevalidation = "is-invalid";
                                     }
-                                    // Debugging output to trace the value of $_SESSION['selectedRoom'] during validation
-                                    // echo "selectedRoom (during validation): " . $_SESSION['selectedRoom'] . "<br>";
-
                                     $departureDate = "";
                                     if (isset($_SESSION["departureDate"])) {
                                         $departureDate = $_SESSION["departureDate"];
@@ -95,7 +88,7 @@ require_once("data/dbfunctions.php");
                                     if (isset($_SESSION["withPets"])) {
                                         $withPets = $_SESSION["withPets"];
                                     }
-                                    $selectedRoom = isset($_SESSION["selectedRoom"]) ? $_SESSION["selectedRoom"] : ''; // Ensure $selectedRoom is not empty
+                                    $selectedRoom = isset($_SESSION["selectedRoom"]) ? $_SESSION["selectedRoom"] : '';
                                     ?>
                                     <form action="logic/booking.php" method="post">
                                         <div class="mb-3">
@@ -199,7 +192,7 @@ require_once("data/dbfunctions.php");
             function updateTotalPrice() {
                 var totalPriceInput = document.querySelector('input[name="currentPrice"]');
                 var totalPrice = calculateTotalPrice();
-                totalPriceInput.value = totalPrice.toFixed(2) + ' €'; // Add euro sign
+                totalPriceInput.value = totalPrice.toFixed(2) + ' €'; // add euro sign
             }
 
             document.querySelectorAll('input[type="checkbox"]').forEach(function (checkbox) {

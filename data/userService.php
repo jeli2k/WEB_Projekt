@@ -6,7 +6,6 @@ function register($firstname, $lastname, $email, $password, $city, $street, $zip
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
     saveRegister($firstname, $lastname, $email, $hashedPassword, $city, $street, $zipCode);
 
-    //saveEmail($email, $hashedPassword);
 }
 
 function login($email, $password) {
@@ -17,10 +16,10 @@ function login($email, $password) {
     }
 
     if (password_verify($password, $userData['hashedPassword'])) {
-        return $userData; // Returns user data if password is correct
+        return $userData; // returns user data if password is correct
     }
 
-    return false; // Return false if password is incorrect
+    return false; // return false if password is incorrect
 }
 
 function emailExists($email) {

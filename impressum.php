@@ -10,10 +10,10 @@ require_once("data/dbfunctions.php");
     <link href="override.css" rel="stylesheet">
     <style>
         .rounded-img {
-            width: 150px; /* Adjust the width as needed */
-            height: 150px; /* Adjust the height as needed */
-            object-fit: cover; /* Ensures the image covers the area without distortion */
-            border-radius: 50%; /* Makes the image round */
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
         }
     </style>
     <title>Impressum</title>

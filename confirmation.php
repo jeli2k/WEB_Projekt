@@ -8,12 +8,12 @@ require_once("data/dbfunctions.php");
 <head>
     <?php include 'includes/head.php'; ?>
     <?php
-        // Check if the user is not logged in
+        // check if the user is not logged in
         if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] !== true) {
             header("Location: login.php");
             exit();
         }
-        // Set a flag indicating that the user has confirmed the booking
+        // set a flag indicating that the user has confirmed the booking
         $_SESSION['bookingConfirmed'] = true;
     ?>
     <title>Booking Confirmation</title>

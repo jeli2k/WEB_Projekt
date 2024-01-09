@@ -3,8 +3,6 @@ require_once("dbaccess.php");
 require_once("dbfunctions.php");
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // TODO: Validation
-
     // set default image URL
     $defaultImageUrl = "uploads/rooms/default_room_image.png";
 
@@ -28,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $imageUrl = $defaultImageUrl;
         }
     } else {
-        // No image uploaded, use default image URL
+        // no image uploaded, use default image URL
         $imageUrl = $defaultImageUrl;
     }
 

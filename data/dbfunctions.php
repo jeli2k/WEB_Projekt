@@ -5,7 +5,7 @@ function findAllNews () {
     $result = $db->query($sql);
 
     $news = [];
-    while ($row = $result->fetch_array()) {  // fetch_array() liefert ein Array mit numerischen und assoziativen Indizes
+    while ($row = $result->fetch_array()) {
         $news[] = $row;
     }
     return $news;
@@ -20,7 +20,7 @@ function saveNews($title, $text, $imagePath) {
 
     $sql = "INSERT INTO `news` (`title`, `text`, `image_url`) VALUES (?, ?, ?)";
     $stmt = $db->prepare($sql);
-    $stmt->bind_param("sss", $title, $text, $imagePath);
+    $stmt->bind_param("sss", $title, $text, $imagePath);  // s = string
 
     $stmt->execute();
 }
@@ -67,9 +67,9 @@ function saveRoom($title, $text, $price, $imageUrl = null) {
 function saveEmail($email, $hashedPassword) {
     global $db;
     if ($email != NULL && $hashedPassword != NULL) {
-        $sql = "INSERT INTO `userdata` (`email`, `hashedPassword`) VALUES (?, ?)";  // ? placeholder against SQL Injection // prepared Statement
+        $sql = "INSERT INTO `userdata` (`email`, `hashedPassword`) VALUES (?, ?)";
     $stmt = $db->prepare($sql);
-    $stmt->bind_param("ss", $email, $hashedPassword); // s = string
+    $stmt->bind_param("ss", $email, $hashedPassword);
 
     $stmt->execute(); 
     }
@@ -79,9 +79,9 @@ function saveRegister($firstname, $lastname, $email, $hashedPassword, $city, $st
     global $db;
 
     if ($firstname != NULL && $lastname != NULL && $email != NULL && $hashedPassword != NULL && $city != NULL && $street != NULL && $zipCode != NULL) {
-        $sql = "INSERT INTO `userdata` (`firstname`, `lastname`, `email`, `hashedPassword`, `city`, `street`, `zipCode`) VALUES (?, ?, ?, ?, ?, ?, ?)";  // ? placeholder against SQL Injection // prepared Statement
+        $sql = "INSERT INTO `userdata` (`firstname`, `lastname`, `email`, `hashedPassword`, `city`, `street`, `zipCode`) VALUES (?, ?, ?, ?, ?, ?, ?)"; 
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("ssssssi", $firstname, $lastname, $email, $hashedPassword, $city, $street, $zipCode); // s = string, i = integer
+        $stmt->bind_param("ssssssi", $firstname, $lastname, $email, $hashedPassword, $city, $street, $zipCode);
     
         $stmt->execute(); 
     }
@@ -104,7 +104,7 @@ function findRegister($email) {
 
     $sql = "SELECT `firstname`, `lastname`, `email`, `hashedPassword`, `city`, `street`, `zipCode` FROM `userdata` WHERE `email` = ?";
     $stmt = $db->prepare($sql);
-    $stmt->bind_param("s", $email); // s = string
+    $stmt->bind_param("s", $email);
 
     $stmt->execute();
     $result = $stmt->get_result();
@@ -117,12 +117,12 @@ function findUserByEmail($email) {
 
     $sql = "SELECT * FROM `userdata` WHERE `email` = ?";
     $stmt = $db->prepare($sql);
-    $stmt->bind_param("s", $email); // s = string
+    $stmt->bind_param("s", $email);
 
     $stmt->execute();
     $result = $stmt->get_result();
 
-    return $result->fetch_assoc(); // Fetch as associative array
+    return $result->fetch_assoc();
 }
 
 
@@ -131,7 +131,7 @@ function findAdminLogin($email) {
 
     $sql = "SELECT * FROM `userdata` WHERE `email` = ? AND `is_admin` = 1";
     $stmt = $db->prepare($sql);
-    $stmt->bind_param("s", $email); // s = string
+    $stmt->bind_param("s", $email);
 
     $stmt->execute();
     $result = $stmt->get_result();
@@ -146,7 +146,7 @@ function findRoom($roomId) {
 
     $sql = "SELECT * FROM `rooms` WHERE `id` = ?";
     $stmt = $db->prepare($sql);
-    $stmt->bind_param("i", $roomId); // i = integer
+    $stmt->bind_param("i", $roomId);
 
     $stmt->execute();
     $result = $stmt->get_result();

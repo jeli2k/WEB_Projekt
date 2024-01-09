@@ -3,7 +3,7 @@ session_start();
 
 include_once("../data/userService.php");
 
-$errors = []; // Initialize $errors array
+$errors = [];
 
 $firstname = $_POST['name'];
 $lastname = $_POST['lastname'];
@@ -48,7 +48,7 @@ if (count($errors) === 0) {
     $_SESSION['success'] = true;
     header("Location: ../login.php");  
 } else {
-     // Store form data and errors in session
+     // store form data and errors in session
     $_SESSION['form_data'] = $_POST;
     $_SESSION['errors'] = $errors;
 

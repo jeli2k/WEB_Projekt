@@ -1,6 +1,6 @@
 <?php
 // general access
-// change for own database
+// change for own database config
 $host = "localhost";
 $user = "root";
 $password = "";

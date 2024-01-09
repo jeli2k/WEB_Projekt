@@ -6,7 +6,7 @@
 
     .navbar-nav .nav-item, .navbar-nav .dropdown {
       display: inline-block;
-      margin: 0 10px; /* Adjust the margin as needed */
+      margin: 0 10px;
     }
 
     .navbar-nav .dropdown-menu {

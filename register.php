@@ -98,18 +98,6 @@
                   <?php endif; ?>
                 </div>
 
-                <!--
-                <div class="mb-3">
-                      <label for="state" class="form-label">State</label>
-                      <select class="form-select" id="state" required>
-                      <option selected disabled value="">Choose...</option>
-                      <option>Austria</option>
-                      <option>Germany</option>
-                      <option>Switzerland</option>
-                      </select>
-                    </div>
-                -->
-
                 <!-- Zip Code Field -->
                 <div class="mb-3">
                   <label for="zipCode" class="form-label">Zip Code</label>

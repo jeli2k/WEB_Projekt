@@ -33,10 +33,10 @@ require_once("data/dbfunctions.php");
         }
 
         .booking-image-container {
-            min-height: 300px; /* Set a minimum height for the container */
-            background-size: cover; /* Cover the entire container */
-            background-position: center; /* Center the image within the container */
-            border-radius: 8px; /* Optional: Add border-radius for a rounded appearance */
+            min-height: 300px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px;
         }
 
     </style>

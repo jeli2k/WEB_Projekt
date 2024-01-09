@@ -18,7 +18,7 @@ if ($adminLogin !== null && password_verify($password, $adminLogin['hashedPasswo
 }
 
 // if not an admin, check regular user login
-$userData = login($userEmail, $password); // Assuming login function now returns user data including status
+$userData = login($userEmail, $password);
 
 if ($userData && $userData['status'] == 1) {
     $_SESSION['error'] = "Your account is currently inactive. Please contact support.";

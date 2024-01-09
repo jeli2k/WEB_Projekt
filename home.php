@@ -57,9 +57,9 @@ require_once("data/dbfunctions.php");
                 }
             }
             .card-img-top {
-            width: 100%; /* Adjust the width as needed */
-            height: 240px; /* Adjust the height as needed */
-            object-fit: cover; /* Maintain aspect ratio and cover the entire container */
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
             }
 
             body {
@@ -84,14 +84,11 @@ require_once("data/dbfunctions.php");
             include 'components/navbar.php';
         ?>
         </nav>
-    
-        <!-- Navbar nicht responsive für Handy, und echo muss noch mit html code -->
                 <div class="row">
                     <div class="col-md-12 text-center mb-3">
                         <div class="alert alert-info" role="alert">
                             <?php
                             if ($loggedIn === true) {
-                                // TODO: Register all Content and display firstname from database here.
                                 echo "<a>Hello, " . htmlspecialchars($firstname) . "!</a>";
                             } else {
                                 echo '<a>To book rooms please <a href="register.php" class="alert-link">register here </a>.';
@@ -153,7 +150,7 @@ require_once("data/dbfunctions.php");
                             // add news form if user is admin
                             if (isset($_SESSION['admin']) && $_SESSION['admin'] == true) {
                                 echo '<form enctype="multipart/form-data" method="post" action="logic/upload.php">';
-                                echo '<input type="hidden" name="news_id" value="' . $news['id'] . '">';  // Add this line
+                                echo '<input type="hidden" name="news_id" value="' . $news['id'] . '">';
                                 echo '<input type="file" name="image" id="image">';
                                 echo '<input type="submit" value="Upload" name="submit">';
                                 echo '</form>';

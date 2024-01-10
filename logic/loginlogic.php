@@ -1,31 +1,39 @@
 <?php
+session_start();
+include_once("../data/userService.php");
 
-$error = '';
+$userEmail = $_POST['email'];
+$password = $_POST['password'];
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+$_SESSION['admin'] = false;
+// check if the user is an admin
+$adminLogin = findAdminLogin($userEmail);
 
-    $enteredEmail = htmlspecialchars($_POST['email']);
-    $enteredPassword = htmlspecialchars($_POST['password']);
-
-    // check if admin
-    if ($enteredEmail === "admin@admin.com" && $enteredPassword === "admin") {
-        $_SESSION['admin'] = true;
-        $_SESSION['loggedIn'] = true;
-        header("Location: home.php");
-        exit();
-    }
-    // Check if user data exists in the session
-    if (isset($_SESSION['userData'])) {
-        if ($enteredEmail === $_SESSION['userData']['email'] && $enteredPassword === $_SESSION['userData']['password']) {
-            $_SESSION['loggedIn'] = true;
-            header("Location: home.php");
-            exit();
-        } else {
-            $error = 'Invalid email or password.';
-        }
-    } else {
-        $error = 'No user data found. Please register first.';
-    }
+if ($adminLogin !== null && password_verify($password, $adminLogin['hashedPassword'])) { 
+    $_SESSION['admin'] = true;
+    $_SESSION['loggedIn'] = true;
+    $_SESSION['email'] = $userEmail;  
+    header("Location: ../home.php");
+    exit();
 }
 
+// if not an admin, check regular user login
+$userData = login($userEmail, $password);
+
+if ($userData && $userData['status'] == 1) {
+    $_SESSION['error'] = "Your account is currently inactive. Please contact support.";
+    header("Location: ../login.php");
+    exit();
+} elseif ($userData) {
+    // set Session
+    $_SESSION['loggedIn'] = true;
+    $_SESSION['email'] = $userEmail;
+    header("Location: ../home.php");
+    exit();
+}
+
+// if neither admin nor regular user, or if status is not 1, show error
+$_SESSION['error'] = "Invalid email or password";
+header("Location: ../login.php");
+exit();
 ?>

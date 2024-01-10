@@ -17,19 +17,31 @@
     </style>
 </head>
 <body>
-    <header>
-        <!-- Header content -->
-    </header>
-
-    <?php include 'components/navbar.php'; ?>
-    <?php include 'logic/loginlogic.php'; ?>
+    <nav>
+        <?php include 'components/navbar.php'; ?>
+    </nav>
 
     <main>
         <div class="container mt-3 pt-5">
-            <form class="row needs-validation" action="login.php" method="post" novalidate>
+            <form class="row needs-validation" action="logic/loginlogic.php" method="post" novalidate>
                 <div class="col-12 col-sm-7 col-md-6 m-auto">
                     <div class="card border-0 shadow">
                         <div class="card-body">
+
+                            <?php 
+                            $error = isset($_SESSION['error']) ? $_SESSION['error'] : '';
+
+                            // Clear the error message from the session
+                            unset($_SESSION['error']);
+
+
+                            $success = isset($_SESSION['success']) ? $_SESSION['success'] : false; 
+                            if ($success) {
+                                echo '<div class="alert alert-success">Registration successful! You can now login.</div>';
+                                // clear the success message from the session
+                                unset($_SESSION['success']);
+                            }
+                            ?>
                             <!-- Email Field -->
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
@@ -43,8 +55,8 @@
                             </div>
 
                             <!-- Error Message -->
-                            <?php if ($error): ?>
-                                <div class="alert alert-danger" role="alert">
+                            <?php if (!empty($error)): ?>
+                                <div class="alert alert-danger">
                                     <?php echo $error; ?>
                                 </div>
                             <?php endif; ?>
@@ -59,8 +71,9 @@
             </form>
         </div>
     </main>
-
-    <?php include 'components/footer.php'; ?>
+    <footer>
+       <?php include 'components/footer.php'; ?> 
+    </footer>
     <?php include 'includes/scripts.php'; ?>
 </body>
 </html>

@@ -1,20 +1,16 @@
-
- <!-- Footer -->
- <section class="pt-5">
+<section class="pt-5">
       <!-- Whitespace on top -->
-  </section>
+</section>
     
 <footer class="text-center text-lg-start bg-light text-muted">
   <!-- Section: Top Space -->
-  <section class="d-flex mt-5 border-bottom">
+  <section class="d-flex mt-0 border-bottom">
 
   </section>
   <!-- Section: Links  -->
   <section class="">
     <div class="container text-center text-md-start mt-5">
-      <!-- Grid row -->
       <div class="row mt-3">
-        <!-- Grid column -->
         <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
         <!-- Content -->
           <h6 class="text-uppercase fw-bold mb-4">
@@ -24,27 +20,19 @@
             Sapphire Shores Hotel
           </p>
         </div>
-        <!-- Grid column -->
-
-        <!-- Grid column -->
-
-        <!-- Grid column -->
         <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
           <!-- Links -->
           <h6 class="text-uppercase fw-bold mb-4">
             Useful links
           </h6>
           <p>
-            <a href="impressum.php" class="text-reset">Impressum</a>
+            <a href="../impressum.php" class="text-reset">Impressum</a>
           </p>
           <p>
-            <a href="faq.php" class="text-reset">FAQ</a>
+            <a href="../faq.php" class="text-reset">FAQ</a>
           </p>
 
         </div>
-        <!-- Grid column -->
-
-        <!-- Grid column -->
         <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
           <!-- Links -->
           <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
@@ -57,9 +45,7 @@
             wi22b076@technikum-wien.at
           </p>
         </div>
-        <!-- Grid column -->
       </div>
-      <!-- Grid row -->
     </div>
   </section>
   <!-- Copyright -->

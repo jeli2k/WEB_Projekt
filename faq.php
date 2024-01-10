@@ -1,16 +1,30 @@
+<?php
+require_once("data/dbaccess.php");
+require_once("data/dbfunctions.php");
+?>
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
     <?php include 'includes/head.php'; ?>
     <link href="override.css" rel="stylesheet">
     <title>FAQ</title>
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <!-- Header content -->
-    </header>
-
-    <?php include 'components/navbar.php'; ?>
+    <nav>
+       <?php include 'components/navbar.php'; ?> 
+    </nav>
 
     <main class="container my-4">
         <div class="row">
@@ -18,7 +32,6 @@
                 <h1 class="mb-4">Frequently Asked Questions - FAQ</h1>
                 <hr>
 
-            
                 <div id="accordion">
                     <!-- Section 1 -->
                     <div class="card">
@@ -103,8 +116,9 @@
             </div>
         </div>
     </main>
-
-    <?php include 'components/footer.php'; ?>
+    <footer>
+        <?php include 'components/footer.php'; ?>
+    </footer>
     <?php include 'includes/scripts.php'; ?>
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

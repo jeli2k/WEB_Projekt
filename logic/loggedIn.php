@@ -1,4 +1,3 @@
-<!-- loggedIn.php checks if a user is logged in -->
 <?php
 session_start();
 
@@ -8,15 +7,14 @@ if (isset($_GET['logout']) && $_GET['logout'] == 'true') {
     unset($_SESSION['email']);
     unset($_SESSION['pw']);
 
-    // Output a logout message
     echo "You have been successfully logged out.";
     header("Location: ../home.php");
     exit();
 }
 
-// Check if the post parameters username and password are set and equal to "admin"
+// check if the post parameters username and password are set and equal to "admin"
 if (isset($_POST['email']) && isset($_POST['pw']) && $_POST['email'] == 'admin@admin.com' && $_POST['pw'] == 'admin') {
-    // Admin login logic (you can customize this part according to your needs)
+    // admin login logic
     $_SESSION['admin'] = true;
     header("Location: ../home.php"); // Redirect to admin home page
     exit();

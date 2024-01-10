@@ -6,13 +6,25 @@
 
     <link href="override.css" rel="stylesheet">
     <title>Update Profile</title>
+    <style>
+        .success-container {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+    </style>
+        <?php
+        // Check if the user is not logged in
+        if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] !== true) {
+            header("Location: login.php");
+            exit();
+        }
+        ?>
 </head>
 <body>
-    <header>
-        <!-- Header content -->
-    </header>
-
-    <?php include 'components/navbar.php'; ?>
+    <nav>
+       <?php include 'components/navbar.php'; ?> 
+    </nav>
 
     <main>
         <div class="container mt-3 pt-5">
@@ -20,6 +32,21 @@
                 <div class="col-12 col-sm-7 col-md-6 m-auto">
                     <div class="card border-0 shadow">
                         <div class="card-body">
+                        <div class="container mt-1 pt-1">
+                        <!-- Title for Profile Management -->
+                            <div class="col-12 text-center">
+                                <h2 class="mb-0.5">Profile Management</h2>
+                        </div>
+
+                        <div class="container mt-3 pt-5">
+                                <!-- Success Message -->
+                                <?php if (isset($_SESSION['updateSuccess']) && $_SESSION['updateSuccess']): ?>
+                                    <div class="alert alert-success text-center" role="alert">
+                                        Profile successfully updated!
+                                    </div>
+                                    <?php unset($_SESSION['updateSuccess']); ?>
+                                <?php endif; ?>
+                            </div>
                             <!-- Name Field -->
                             <div class="mb-3">
                                 <label for="name" class="form-label">Name</label>
@@ -50,16 +77,17 @@
                             <!-- Old Password Field -->
                             <div class="mb-3">
                                 <label for="oldPassword" class="form-label">Old Password</label>
-                                <input type="password" class="form-control <?php echo !empty($errors['oldPassword']) ? 'is-invalid' : ''; ?>" id="oldPassword" name="oldPassword" required>
+                                <input type="password" class="form-control <?php echo !empty($errors['oldPassword']) ? 'is-invalid' : ''; ?>" id="oldPassword" name="oldPassword" placeholder="••••••••••••" required>
                                 <?php if (!empty($errors['oldPassword'])): ?>
                                     <div class="invalid-feedback"><?php echo $errors['oldPassword']; ?></div>
                                 <?php endif; ?>
                             </div>
 
                             <!-- New Password Field -->
+                            <!-- NOT REQUIRED -->
                             <div class="mb-3">
                                 <label for="newPassword" class="form-label">New Password</label>
-                                <input type="password" class="form-control <?php echo !empty($errors['newPassword']) ? 'is-invalid' : ''; ?>" id="newPassword" name="newPassword" required>
+                                <input type="password" class="form-control <?php echo !empty($errors['newPassword']) ? 'is-invalid' : ''; ?>" id="newPassword" name="newPassword">
                                 <?php if (!empty($errors['newPassword'])): ?>
                                     <div class="invalid-feedback"><?php echo $errors['newPassword']; ?></div>
                                 <?php endif; ?>
@@ -95,15 +123,15 @@
                             <!-- Submit Button -->
                             <div class="mb-3 text-center">
                                 <button class="btn btn-primary" type="submit">Update Profile</button>
-                            </div>
                         </div>
                     </div>
                 </div>
             </form>
         </div>
     </main>
-
-    <?php include 'components/footer.php'; ?>
+    <footer>
+       <?php include 'components/footer.php'; ?> 
+    </footer>
     <?php include 'includes/scripts.php'; ?>
 </body>
 </html>

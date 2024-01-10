@@ -6,7 +6,7 @@ require_once("../data/dbfunctions.php");
 // Check if the form was submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['admin']) && $_SESSION['admin'] == true) {
     // Specify the upload directory
-    $uploadDirectory = 'uploads/news';
+    $uploadDirectory = 'uploads/news/';
 
     // Check if the file is uploaded successfully
     if ($_FILES['image'] && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
@@ -15,27 +15,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['admin']) && $_SESSI
         if ($check !== false) {
             // Check file size (limit to 10MB)
             if ($_FILES['image']['size'] <= 10 * 1024 * 1024) {
-                // Check file format (allow only certain formats, e.g., jpeg, png, gif)
-                $allowedFormats = ['jpeg', 'jpg', 'png', 'gif'];
+                // Check file format
+                $allowedFormats = ['jpeg', 'jpg', 'png'];
                 $fileFormat = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
 
                 if (in_array($fileFormat, $allowedFormats)) {
-                    // Move the uploaded file to the specified directory with the original filename
-                    $uploadPath = 'uploads/news' . basename($_FILES['image']['name']);
+                    // Generate a unique filename to avoid overwriting existing files
+                    $imageName = pathinfo($_FILES['image']['name'], PATHINFO_FILENAME) . '.' . $fileFormat;
+                    $uploadPath = $uploadDirectory . $imageName;
 
                     if (move_uploaded_file($_FILES['image']['tmp_name'], '../' . $uploadPath)) {
+                        resizeImage("../" . $uploadPath, 650, 360);
                         // Update the image_url for the existing news article
-                        $newsId = $_POST['news_id']; // Assuming you have a hidden input field for news_id in your form
+                        $newsId = $_POST['news_id'];
                         $image_url = $uploadPath;
-                    
+
                         $sql = "UPDATE `news` SET `image_url` = ? WHERE `id` = ?";
                         $stmt = $db->prepare($sql);
                         $stmt->bind_param("si", $image_url, $newsId);
-                    
+
                         if ($stmt->execute()) {
                             // Success message
                             echo "File successfully uploaded and data updated in the database.";
                             header("Location: ../home.php");
+                            exit();
                         } else {
                             // Error message for database update failure
                             echo "Error updating data in the database.";
@@ -62,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['admin']) && $_SESSI
         echo "File upload failed. Please check the file and try again";
     }
 } else {
-    // Redirect to home.php if accessed directly without form submission or if user is not admin
+    // Redirect to home.php if accessed directly without form submission or if the user is not admin
     header("Location: ../home.php");
     exit();
 }

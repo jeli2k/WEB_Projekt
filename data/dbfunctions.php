@@ -288,5 +288,65 @@ function findBookingsByUserId($userId) {
     return $bookings;
 }
 
+// Function to resize image
+function resizeImage($file, $width, $height) {
+    // Get image information
+    list($origWidth, $origHeight, $imageType) = getimagesize($file);
+
+    // Determine image type and create appropriate source image resource
+    switch ($imageType) {
+        case IMAGETYPE_JPEG:
+            $sourceImage = imagecreatefromjpeg($file);
+            break;
+        case IMAGETYPE_PNG:
+            $sourceImage = imagecreatefrompng($file);
+            break;
+        default:
+            // Unsupported image type
+            return false;
+    }
+
+    $imageRatio = $origWidth / $origHeight;
+    $targetRatio = $width / $height;
+
+    if ($imageRatio > $targetRatio) {
+        $newWidth = $width;
+        $newHeight = $width / $imageRatio;
+    } else {
+        $newHeight = $height;
+        $newWidth = $height * $imageRatio;
+    }
+
+    $resizedImage = imagecreatetruecolor($newWidth, $newHeight);
+
+    // preserve transparency for PNG images
+    if ($imageType === IMAGETYPE_PNG) {
+        imagealphablending($resizedImage, false);
+        imagesavealpha($resizedImage, true);
+    }
+
+    // perform image resizing
+    imagecopyresampled($resizedImage, $sourceImage, 0, 0, 0, 0, $newWidth, $newHeight, $origWidth, $origHeight);
+
+    // save the resized image based on its original format
+    switch ($imageType) {
+        case IMAGETYPE_JPEG:
+            imagejpeg($resizedImage, $file);
+            break;
+        case IMAGETYPE_PNG:
+            imagepng($resizedImage, $file);
+            break;
+
+        default:
+            // unsupported image type
+            return false;
+    }
+    // free up
+    imagedestroy($resizedImage);
+    imagedestroy($sourceImage);
+
+    return true;
+}
+
 ?>
 

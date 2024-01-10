@@ -21,6 +21,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             // set the image URL to the uploaded image path
             $imageUrl = $targetFilePath;
+            // resize the uploaded image
+            resizeImage("../" . $targetFilePath, 650, 360);
         } else {
             // invalid image type, use default image URL
             $imageUrl = $defaultImageUrl;

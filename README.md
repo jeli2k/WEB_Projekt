@@ -8,6 +8,12 @@ For Local Database initialization:
 3. Import the db/schema/initial.php file
 4. Verify the data (e.g. SELECT * FROM userdata;)
 
+Activate GD-Extension in php.ini (to enable image rescaling functions)
+1. Open php.ini (e.g.: "..\xampp\php" or "../MAMP/bin/php/php8.2.0/bin/php.ini")
+2. Search "extension=gd" or "extension=gd2"
+3. Remove the Semicolon ";" in front of "extension=gd" or "extension=gd2"
+4. Save the php.ini file
+
 admin User-Login:
 
 E-Mail: 'admin@admin.com'\
